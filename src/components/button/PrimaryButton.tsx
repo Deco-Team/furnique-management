@@ -8,17 +8,15 @@ const PrimaryButton = (props: ICustomButtonProps) => {
       <CustomButton
         variant='contained'
         name={name}
+        type='submit'
         sx={{
-          backgroundColor: 'var(--primary-color)',
-          width: { sm: '165px', xs: '115px' },
+          width: '165px',
           height: '45px',
-          textTransform: 'capitalize',
+          textTransform: 'uppercase',
           fontSize: '14px',
           padding: '10px',
           lineHeight: '1.2',
-          '&:hover': {
-            backgroundColor: 'var(--primary-dark-color)'
-          }
+          color: 'var(--white-color)'
         }}
       />
     </>

@@ -29,7 +29,6 @@ export const Footer = styled.div`
 `
 export const FooterText = styled.p`
   font-size: 0/5rem;
-  color: #000;
   margin-right: 0.5rem;
   font-weight: 500;
 `
@@ -40,4 +39,5 @@ export const FormWrapper = styled.form`
   justify-content: space-around;
   height: 50%;
   align-items: center;
+  width: 30em;
 `

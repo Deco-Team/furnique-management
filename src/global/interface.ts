@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SxProps } from '@mui/material'
 import { ReactNode } from 'react'
+import { Control } from 'react-hook-form'
 
 export interface ILayout {
   children: ReactNode
@@ -10,7 +11,8 @@ export interface ILayout {
 export interface IFormInputProps {
   name: string
   label?: string
-  control: object
+  control: Control<any>
+  error?: string
 }
 
 export interface ICustomButtonProps {
@@ -19,4 +21,5 @@ export interface ICustomButtonProps {
   onClick?: () => void
   icon?: React.ReactNode
   sx?: SxProps
+  type: 'submit' | 'reset'
 }

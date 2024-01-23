@@ -16,7 +16,7 @@ const InputTextForm = ({ name, label, control }: IFormInputProps) => {
           value={value}
           fullWidth
           label={label}
-          variant='outlined'
+          variant='standard'
         />
       )}
     />
