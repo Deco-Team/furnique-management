@@ -3,7 +3,7 @@ import { SxProps } from '@mui/material'
 import { ReactNode } from 'react'
 import { Control } from 'react-hook-form'
 
-export interface ILayout {
+export interface ILayoutProps {
   children: ReactNode
   title?: string
 }
@@ -22,4 +22,25 @@ export interface ICustomButtonProps {
   icon?: React.ReactNode
   sx?: SxProps
   type: 'submit' | 'reset'
+}
+
+export interface IUserInfoProps {
+  id: string
+  staffCode: string
+  email: string
+  password: string
+  avatar: string
+  role: string
+  firstName: string
+  lastName: string
+}
+
+export interface IAuthProviderProps {
+  children: ReactNode
+}
+export interface IAuthContextProps {
+  user: IUserInfoProps | undefined
+  idToken: string | null
+  login: () => Promise<void>
+  logout: () => Promise<void>
 }
