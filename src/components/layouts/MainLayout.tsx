@@ -1,7 +1,7 @@
 import { Container } from '@mui/material'
-import { ILayout } from '~/global/interface'
+import { ILayoutProps } from '~/global/interface'
 
-const MainLayout = ({ children }: ILayout) => {
+const MainLayout = ({ children }: ILayoutProps) => {
   return (
     <>
       <Container maxWidth='lg'>{children}</Container>

@@ -2,6 +2,7 @@ import { ThemeProvider, createTheme } from '@mui/material'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import { privateRoutes, publicRoutes } from './routes/routes'
+import AuthProvider from './contexts/AuthContext'
 
 const theme = createTheme({
   palette: {
@@ -24,14 +25,16 @@ function App() {
     <>
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <Routes>
-            {publicRoutes.map((route, index) => (
-              <Route key={index} path={route.path} Component={route.component} />
-            ))}
-            {privateRoutes.map((route, index) => (
-              <Route key={index} path={route.path} Component={route.component} />
-            ))}
-          </Routes>
+          <AuthProvider>
+            <Routes>
+              {publicRoutes.map((route, index) => (
+                <Route key={index} path={route.path} Component={route.component} />
+              ))}
+              {privateRoutes.map((route, index) => (
+                <Route key={index} path={route.path} Component={route.component} />
+              ))}
+            </Routes>
+          </AuthProvider>
         </BrowserRouter>
       </ThemeProvider>
     </>
