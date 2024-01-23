@@ -1,24 +1,36 @@
+import { ThemeProvider, createTheme } from '@mui/material'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { publicRoutes } from './routes/routes'
+import { privateRoutes, publicRoutes } from './routes/routes'
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#e3964a',
+      dark: '#dd8022',
+      light: '#e9ad72'
+    },
+    text: {
+      primary: '#000000'
+    }
+  }
+})
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          {publicRoutes.map((route, index) => (
-            <Route key={index} path={route.path} Component={route.component} />
-          ))}
-          {/* {privateRoutes.map((route, index) => (
-              <Route key={index} path={route.path} element={<PrivateRoute Component={route.component} />}>
-                {route.children?.map((child, index) => (
-                  <Route key={index} index={child.index} path={child.path} Component={child.component} />
-                ))}
-              </Route>
-            ))} */}
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            {publicRoutes.map((route, index) => (
+              <Route key={index} path={route.path} Component={route.component} />
+            ))}
+            {privateRoutes.map((route, index) => (
+              <Route key={index} path={route.path} Component={route.component} />
+            ))}
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   )
 }
