@@ -35,7 +35,13 @@ const LoginForm = () => {
   return (
     <FormWrapper onSubmit={handleSubmit(login)}>
       <InputTextForm control={control} name='email' label='Email' error={errors.email?.message} />
-      <InputTextForm control={control} name='password' label='Mật khẩu' error={errors.password?.message} />
+      <InputTextForm
+        control={control}
+        name='password'
+        label='Mật khẩu'
+        error={errors.password?.message}
+        type='password'
+      />
       <PrimaryButton type='submit' name='Login' variant='contained' />
     </FormWrapper>
   )

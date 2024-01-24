@@ -13,6 +13,7 @@ export interface IFormInputProps {
   label?: string
   control: Control<any>
   error?: string
+  type?: 'password' | 'date' | 'checkbox' | 'radio' | 'email' | 'hidden' | 'number'
 }
 
 export interface ICustomButtonProps {
