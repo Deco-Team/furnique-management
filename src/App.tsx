@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import { privateRoutes, publicRoutes } from './routes/routes'
 import AuthProvider from './contexts/AuthContext'
+import PrivateRoute from './routes/PrivateRoutes'
 
 const theme = createTheme({
   palette: {
@@ -14,9 +15,6 @@ const theme = createTheme({
     text: {
       primary: '#000000'
     }
-  },
-  typography: {
-    fontFamily: 'Helvetica'
   }
 })
 
@@ -31,7 +29,7 @@ function App() {
                 <Route key={index} path={route.path} Component={route.component} />
               ))}
               {privateRoutes.map((route, index) => (
-                <Route key={index} path={route.path} Component={route.component} />
+                <Route key={index} path={route.path} element={<PrivateRoute Component={route.component} />} />
               ))}
             </Routes>
           </AuthProvider>
