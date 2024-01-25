@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SxProps } from '@mui/material'
-import { ReactNode } from 'react'
+import { GridColDef } from '@mui/x-data-grid'
+import React, { ReactNode } from 'react'
 import { Control } from 'react-hook-form'
 
 export interface ILayoutProps {
@@ -44,4 +45,17 @@ export interface IAuthContextProps {
   idToken: string | null
   login: () => Promise<void>
   logout: () => Promise<void>
+}
+
+export interface IMainLayoutProps {
+  Component: React.ComponentType
+}
+
+export interface ISidebarProps {
+  mainContainerRef: React.RefObject<HTMLDivElement>
+}
+
+export interface IDataTableProps {
+  rows: any[]
+  columns: GridColDef[]
 }

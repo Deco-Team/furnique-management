@@ -4,6 +4,7 @@ import Loading from '~/components/loading/Loading'
 import { EMPTY } from '~/global/constants'
 import { IAuthContextProps, IAuthProviderProps, IUserInfoProps } from '~/global/interface'
 import { notifyError, notifySuccess } from '~/global/toastify'
+import { mockUser } from '~/mocks/userData'
 
 const initialContext: IAuthContextProps = {
   user: {
@@ -41,6 +42,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   initialContext.login = async () => {
     setLoading(true)
     try {
+      setUser(mockUser)
       notifySuccess('Đăng nhập thành công')
     } catch (error) {
       console.error()
