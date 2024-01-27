@@ -5,10 +5,10 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import ActionCell from '~/components/table/ActionCell'
 import StatusTextDiv from './StatusTextDiv'
 
-export const productsColumn: GridColDef[] = [
+export const ordersColumn: GridColDef[] = [
   {
     field: 'id',
-    headerName: 'STT',
+    headerName: 'ID',
     width: 50,
     filterable: false,
     sortable: false
@@ -16,36 +16,30 @@ export const productsColumn: GridColDef[] = [
   {
     field: 'product',
     headerName: 'Sản phẩm',
-    width: 250,
+    width: 200,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
-  { field: 'sku', headerName: 'SKU', width: 90 },
-  { field: 'category', headerName: 'Phân loại', width: 120 },
+  { field: 'orderDate', headerName: 'Ngày đặt', type: 'Date', width: 150 },
+  { field: 'customer', headerName: 'Khách hàng', width: 160 },
 
   {
-    field: 'stock',
-    headerName: 'Còn hàng',
+    field: 'total',
+    headerName: 'Tổng cộng',
     headerAlign: 'left',
     type: 'number',
-    width: 110
+    width: 120
   },
   {
-    field: 'price',
-    headerName: 'Giá',
-    width: 100
+    field: 'payment',
+    headerName: 'Thanh toán',
+    width: 150
   },
   {
     field: 'status',
     headerName: 'Trạng thái',
     width: 150,
     renderCell: (param: GridRenderCellParams) => <StatusTextDiv status={param.row.status} />
-  },
-  {
-    field: 'added',
-    headerName: 'Ngày nhập',
-    type: 'Date',
-    width: 120
   },
   {
     field: 'actions',
