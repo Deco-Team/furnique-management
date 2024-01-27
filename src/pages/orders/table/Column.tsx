@@ -1,4 +1,3 @@
-import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
@@ -9,7 +8,7 @@ export const ordersColumn: GridColDef[] = [
   {
     field: 'id',
     headerName: 'ID',
-    width: 50,
+    width: 80,
     filterable: false,
     sortable: false
   },
@@ -21,7 +20,7 @@ export const ordersColumn: GridColDef[] = [
     sortingOrder: ['asc', 'desc']
   },
   { field: 'orderDate', headerName: 'Ngày đặt', type: 'Date', width: 150 },
-  { field: 'customer', headerName: 'Khách hàng', width: 160 },
+  { field: 'customer', headerName: 'Khách hàng', width: 180 },
 
   {
     field: 'total',
@@ -33,18 +32,18 @@ export const ordersColumn: GridColDef[] = [
   {
     field: 'payment',
     headerName: 'Thanh toán',
-    width: 150
+    width: 180
   },
   {
     field: 'status',
     headerName: 'Trạng thái',
-    width: 150,
+    width: 180,
     renderCell: (param: GridRenderCellParams) => <StatusTextDiv status={param.row.status} />
   },
   {
     field: 'actions',
     headerName: 'Thao tác',
-    width: 250,
+    width: 150,
     sortable: false,
     filterable: false,
     headerAlign: 'center',
@@ -55,8 +54,7 @@ export const ordersColumn: GridColDef[] = [
           id={params.row.id as number}
           buttons={[
             { icon: <EditIcon />, onClick: () => console.log('Edit clicked') },
-            { icon: <VisibilityIcon />, onClick: () => console.log('View clicked') },
-            { icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') }
+            { icon: <VisibilityIcon />, onClick: () => console.log('View clicked') }
           ]}
         />
       )
