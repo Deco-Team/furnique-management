@@ -2,6 +2,7 @@ import { ScreenPath } from '~/global/enum'
 import Login from '~/pages/auth/Login'
 import Categories from '~/pages/categories/Categories'
 import Dashboard from '~/pages/dashboard/Dashboard'
+import Orders from '~/pages/orders/Orders'
 import Products from '~/pages/products/Products'
 
 export const publicRoutes = [{ path: '/', component: Login }]
@@ -17,5 +18,10 @@ export const privateRoutes = [
     path: ScreenPath.PRODUCTS,
     component: Products,
     title: 'Sản phẩm'
+  },
+  {
+    path: ScreenPath.ORDERS,
+    component: Orders,
+    title: 'Đơn hàng'
   }
 ]

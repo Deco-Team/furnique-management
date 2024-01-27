@@ -14,7 +14,7 @@
 
   --primary-color: #e3964a;
   --primary-dark-color: #dd8022;
-  --primary-light-color: #e9ad72;
+  --primary-light-color: #f9e9e2;
   --gray-color: #4a4c56;
   --gray-light-color: #e9e9ea;
   --white-color: #ffffff;
@@ -23,6 +23,8 @@
   --red-light-color: #fbd8db;
   --green-color: #1a9882;
   --green-light-color: #d3f4ef;
+  --blue-color: #2bb2fe;
+  --blue-light-color: #d5f0ff;
 }
 
 a {
