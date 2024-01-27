@@ -1,15 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import { EMPTY } from '~/global/constants'
+import { ScreenPath } from '~/global/enum'
+import useAuth from '~/hooks/useAuth'
 import InputTextForm from '../../components/form/InputTextForm'
 import { FormWrapper } from './Login.styled'
 import { ILoginFormProps } from './types/LoginForm'
 import { loginValidationSchema } from './validation/LoginValidationSchema'
-import useAuth from '~/hooks/useAuth'
-import { useEffect } from 'react'
-import { SCREEN_PATH } from '~/global/enum'
 
 const LoginForm = () => {
   const defaultValues: ILoginFormProps = {
@@ -28,7 +28,7 @@ const LoginForm = () => {
   const navigate = useNavigate()
   useEffect(() => {
     if (user) {
-      navigate(SCREEN_PATH.DASHBOARD)
+      navigate(ScreenPath.DASHBOARD)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])

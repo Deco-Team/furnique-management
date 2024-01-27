@@ -59,3 +59,9 @@ export interface IDataTableProps {
   rows: any[]
   columns: GridColDef[]
 }
+
+export interface IStatusProductProps {
+  outOfStock?: boolean
+  published?: boolean
+  draft?: boolean
+}
