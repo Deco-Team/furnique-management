@@ -65,3 +65,10 @@ export interface IStatusProductProps {
   published?: boolean
   draft?: boolean
 }
+
+export interface IStatusOrderProps {
+  processing?: boolean
+  delivering?: boolean
+  cancelled?: boolean
+  completed?: boolean
+}
