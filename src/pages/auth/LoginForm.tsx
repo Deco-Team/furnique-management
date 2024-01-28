@@ -24,14 +24,14 @@ const LoginForm = () => {
     defaultValues: defaultValues,
     resolver: yupResolver(loginValidationSchema)
   })
-  const { user, login } = useAuth()
+  const { idToken, login } = useAuth()
   const navigate = useNavigate()
   useEffect(() => {
-    if (user) {
+    if (idToken) {
       navigate(ScreenPath.DASHBOARD)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user])
+  }, [idToken])
   return (
     <FormWrapper onSubmit={handleSubmit(login)}>
       <InputTextForm
