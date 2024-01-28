@@ -48,12 +48,18 @@ const OptionList: React.FC<SidebarProps> = ({ prop }) => {
             sx={{
               width: '100%',
               height: '100%',
-              color: option.id === btn ? 'var(--white-color)' : 'var(--black-light-color)',
+              color: option.id === btn ? 'var(--primary-color)' : 'var(--gray-color)',
+              backgroundColor: option.id === btn ? 'var(--primary-light-color)' : 'none',
+              fontWeight: option.id === btn ? '600' : '0',
               borderRadius: 0,
               padding: '5% 10%',
               justifyContent: 'flex-start',
               textTransform: 'none',
-              fontFamily: 'inherit'
+              fontFamily: 'inherit',
+              boxShadow: 'none',
+              '&:hover': {
+                color: option.id === btn ? 'var(--white-color)' : 'var(--primary-color)'
+              }
             }}
             startIcon={React.createElement(option.icon)}
             variant={option.id === btn ? 'contained' : 'text'}

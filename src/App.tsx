@@ -15,6 +15,15 @@ const theme = createTheme({
     text: {
       primary: '#000000'
     }
+  },
+  components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'transparent'
+        }
+      }
+    }
   }
 })
 

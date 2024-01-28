@@ -38,5 +38,5 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: '20ch'
     }
   },
-  color: 'var(--white-color)'
+  color: 'var(--gray-color)'
 }))

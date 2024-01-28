@@ -2,7 +2,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { IDataTableProps } from '~/global/interface'
 const CommonTable = ({ rows, columns }: IDataTableProps) => {
   return (
-    <div style={{ height: 650, width: '100%' }}>
+    <div style={{ height: 630, width: '100%' }}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -14,6 +14,7 @@ const CommonTable = ({ rows, columns }: IDataTableProps) => {
         pageSizeOptions={[10, 20]}
         checkboxSelection
         disableColumnMenu
+        sx={{ backgroundColor: 'var(--white-color)' }}
       />
     </div>
   )
