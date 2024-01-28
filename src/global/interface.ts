@@ -3,6 +3,7 @@ import { SxProps } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 import React, { ReactNode } from 'react'
 import { Control } from 'react-hook-form'
+import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
 
 export interface ILayoutProps {
   children: ReactNode
@@ -47,8 +48,9 @@ export interface IAuthProviderProps {
 export interface IAuthContextProps {
   user: IUserInfoProps | undefined
   idToken: string | null
-  login: () => Promise<void>
+  login: ({ email, password }: ILoginFormProps) => Promise<void>
   logout: () => Promise<void>
+  refreshToken: () => Promise<void>
 }
 
 export interface IMainLayoutProps {

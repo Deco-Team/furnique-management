@@ -1,10 +1,12 @@
+import { AxiosError } from 'axios'
 import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Loading from '~/components/loading/Loading'
 import { EMPTY } from '~/global/constants'
 import { IAuthContextProps, IAuthProviderProps, IUserInfoProps } from '~/global/interface'
 import { notifyError, notifySuccess } from '~/global/toastify'
-import { mockUser } from '~/mocks/userData'
+import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
+import { post } from '~/utils/apiCaller'
 
 const initialContext: IAuthContextProps = {
   user: {
@@ -18,14 +20,16 @@ const initialContext: IAuthContextProps = {
     staffCode: EMPTY
   },
   idToken: null,
-  login: async () => {
+  login: async () => {},
+  logout: async () => {
     return
   },
-  logout: async () => {
+  refreshToken: async () => {
     return
   }
 }
 export const AuthContext = createContext<IAuthContextProps>(initialContext)
+
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [idToken, setIdToken] = useState<string | null>(null)
   const [user, setUser] = useState<IUserInfoProps | undefined>()
@@ -39,14 +43,19 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, idToken])
 
-  initialContext.login = async () => {
-    setLoading(true)
+  initialContext.login = async ({ email, password }: ILoginFormProps) => {
     try {
-      setUser(mockUser)
+      setLoading(true)
+      const { data } = await post('/auth/provider/login', { email, password }, {}, {})
+      const token = data.data.accessToken
       notifySuccess('Đăng nhập thành công')
+      setIdToken(token)
     } catch (error) {
-      console.error()
-      notifyError('Lỗi!')
+      if (error instanceof AxiosError && error.response && error.response.data) {
+        notifyError(error.response.data.message)
+      } else {
+        notifyError('Lỗi!')
+      }
     }
     setLoading(false)
   }
