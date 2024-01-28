@@ -3,6 +3,7 @@ import { SxProps } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
 import React, { ReactNode } from 'react'
 import { Control } from 'react-hook-form'
+import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
 
 export interface ILayoutProps {
   children: ReactNode
@@ -15,15 +16,19 @@ export interface IFormInputProps {
   control: Control<any>
   error?: string
   type?: 'password' | 'date' | 'checkbox' | 'radio' | 'email' | 'hidden' | 'number'
+  sx?: SxProps
+  variant: 'outlined' | 'standard'
+  multiline?: boolean
+  rows?: number
 }
 
 export interface ICustomButtonProps {
   variant: 'contained' | 'outlined'
   name: string
-  onClick?: () => void
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   icon?: React.ReactNode
   sx?: SxProps
-  type: 'submit' | 'reset'
+  type: 'button' | 'submit' | 'reset'
 }
 
 export interface IUserInfoProps {
@@ -43,8 +48,9 @@ export interface IAuthProviderProps {
 export interface IAuthContextProps {
   user: IUserInfoProps | undefined
   idToken: string | null
-  login: () => Promise<void>
+  login: ({ email, password }: ILoginFormProps) => Promise<void>
   logout: () => Promise<void>
+  refreshToken: () => Promise<void>
 }
 
 export interface IMainLayoutProps {
@@ -71,4 +77,14 @@ export interface IStatusOrderProps {
   delivering?: boolean
   cancelled?: boolean
   completed?: boolean
+}
+
+export interface ICategoriesProps {
+  image?: string
+  categoryName: string
+  description: string
+}
+
+export interface IUploadFileButtonProps {
+  onFileChange: (fileUrl: string | null) => void
 }
