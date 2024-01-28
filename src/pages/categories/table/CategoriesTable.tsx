@@ -1,6 +1,6 @@
 import CommonTable from '~/components/table/CommonTable'
-import { categoriesColumn } from './Coloumn'
 import { categoriesRows } from '~/mocks/categoriesData'
+import { categoriesColumn } from './Coloumn'
 
 const CategoriesTable = () => {
   return (
