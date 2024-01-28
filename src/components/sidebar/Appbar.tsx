@@ -110,8 +110,8 @@ const Appbar = () => {
 
   return (
     <>
-      <AppBar position='static'>
-        <Toolbar sx={{ color: 'var(--white-color)' }}>
+      <AppBar position='static' sx={{ boxShadow: 'none' }}>
+        <Toolbar sx={{ color: 'var(--gray-color)', backgroundColor: '#e0e2e737' }}>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />

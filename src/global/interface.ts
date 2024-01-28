@@ -15,15 +15,19 @@ export interface IFormInputProps {
   control: Control<any>
   error?: string
   type?: 'password' | 'date' | 'checkbox' | 'radio' | 'email' | 'hidden' | 'number'
+  sx?: SxProps
+  variant: 'outlined' | 'standard'
+  multiline?: boolean
+  rows?: number
 }
 
 export interface ICustomButtonProps {
   variant: 'contained' | 'outlined'
   name: string
-  onClick?: () => void
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
   icon?: React.ReactNode
   sx?: SxProps
-  type: 'submit' | 'reset'
+  type: 'button' | 'submit' | 'reset'
 }
 
 export interface IUserInfoProps {
@@ -71,4 +75,14 @@ export interface IStatusOrderProps {
   delivering?: boolean
   cancelled?: boolean
   completed?: boolean
+}
+
+export interface ICategoriesProps {
+  image?: string
+  categoryName: string
+  description: string
+}
+
+export interface IUploadFileButtonProps {
+  onFileChange: (fileUrl: string | null) => void
 }
