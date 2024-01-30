@@ -21,6 +21,9 @@ const PrimaryButton = (props: ICustomButtonProps) => {
           '&:hover': {
             backgroundColor: 'var(--primary-color)',
             color: 'var(--white-color)'
+          },
+          '&:focus': {
+            outline: 'none'
           }
         }}
         onClick={onClick}

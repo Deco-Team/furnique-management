@@ -120,12 +120,30 @@ const Appbar = () => {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
+            <IconButton
+              size='large'
+              aria-label='show 4 new mails'
+              color='inherit'
+              sx={{
+                '&:focus': {
+                  outline: 'none'
+                }
+              }}
+            >
               <Badge badgeContent={4} color='error'>
                 <MailIcon />
               </Badge>
             </IconButton>
-            <IconButton size='large' aria-label='show 17 new notifications' color='inherit'>
+            <IconButton
+              size='large'
+              aria-label='show 17 new notifications'
+              color='inherit'
+              sx={{
+                '&:focus': {
+                  outline: 'none'
+                }
+              }}
+            >
               <Badge badgeContent={17} color='error'>
                 <NotificationsIcon />
               </Badge>
@@ -138,6 +156,11 @@ const Appbar = () => {
               aria-haspopup='true'
               onClick={handleProfileMenuOpen}
               color='inherit'
+              sx={{
+                '&:focus': {
+                  outline: 'none'
+                }
+              }}
             >
               <AccountCircle />
             </IconButton>
