@@ -18,6 +18,9 @@ const SecondaryButton = ({ color, ...props }: ICustomButtonProps & { color?: str
         borderColor: color || 'var(--white-color)',
         '&:hover': {
           color: 'var(--primary-color)'
+        },
+        '&:focus': {
+          outline: 'none'
         }
       }}
       icon={icon}

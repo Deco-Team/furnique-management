@@ -27,6 +27,9 @@ const ActionsCell: React.FC<ActionsCellProps> = ({ id, buttons }) => {
             color: 'var(--black-color)',
             '.MuiTouchRipple-root': {
               width: 'fit-content'
+            },
+            '&:focus': {
+              outline: 'none'
             }
           }}
         />

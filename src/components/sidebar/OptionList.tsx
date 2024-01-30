@@ -59,6 +59,9 @@ const OptionList: React.FC<SidebarProps> = ({ prop }) => {
               boxShadow: 'none',
               '&:hover': {
                 color: option.id === btn ? 'var(--white-color)' : 'var(--primary-color)'
+              },
+              '&:focus': {
+                outline: 'none'
               }
             }}
             startIcon={React.createElement(option.icon)}
