@@ -1,4 +1,4 @@
-import { ICustomButtonProps } from '~/global/interface'
+import { ICustomButtonProps } from '~/global/interfaces/interface'
 import CustomButton from './CustomButton'
 
 const SecondaryButton = ({ color, ...props }: ICustomButtonProps & { color?: string }) => {

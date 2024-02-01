@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { IStatusProductProps } from '~/global/interface'
+import { IStatusProductProps } from '~/global/interfaces/interface'
 
 export const StatusDiv = styled.div<IStatusProductProps>`
   width: 80px;

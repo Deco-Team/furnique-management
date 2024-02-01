@@ -10,32 +10,44 @@ export const categoriesColumn: GridColDef[] = [
     headerName: 'No',
     width: 100,
     filterable: false,
-    sortable: false
+    sortable: false,
+    valueGetter: (params) => {
+      const page = params.api.state.pagination.paginationModel.page
+      const pageSize = params.api.state.pagination.paginationModel.pageSize
+      const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.row.id)
+      return page * pageSize + rowIndex + 1
+    }
   },
   {
-    field: 'categoryName',
+    field: 'name',
     headerName: 'Tên phân loại',
-    width: 325,
+    width: 425,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
-  { field: 'sold', headerName: 'Đã bán', type: 'number', width: 200 },
   {
-    field: 'stock',
-    headerName: 'Còn hàng',
-    type: 'number',
-    width: 150
+    field: 'description',
+    headerName: 'Mô tả',
+    width: 500,
+    filterable: false
   },
-  {
-    field: 'added',
-    headerName: 'Ngày nhập',
-    type: 'Date',
-    width: 200
-  },
+  // { field: 'sold', headerName: 'Đã bán', type: 'number', width: 200 },
+  // {
+  //   field: 'stock',
+  //   headerName: 'Còn hàng',
+  //   type: 'number',
+  //   width: 150
+  // },
+  // {
+  //   field: 'added',
+  //   headerName: 'Ngày nhập',
+  //   type: 'Date',
+  //   width: 200
+  // },
   {
     field: 'actions',
     headerName: 'Thao tác',
-    width: 250,
+    width: 200,
     sortable: false,
     filterable: false,
     headerAlign: 'center',

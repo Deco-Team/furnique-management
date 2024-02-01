@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Loading from '~/components/loading/Loading'
 import { EMPTY } from '~/global/constants'
-import { IAuthContextProps, IAuthProviderProps, IUserInfoProps } from '~/global/interface'
+import { IAuthContextProps, IAuthProviderProps, IUserInfoProps } from '~/global/interfaces/interface'
 import { notifyError, notifySuccess } from '~/global/toastify'
 import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
 import { post } from '~/utils/apiCaller'
@@ -35,7 +35,12 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [user, setUser] = useState<IUserInfoProps | undefined>()
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-
+  useEffect(() => {
+    const storedToken = localStorage.getItem('idToken')
+    if (storedToken) {
+      setIdToken(storedToken)
+    }
+  }, [])
   useEffect(() => {
     if (!idToken && !loading) {
       navigate('/')
@@ -48,8 +53,9 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       setLoading(true)
       const { data } = await post('/auth/provider/login', { email, password }, {}, {})
       const token = data.data.accessToken
-      notifySuccess('Đăng nhập thành công')
       setIdToken(token)
+      localStorage.setItem('idToken', token)
+      notifySuccess('Đăng nhập thành công')
     } catch (error) {
       if (error instanceof AxiosError && error.response && error.response.data) {
         notifyError(error.response.data.message)

@@ -10,7 +10,7 @@ import SecondaryButton from '~/components/button/SecondaryButton'
 import InputTextForm from '~/components/form/InputTextForm'
 import { EMPTY } from '~/global/constants'
 import { ScreenPath } from '~/global/enum'
-import { ICategoriesProps } from '~/global/interface'
+import { ICategoriesProps } from '~/global/interfaces/interface'
 import { addCategoryValidationSchema } from '../validation/AddCategoryValidationSchema'
 import { ButtonWrapper, InformationContainer, ThumnailContainer, TitleText, Wrapper } from './AddCategory.styled'
 const AddCategory = () => {

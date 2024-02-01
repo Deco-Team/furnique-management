@@ -66,6 +66,12 @@ export interface IDataTableProps {
   columns: GridColDef[]
 }
 
+export interface IStatusCategoriesProps {
+  outOfStock?: boolean
+  published?: boolean
+  draft?: boolean
+}
+
 export interface IStatusProductProps {
   outOfStock?: boolean
   published?: boolean
@@ -80,6 +86,7 @@ export interface IStatusOrderProps {
 }
 
 export interface ICategoriesProps {
+  _id: string
   image?: string
   categoryName: string
   description: string

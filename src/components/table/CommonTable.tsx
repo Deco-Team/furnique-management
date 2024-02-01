@@ -1,5 +1,5 @@
 import { DataGrid } from '@mui/x-data-grid'
-import { IDataTableProps } from '~/global/interface'
+import { IDataTableProps } from '~/global/interfaces/interface'
 const CommonTable = ({ rows, columns }: IDataTableProps) => {
   return (
     <div style={{ height: 630, width: '100%' }}>
