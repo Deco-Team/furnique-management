@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { ILayoutProps } from '~/global/interface'
+import { ILayoutProps } from '~/global/interfaces/interface'
 import Appbar from '../sidebar/Appbar'
 import Sidebar from '../sidebar/Sidebar'
 import { MainContainer, Wrapper } from './MainLayout.styled'

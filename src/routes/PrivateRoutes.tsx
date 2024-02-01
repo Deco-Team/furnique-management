@@ -1,5 +1,5 @@
 import MainLayout from '~/components/layouts/MainLayout'
-import { IMainLayoutProps } from '~/global/interface'
+import { IMainLayoutProps } from '~/global/interfaces/interface'
 import { privateRoutes } from './routes'
 
 const PrivateRoute = ({ Component }: IMainLayoutProps) => {

@@ -1,4 +1,4 @@
-import { ISidebarProps } from '~/global/interface'
+import { ISidebarProps } from '~/global/interfaces/interface'
 import OptionList from './OptionList'
 import { SideBarWrapper, Wrapper } from './Sidebar.styled'
 
