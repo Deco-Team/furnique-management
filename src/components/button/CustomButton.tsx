@@ -1,5 +1,5 @@
 import { Button } from '@mui/material'
-import { ICustomButtonProps } from '~/global/interface'
+import { ICustomButtonProps } from '~/global/interfaces/interface'
 
 const CustomButton = (props: ICustomButtonProps) => {
   const { name, icon, variant, sx, type, onClick } = props
