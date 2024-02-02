@@ -1,3 +1,19 @@
+import { ICategory } from './categoriesInterface'
+
+interface IVariant {
+  sku: string
+  price: number
+  quantity: number
+  dimensions: {
+    height: number
+    width: number
+    length: number
+  }
+  keyValue: {
+    color: string
+    material: string
+  }
+}
 export interface IProduct {
   _id: string
   name: string
@@ -6,24 +22,21 @@ export interface IProduct {
   rate: number
   brand: string
   variants: IVariant[]
-  categories: string[]
+  categories: ICategory[]
+  status: string
+  createdAt: string
+  updatedAt: string
 }
 
-interface IDimensions {
-  height: number
-  width: number
-  length: number
-}
-
-interface IKeyValue {
-  color: string
-  material: string
-}
-
-interface IVariant {
-  sku: string
-  price: number
-  quantity: number
-  dimensions: IDimensions
-  keyValue: IKeyValue
+export interface IProductsResponse {
+  docs: IProduct[]
+  totalDocs: number
+  limit: number
+  totalPages: number
+  page: number
+  pagingCounter: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+  prevPage: null | number
+  nextPage: null | number
 }

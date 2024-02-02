@@ -73,6 +73,7 @@ export interface IStatusCategoriesProps {
 }
 
 export interface IStatusProductProps {
+  active?: boolean
   outOfStock?: boolean
   published?: boolean
   draft?: boolean

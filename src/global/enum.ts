@@ -7,9 +7,8 @@ export enum ScreenPath {
 }
 
 export enum ProductStatus {
-  OUT_OF_STOCK = 'OUT_OF_STOCK',
-  PUBLISHED = 'PUBLISHED',
-  DRAFT = 'DRAFT'
+  ACTIVE = 'ACTIVE',
+  OUT_OF_STOCK = 'OUT_OF_STOCK'
 }
 
 export enum OrderStatus {

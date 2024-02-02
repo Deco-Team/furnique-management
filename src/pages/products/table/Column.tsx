@@ -11,28 +11,26 @@ export const productsColumn: GridColDef[] = [
     headerName: 'STT',
     width: 50,
     filterable: false,
-    sortable: false
+    sortable: false,
+    valueGetter: (params) => {
+      const page = params.api.state.pagination.paginationModel.page
+      const pageSize = params.api.state.pagination.paginationModel.pageSize
+      const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.row.id)
+      return page * pageSize + rowIndex + 1
+    }
   },
   {
-    field: 'product',
+    field: 'name',
     headerName: 'Sản phẩm',
-    width: 250,
+    width: 180,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
-  { field: 'sku', headerName: 'SKU', width: 90 },
-  { field: 'category', headerName: 'Phân loại', width: 120 },
-
+  { field: 'categories', headerName: 'Phân loại', width: 150 },
+  { field: 'description', headerName: 'Mô tả', width: 220 },
   {
-    field: 'stock',
-    headerName: 'Còn hàng',
-    headerAlign: 'left',
-    type: 'number',
-    width: 110
-  },
-  {
-    field: 'price',
-    headerName: 'Giá',
+    field: 'brand',
+    headerName: 'Hãng',
     width: 100
   },
   {
@@ -42,7 +40,7 @@ export const productsColumn: GridColDef[] = [
     renderCell: (param: GridRenderCellParams) => <StatusTextDiv status={param.row.status} />
   },
   {
-    field: 'added',
+    field: 'createdAt',
     headerName: 'Ngày nhập',
     type: 'Date',
     width: 120
