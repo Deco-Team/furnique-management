@@ -1,12 +1,12 @@
-import { ICategory } from '~/global/interfaces/categoriesInterface'
-import useApi from './useApi'
 import { useCallback } from 'react'
-
-const useCategoriesApi = () => {
+import { IProductsResponse } from '~/global/interfaces/productInterface'
+import useApi from './useApi'
+//TODO: waiting for back-end document api :)
+const useProductsApi = () => {
   const callApi = useApi()
-  const rootEndpoint = 'categories/provider'
+  const rootEndpoint = 'products/provider'
 
-  const getAllCategories = useCallback(async () => {
+  const getAllProducts = useCallback(async () => {
     const endpoint = `/${rootEndpoint}`
     try {
       const response = await callApi('get', endpoint)
@@ -16,8 +16,8 @@ const useCategoriesApi = () => {
     }
   }, [callApi])
 
-  const createCategory = useCallback(
-    async (data: ICategory) => {
+  const createProduct = useCallback(
+    async (data: IProductsResponse) => {
       const endpoint = `/${rootEndpoint}`
       try {
         const response = await callApi('post', endpoint, {}, {}, data)
@@ -29,9 +29,9 @@ const useCategoriesApi = () => {
     [callApi]
   )
 
-  const updateCategory = useCallback(
-    async (categoryId: string, data: ICategory) => {
-      const endpoint = `/${rootEndpoint}/${categoryId}`
+  const updateProduct = useCallback(
+    async (productId: string, data: IProductsResponse) => {
+      const endpoint = `/${rootEndpoint}/${productId}`
       try {
         const response = await callApi('put', endpoint, {}, {}, data)
         return response
@@ -42,7 +42,7 @@ const useCategoriesApi = () => {
     [callApi]
   )
 
-  return { getAllCategories, createCategory, updateCategory }
+  return { getAllProducts, createProduct, updateProduct }
 }
 
-export default useCategoriesApi
+export default useProductsApi
