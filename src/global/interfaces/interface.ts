@@ -80,10 +80,13 @@ export interface IStatusProductProps {
 }
 
 export interface IStatusOrderProps {
-  processing?: boolean
+  deleted?: boolean
   delivering?: boolean
-  cancelled?: boolean
+  canceled?: boolean
   completed?: boolean
+  pending?: boolean
+  confirmed?: boolean
+  draft?: boolean
 }
 
 export interface ICategoriesProps {
