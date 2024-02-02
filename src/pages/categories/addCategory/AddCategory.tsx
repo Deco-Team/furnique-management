@@ -19,7 +19,7 @@ const AddCategory = () => {
 
   const defaultValues: ICategoriesProps = {
     image: EMPTY,
-    categoryName: EMPTY,
+    name: EMPTY,
     description: EMPTY
   }
   const {
@@ -91,11 +91,11 @@ const AddCategory = () => {
           <TitleText>Thông tin chung</TitleText>
           <InputTextForm
             control={control}
-            name='categoryName'
+            name='name'
             label='Tên phân loại'
             sx={{ width: '90%', marginLeft: ' 20px' }}
             variant='outlined'
-            error={errors.categoryName?.message}
+            error={errors.name?.message}
           />
           <InputTextForm
             control={control}
