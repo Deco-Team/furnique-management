@@ -86,9 +86,9 @@ export interface IStatusOrderProps {
 }
 
 export interface ICategoriesProps {
-  _id: string
+  _id?: string
   image?: string
-  categoryName: string
+  name: string
   description: string
 }
 
