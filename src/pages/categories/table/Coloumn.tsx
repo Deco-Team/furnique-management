@@ -7,7 +7,7 @@ import ActionCell from '~/components/table/ActionCell'
 export const categoriesColumn: GridColDef[] = [
   {
     field: 'id',
-    headerName: 'No',
+    headerName: 'STT',
     width: 100,
     filterable: false,
     sortable: false,

@@ -10,22 +10,16 @@ export const StatusDiv = styled.div<IStatusProductProps>`
   border-radius: 5px;
   padding: 5px 15px;
   font-weight: 500;
+  ${({ active }) =>
+    active &&
+    `
+    background-color: var(--green-light-color);
+    color: var(--green-color)
+    `};
   ${({ outOfStock }) =>
     outOfStock &&
     `
     background-color: var(--red-light-color);
     color: var(--red-color)
     `};
-  ${({ published }) =>
-    published &&
-    `
-    background-color: var(--green-light-color);
-    color: var(--green-color)
-  `}
-  ${({ draft }) =>
-    draft &&
-    `
-    background-color: var(--gray-light-color);
-    color: var(--gray-color)
-  `}
 `

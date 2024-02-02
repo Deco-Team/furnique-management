@@ -22,9 +22,10 @@ const CategoriesTable = () => {
         id: row._id
       }))
       setCategoriesRows(categoriesRows)
-      setIsLoading(false)
     } catch (error) {
       console.error()
+    } finally {
+      setIsLoading(false)
     }
   }
   return <>{isLoading ? <Loading /> : <CommonTable columns={categoriesColumn} rows={categoriesRows} />}</>
