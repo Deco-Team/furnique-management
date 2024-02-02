@@ -24,8 +24,12 @@
   --red-light-color: #fbd8db;
   --green-color: #1a9882;
   --green-light-color: #d3f4ef;
-  --blue-color: #2bb2fe;
-  --blue-light-color: #d5f0ff;
+  --cyan-color: #2bb2fe;
+  --cyan-light-color: #d5f0ff;
+  --purple-color: #a064d9;
+  --purple-light-color: #e7d8f5;
+  --blue-color: #5b73ff;
+  --blue-light-color: #d6dcff;
 }
 
 a {
