@@ -1,6 +1,6 @@
 import { ICategory } from './categoriesInterface'
 
-interface IVariant {
+export interface IVariant {
   sku: string
   price: number
   quantity: number
@@ -39,4 +39,15 @@ export interface IProductsResponse {
   hasNextPage: boolean
   prevPage: null | number
   nextPage: null | number
+}
+
+export interface IProductRows {
+  _id: string
+  name: string
+  sku: string
+  category: string
+  stock: number
+  price: number
+  status: string
+  added: Date
 }

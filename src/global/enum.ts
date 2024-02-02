@@ -8,12 +8,24 @@ export enum ScreenPath {
 
 export enum ProductStatus {
   ACTIVE = 'ACTIVE',
-  OUT_OF_STOCK = 'OUT_OF_STOCK'
+  OUT_OF_STOCK = 'OUT_OF_STOCK',
+  INACTIVE = 'INACTIVE',
+  DELETED = 'DELETED'
 }
 
 export enum OrderStatus {
-  PROCESSING = 'PROCESSING',
-  CANCELLED = 'CANCELLED',
+  DELETED = 'DELETED',
+  CANCELED = 'CANCELED',
   COMPLETED = 'COMPLETED',
-  DELIVERING = 'DELIVERING'
+  DELIVERING = 'DELIVERING',
+  PENDING = 'PENDING',
+  CONFIRMED = 'CONFIRMED'
+}
+
+export enum TransactionStatus {
+  DRAFT = 'DRAFT',
+  CAPTURED = 'CAPTURED',
+  ERROR = 'ERROR',
+  CANCELED = 'CANCELED',
+  DELETED = 'DELETED'
 }

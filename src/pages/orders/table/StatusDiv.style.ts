@@ -10,11 +10,11 @@ export const StatusDiv = styled.div<IStatusOrderProps>`
   border-radius: 5px;
   padding: 5px 15px;
   font-weight: 500;
-  ${({ cancelled }) =>
-    cancelled &&
+  ${({ canceled }) =>
+    canceled &&
     `
-    background-color: var(--red-light-color);
-    color: var(--red-color)
+    background-color: var(--primary-light-color);
+    color: var(--primary-color)
     `};
   ${({ completed }) =>
     completed &&
@@ -22,16 +22,34 @@ export const StatusDiv = styled.div<IStatusOrderProps>`
     background-color: var(--green-light-color);
     color: var(--green-color)
   `}
-  ${({ processing }) =>
-    processing &&
+  ${({ deleted }) =>
+    deleted &&
     `
-    background-color: var(--primary-light-color);
-    color: var(--primary-color)
+    background-color: var(--red-light-color);
+    color: var(--red-color)
   `}
    ${({ delivering }) =>
     delivering &&
     `
+    background-color: var(--cyan-light-color);
+    color: var(--cyan-color)
+  `}
+  ${({ pending }) =>
+    pending &&
+    `
+    background-color: var(--purple-light-color);
+    color: var(--purple-color)
+  `}
+  ${({ confirmed }) =>
+    confirmed &&
+    `
     background-color: var(--blue-light-color);
     color: var(--blue-color)
+  `}
+  ${({ draft }) =>
+    draft &&
+    `
+    background-color: var(--gray-light-color);
+    color: var(--gray-color)
   `}
 `
