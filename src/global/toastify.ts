@@ -16,6 +16,10 @@ export const notifyError = (msg: string) => {
   toast.error(msg, Emmiter)
 }
 
+export const notifyLoading = () => {
+  toast.loading('Loading...')
+}
+
 export const notifySuccess = (msg: string) => {
   toast.dismiss()
   toast.success(msg, Emmiter)
