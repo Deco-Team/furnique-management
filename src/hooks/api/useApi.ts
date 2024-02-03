@@ -12,7 +12,7 @@ const useApi = () => {
       let message = ''
       if (error instanceof AxiosError) {
         console.log(error)
-        const errorDetails = error.response?.data.details
+        const errorDetails = error.response?.data.message
         switch (errorDetails) {
           case 'Access denied': {
             await logout()
