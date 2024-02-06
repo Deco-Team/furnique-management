@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Loading from '~/components/loading/Loading'
-import { EMPTY } from '~/global/constants'
+import { EMPTY } from '~/global/constants/constants'
 import { IAuthContextProps, IAuthProviderProps, IUserInfoProps } from '~/global/interfaces/interface'
 import { notifyError, notifySuccess } from '~/global/toastify'
 import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
@@ -69,7 +69,7 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
   initialContext.logout = async () => {
     setLoading(true)
     try {
-      console.log('Log out!')
+      localStorage.removeItem('idToken')
     } catch (error) {
       console.error()
     }
@@ -80,7 +80,11 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
 
   initialContext.user = user
   initialContext.idToken = idToken
-  return !loading ? <AuthContext.Provider value={initialContext}>{children}</AuthContext.Provider> : <Loading />
+  return !loading ? (
+    <AuthContext.Provider value={initialContext}>{children}</AuthContext.Provider>
+  ) : (
+    <Loading fullViewport={true} />
+  )
 }
 
 export default AuthProvider

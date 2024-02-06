@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add'
 const Categories = () => {
   const navigate = useNavigate()
   const handleAddButton = () => {
-    navigate(`${ScreenPath.CATEGORIES}/create`)
+    navigate(ScreenPath.ADD_CATEGORIES)
   }
 
   return (

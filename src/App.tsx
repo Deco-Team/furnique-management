@@ -23,6 +23,17 @@ const theme = createTheme({
           backgroundColor: 'transparent'
         }
       }
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        '*::-webkit-scrollbar': {
+          display: 'none'
+        },
+        '*': {
+          scrollbarWidth: 'none',
+          '-ms-overflow-style': 'none'
+        }
+      }
     }
   }
 })
