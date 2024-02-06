@@ -13,9 +13,13 @@ import { ScreenPath } from '~/global/enum'
 import { ICategoriesProps } from '~/global/interfaces/interface'
 import { addCategoryValidationSchema } from '../validation/AddCategoryValidationSchema'
 import { ButtonWrapper, InformationContainer, ThumnailContainer, TitleText, Wrapper } from './AddCategory.styled'
+import useCategoriesApi from '~/hooks/api/useCategoriesApi'
+import { cloudinaryURLConvert, removeAccents } from '~/utils/common.utils'
+import { notifyError, notifySuccess } from '~/global/toastify'
 const AddCategory = () => {
   const navigate = useNavigate()
   const [files, setFiles] = useState<File[]>([])
+  const { uploadCloudinary, createCategory } = useCategoriesApi()
 
   const defaultValues: ICategoriesProps = {
     image: EMPTY,
@@ -25,15 +29,40 @@ const AddCategory = () => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<ICategoriesProps>({
     defaultValues: defaultValues,
     resolver: yupResolver(addCategoryValidationSchema)
   })
 
-  const handleAddCategoryButton = () => {
-    console.log('Added')
+  const uploadImage = async () => {
+    try {
+      await uploadCloudinary(files, removeAccents(control._formValues.name))
+    } catch (error) {
+      notifyError('Có lỗi xảy ra')
+    }
   }
+
+  const handleAddCategoryButton = async () => {
+    if (files.length <= 0) {
+      notifyError('Cần ít nhất một ảnh')
+      return
+    } else {
+      const response = await createCategory({
+        name: control._formValues.name,
+        description: control._formValues.description,
+        image: cloudinaryURLConvert(control._formValues.name)
+      })
+      if (response) {
+        await uploadImage()
+        notifySuccess('Thêm thành công')
+        reset()
+        setFiles([])
+      }
+    }
+  }
+
   const handleCancelButton = () => {
     navigate(ScreenPath.CATEGORIES)
   }
