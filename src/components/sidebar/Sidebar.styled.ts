@@ -4,6 +4,9 @@ export const Wrapper = styled.div`
   background-color: var(--white-color);
   width: 15%;
   height: 100%;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
 `
 export const SideBarWrapper = styled.div`
   width: 100%;

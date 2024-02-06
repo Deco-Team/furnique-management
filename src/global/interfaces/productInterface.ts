@@ -9,10 +9,7 @@ export interface IVariant {
     width: number
     length: number
   }
-  keyValue: {
-    color: string
-    material: string
-  }
+  keyValue: Record<string, string>
 }
 export interface IProduct {
   _id: string
