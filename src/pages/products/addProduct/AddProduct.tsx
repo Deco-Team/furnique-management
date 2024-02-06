@@ -1,16 +1,19 @@
-import { yupResolver } from '@hookform/resolvers/yup'
+// AddProduct.tsx
+
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useFieldArray, useForm } from 'react-hook-form'
 import FileUpload from 'react-material-file-upload'
 import { useNavigate } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
+import InputDropdownForm from '~/components/form/InputDropdownForm'
 import InputTextForm from '~/components/form/InputTextForm'
 import { EMPTY } from '~/global/constants/constants'
-import { ScreenPath } from '~/global/enum'
+import { ZERO } from '~/global/constants/numbers'
 import { IProductsProps } from '~/global/interfaces/interface'
+import { categoriesOptions } from '~/mocks/categoriesOptions'
 import { addProductValidationSchema } from '../validation/AddProductValidationSchema'
 import {
   ButtonWrapper,
@@ -20,38 +23,78 @@ import {
   TitleText,
   Wrapper
 } from './AddProduct.styled'
-import InputDropdownForm from '~/components/form/InputDropdownForm'
-import { categoriesOptions } from '~/mocks/categoriesOptions'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { ScreenPath } from '~/global/enum'
 
 const AddProduct = () => {
   const navigate = useNavigate()
   const [files, setFiles] = useState<File[]>([])
+  const [showVariantFields, setShowVariantFields] = useState(false)
 
   const defaultValues: IProductsProps = {
     name: EMPTY,
     description: EMPTY,
     images: [],
     brand: EMPTY,
-    variants: [],
+    variants: [
+      {
+        sku: EMPTY,
+        price: ZERO,
+        quantity: ZERO,
+        dimensions: {
+          height: ZERO,
+          width: ZERO,
+          length: ZERO
+        },
+        keyValue: {}
+      }
+    ],
     categories: []
   }
+
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors }
   } = useForm<IProductsProps>({
     defaultValues: defaultValues,
     resolver: yupResolver(addProductValidationSchema)
   })
 
-  const handleAddCategoryButton = () => {
+  const { fields, append } = useFieldArray({
+    control,
+    name: 'variants'
+  })
+
+  const handleAddProductButton = () => {
     console.log('Added')
   }
+
   const handleCancelButton = () => {
     navigate(ScreenPath.PRODUCTS)
   }
+
+  const handleAddVariantsButton = () => {
+    if (!showVariantFields) {
+      setShowVariantFields(true)
+    } else if (fields.length < 2) {
+      append({
+        sku: EMPTY,
+        price: ZERO,
+        quantity: ZERO,
+        dimensions: {
+          height: ZERO,
+          width: ZERO,
+          length: ZERO
+        },
+        keyValue: {}
+      })
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit(handleAddCategoryButton)}>
+    <form onSubmit={handleSubmit(handleAddProductButton)}>
       <ButtonWrapper>
         <SecondaryButton
           variant='contained'
@@ -124,6 +167,86 @@ const AddProduct = () => {
               buttonText='Tải lên'
             />
           </InformationContainer>
+          <InformationContainer>
+            <TitleText>Phân loại</TitleText>
+            {showVariantFields &&
+              fields.map((_variant, index) => {
+                return (
+                  <div key={index} style={{ marginBottom: '20px' }}>
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${index}].sku`}
+                      label={`SKU ${index + 1}`}
+                      sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                      variant='outlined'
+                      error={errors.variants?.[index]?.sku?.message}
+                    />
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${index}].price`}
+                      label={`Price ${index + 1}`}
+                      sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                      variant='outlined'
+                      error={errors.variants?.[index]?.price?.message}
+                    />
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${index}].quantity`}
+                      label={`Quantity ${index + 1}`}
+                      sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                      variant='outlined'
+                      type='number'
+                      error={errors.variants?.[index]?.quantity?.message}
+                    />
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${index}].dimensions.height`}
+                      label={`Height ${index + 1}`}
+                      sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                      variant='outlined'
+                      error={errors.variants?.[index]?.dimensions?.height?.message}
+                    />
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${index}].dimensions.width`}
+                      label={`Width ${index + 1}`}
+                      sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                      variant='outlined'
+                      error={errors.variants?.[index]?.dimensions?.width?.message}
+                    />
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${index}].dimensions.length`}
+                      label={`Length ${index + 1}`}
+                      sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                      variant='outlined'
+                      error={errors.variants?.[index]?.dimensions?.length?.message}
+                    />
+
+                    {/* <h4>KeyValue</h4>
+                    {Object.entries(defaultValues.variants[index].keyValue).map(([key, value], kvIndex) => (
+                      <div key={kvIndex}>
+                        <InputTextForm
+                          name={`variants[${index}].keyValue.${key}`}
+                          label={key}
+                          control={control}
+                          variant={'outlined'}
+                        />
+                      </div>
+                    ))}
+                    <PrimaryButton variant={'outlined'} name={'Thêm giá trị'} type={'button'} /> */}
+                  </div>
+                )
+              })}
+            {fields.length < 2 && (
+              <PrimaryButton
+                variant={'outlined'}
+                name={'Thêm phân loại'}
+                type={'button'}
+                onClick={handleAddVariantsButton}
+              />
+            )}
+          </InformationContainer>
         </GeneralContainer>
         <CategoryContainer>
           <TitleText>Danh mục</TitleText>
@@ -133,7 +256,6 @@ const AddProduct = () => {
             options={categoriesOptions}
             variant='outlined'
             label='Phân loại sản phẩm'
-            sx={{ width: '90%' }}
           />
         </CategoryContainer>
       </Wrapper>

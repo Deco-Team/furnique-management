@@ -14,7 +14,7 @@ const InputDropdownForm = ({ name, control, label, options }: IFormInputDropdown
   }
   return (
     <>
-      <FormControl size={'small'}>
+      <FormControl size={'small'} sx={{ width: '250px' }}>
         <InputLabel>{label}</InputLabel>
         <Controller
           render={({ field: { onChange, value } }) => (
