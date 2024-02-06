@@ -13,6 +13,7 @@ export const CategoryContainer = styled.div`
   height: 20rem;
   background-color: var(--white-color);
   border-radius: 10px;
+  padding-left: 20px;
 `
 
 export const GeneralContainer = styled.div`
@@ -22,7 +23,7 @@ export const GeneralContainer = styled.div`
 `
 
 export const InformationContainer = styled.div`
-  height: 20rem;
+  height: max-content;
   background-color: var(--white-color);
   border-radius: 10px;
   margin-bottom: 1rem;
