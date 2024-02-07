@@ -50,7 +50,7 @@ const LoginForm = () => {
         type='password'
         variant='standard'
       />
-      <PrimaryButton type='submit' name='Login' variant='contained' />
+      <PrimaryButton type='submit' name='Đăng nhập' variant='contained' />
     </FormWrapper>
   )
 }

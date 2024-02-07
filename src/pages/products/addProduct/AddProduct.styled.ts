@@ -9,11 +9,11 @@ export const Wrapper = styled.section`
 `
 
 export const CategoryContainer = styled.div`
-  width: 28%;
-  height: 20rem;
+  width: 25%;
+  height: fit-content;
   background-color: var(--white-color);
   border-radius: 10px;
-  padding-left: 20px;
+  padding: 0 0 20px 20px;
 `
 
 export const GeneralContainer = styled.div`

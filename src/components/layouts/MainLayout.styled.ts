@@ -11,4 +11,7 @@ export const MainContainer = styled.div`
   background-color: var(--background-color);
   width: 85%;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  scrollbar-face-color: transparent;
 `

@@ -21,6 +21,7 @@ export interface IFormInputProps {
   variant: 'outlined' | 'standard'
   multiline?: boolean
   rows?: number
+  value?: string
 }
 export interface IDropdownOption {
   label: string
@@ -29,6 +30,19 @@ export interface IDropdownOption {
 
 export interface IFormInputDropdownProps extends IFormInputProps {
   options: IDropdownOption[]
+}
+
+export interface ICheckboxOption {
+  label: string
+  value: any
+}
+
+export interface ICheckboxGroupProps {
+  name?: string
+  label: string
+  options: ICheckboxOption[]
+  defaultValues?: any[]
+  control?: Control<any, any>
 }
 
 export interface ICustomButtonProps {
@@ -115,5 +129,5 @@ export interface IProductsProps {
   images: string[]
   brand: string
   variants: IVariant[]
-  categories: string[]
+  categories: string
 }
