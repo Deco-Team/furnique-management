@@ -1,5 +1,9 @@
 import { Control } from 'react-hook-form'
 import { ICategory } from './categoriesInterface'
+interface KeyValuePair {
+  key: string
+  value: string
+}
 
 export interface IVariant {
   sku: string
@@ -10,7 +14,7 @@ export interface IVariant {
     width: number
     length: number
   }
-  keyValue: Record<string, string>
+  keyValue: Record<string, KeyValuePair>
 }
 export interface IProduct {
   _id: string

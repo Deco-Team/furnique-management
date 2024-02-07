@@ -15,10 +15,10 @@ const variantSchema = object().shape({
 })
 
 export const addProductValidationSchema = object().shape({
-  name: string().required('Tên phân loại là bắt buộc'),
+  name: string().required('Tên sản phẩm là bắt buộc'),
   description: string().required('Mô tả là bắt buộc'),
   images: array().of(string().required()).required('Cần có ít nhất 1 ảnh'),
   brand: string().required('Thương hiệu là bắt buộc'),
   variants: array().of(variantSchema).required('Phân loại là bắt buộc'),
-  categories: array().of(string().required()).required('Danh mục là bắt buộc')
+  categories: string().required().required('Danh mục là bắt buộc')
 })
