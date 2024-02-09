@@ -4,22 +4,29 @@ export const Wrapper = styled.section`
   display: flex;
   justify-content: space-between;
   margin: 0.25rem 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
 `
 
-export const ThumnailContainer = styled.div`
+export const CategoryContainer = styled.div`
   width: 25%;
-  height: 20rem;
-  padding: 10px;
+  height: fit-content;
   background-color: var(--white-color);
   border-radius: 10px;
+  padding: 0 0 20px 20px;
+`
+
+export const GeneralContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
 `
 
 export const InformationContainer = styled.div`
-  width: 70%;
-  height: 20rem;
-  padding: 10px;
+  height: max-content;
   background-color: var(--white-color);
   border-radius: 10px;
+  margin-bottom: 1rem;
 `
 
 export const TitleText = styled.h2`

@@ -1,4 +1,9 @@
+import { Control } from 'react-hook-form'
 import { ICategory } from './categoriesInterface'
+interface KeyValuePair {
+  key: string
+  value: string
+}
 
 export interface IVariant {
   sku: string
@@ -9,10 +14,7 @@ export interface IVariant {
     width: number
     length: number
   }
-  keyValue: {
-    color: string
-    material: string
-  }
+  keyValue: Record<string, KeyValuePair>
 }
 export interface IProduct {
   _id: string
@@ -50,4 +52,10 @@ export interface IProductRows {
   price: number
   status: string
   added: Date
+}
+
+export interface IVariantsProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  control: Control<any>
+  errors?: string
 }

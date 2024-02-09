@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
-import { EMPTY } from '~/global/constants'
+import { EMPTY } from '~/global/constants/constants'
 import { ScreenPath } from '~/global/enum'
 import useAuth from '~/hooks/useAuth'
 import InputTextForm from '../../components/form/InputTextForm'
@@ -50,7 +50,7 @@ const LoginForm = () => {
         type='password'
         variant='standard'
       />
-      <PrimaryButton type='submit' name='Login' variant='contained' />
+      <PrimaryButton type='submit' name='Đăng nhập' variant='contained' />
     </FormWrapper>
   )
 }

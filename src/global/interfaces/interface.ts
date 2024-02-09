@@ -4,6 +4,7 @@ import { GridColDef } from '@mui/x-data-grid'
 import React, { ReactNode } from 'react'
 import { Control } from 'react-hook-form'
 import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
+import { IVariant } from './productInterface'
 
 export interface ILayoutProps {
   children: ReactNode
@@ -20,6 +21,28 @@ export interface IFormInputProps {
   variant: 'outlined' | 'standard'
   multiline?: boolean
   rows?: number
+  value?: string
+}
+export interface IDropdownOption {
+  label: string
+  value: string
+}
+
+export interface IFormInputDropdownProps extends IFormInputProps {
+  options: IDropdownOption[]
+}
+
+export interface ICheckboxOption {
+  label: string
+  value: any
+}
+
+export interface ICheckboxGroupProps {
+  name?: string
+  label: string
+  options: ICheckboxOption[]
+  defaultValues?: any[]
+  control?: Control<any, any>
 }
 
 export interface ICustomButtonProps {
@@ -98,4 +121,13 @@ export interface ICategoriesProps {
 
 export interface IUploadFileButtonProps {
   onFileChange: (fileUrl: string | null) => void
+}
+
+export interface IProductsProps {
+  name: string
+  description: string
+  images: string[]
+  brand: string
+  variants: IVariant[]
+  categories: string[]
 }
