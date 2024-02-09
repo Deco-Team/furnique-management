@@ -57,7 +57,6 @@ const VariantsSection = ({
                     label={`Số lượng ${index + ONE}`}
                     sx={{ width: '30%', margin: '20px 0 0 20px' }}
                     variant='outlined'
-                    type='number'
                     error={errors.variants?.[index]?.quantity?.message}
                   />
                   <InputTextForm

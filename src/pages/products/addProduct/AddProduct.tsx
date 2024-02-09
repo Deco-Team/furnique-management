@@ -22,6 +22,7 @@ const AddProduct = () => {
   const [files, setFiles] = useState<File[]>([])
   const [showVariantFields, setShowVariantFields] = useState(false)
   const [keyValueCounts, setKeyValueCounts] = useState<Record<number, number>>({})
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const defaultValues: IProductsProps = {
     name: EMPTY,
     description: EMPTY,
@@ -40,7 +41,7 @@ const AddProduct = () => {
         keyValue: {}
       }
     ],
-    categories: EMPTY
+    categories: []
   }
 
   const {
@@ -56,23 +57,26 @@ const AddProduct = () => {
     control,
     name: 'variants'
   })
+  const handleCategoriesSelect = (selectedCategories: string[]) => {
+    setSelectedCategories(selectedCategories)
+  }
 
   const handleAddProductButton = (data: IProductsProps) => {
     const updatedVariants = data.variants.map((variant) => {
+      const transformedKeyValue: Record<string, unknown> = {}
       if (variant.keyValue && Object.keys(variant.keyValue).length > ZERO) {
-        const keyValuePairs = Object.entries(variant.keyValue).map(([key, value]) => ({
-          key: key,
-          value: value
-        }))
-        return {
-          ...variant,
-          keyValue: keyValuePairs
-        }
+        Object.entries(variant.keyValue).forEach(([key, value]) => {
+          transformedKeyValue[key] = value
+        })
       }
-      return variant
+      return {
+        ...variant,
+        keyValue: transformedKeyValue
+      }
     })
     const formData = {
       ...data,
+      categories: selectedCategories,
       variants: updatedVariants
     }
     console.log(formData)
@@ -137,7 +141,7 @@ const AddProduct = () => {
             showVariantFields={showVariantFields}
           />
         </GeneralContainer>
-        <CategoriesSection control={control} />
+        <CategoriesSection control={control} onCategoriesSelect={handleCategoriesSelect} />
       </Wrapper>
     </form>
   )
