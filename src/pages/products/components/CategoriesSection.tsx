@@ -6,14 +6,25 @@ import { CategoryContainer, TitleText } from '../addProduct/AddProduct.styled'
 
 interface CategoriesSectionProps {
   control: Control<IProductsProps>
+  onCategoriesSelect: (selectedCategories: string[]) => void
 }
 
-const CategoriesSection = ({ control }: CategoriesSectionProps) => {
+const CategoriesSection = ({ control, onCategoriesSelect }: CategoriesSectionProps) => {
+  const handleCategoriesSelect = (selectedCategories: string[]) => {
+    onCategoriesSelect(selectedCategories)
+  }
+
   return (
     <>
       <CategoryContainer>
         <TitleText>Danh mục</TitleText>
-        <InputCheckboxForm control={control} name='categories' options={categoriesOptions} label='Phân loại sản phẩm' />
+        <InputCheckboxForm
+          control={control}
+          name='categories'
+          options={categoriesOptions}
+          label='Phân loại sản phẩm'
+          onSelectionChange={handleCategoriesSelect}
+        />
       </CategoryContainer>
     </>
   )

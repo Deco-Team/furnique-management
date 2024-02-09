@@ -20,15 +20,22 @@ const useCheckboxGroup = (defaultValues: any[] = []) => {
   return { selectedItems, handleSelect }
 }
 
-const InputCheckboxForm = ({ name, label, options, defaultValues }: ICheckboxGroupProps) => {
+const InputCheckboxForm = ({
+  name,
+  label,
+  options,
+  defaultValues,
+  onSelectionChange
+}: ICheckboxGroupProps & { onSelectionChange: (selectedItems: string[]) => void }) => {
   const { control, setValue } = useForm()
   const { selectedItems, handleSelect } = useCheckboxGroup(defaultValues)
 
   useEffect(() => {
     if (name) {
       setValue(name, selectedItems)
+      onSelectionChange(selectedItems)
     }
-  }, [selectedItems, setValue, name])
+  }, [selectedItems, setValue, name, onSelectionChange])
 
   return (
     <FormControl size={'small'} variant={'outlined'}>
