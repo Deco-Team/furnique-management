@@ -8,6 +8,7 @@ import Dashboard from '~/pages/dashboard/Dashboard'
 import Orders from '~/pages/orders/Orders'
 import AddProduct from '~/pages/products/addProduct/AddProduct'
 import Products from '~/pages/products/Products'
+import Staffs from '~/pages/staffs/Staffs'
 
 export const publicRoutes = [{ path: '/', component: Login }]
 
@@ -47,5 +48,10 @@ export const privateRoutes = [
     path: ScreenPath.ORDERS,
     component: Orders,
     title: 'Đơn hàng'
+  },
+  {
+    path: ScreenPath.STAFFS,
+    component: Staffs,
+    title: 'Nhân viên'
   }
 ]
