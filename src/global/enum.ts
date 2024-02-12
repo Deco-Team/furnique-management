@@ -6,7 +6,8 @@ export enum ScreenPath {
   UPDATE_CATEGORY = '/categories/update/:categoryId',
   PRODUCTS = '/products',
   ADD_PRODUCTS = '/products/create',
-  ORDERS = '/orders'
+  ORDERS = '/orders',
+  STAFFS = '/staffs'
 }
 
 export enum ProductStatus {
