@@ -24,3 +24,8 @@ export const notifySuccess = (msg: string) => {
   toast.dismiss()
   toast.success(msg, Emmiter)
 }
+
+export const notifyInfo = (msg: string) => {
+  toast.dismiss()
+  toast.info(msg, Emmiter)
+}

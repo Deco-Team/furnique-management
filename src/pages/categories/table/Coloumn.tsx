@@ -1,10 +1,12 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
+import { GridColDef } from '@mui/x-data-grid'
 import ActionCell from '~/components/table/ActionCell'
+import { ScreenPath } from '~/global/enum'
+import { ColumnProps } from '~/global/interfaces/interface'
 
-export const categoriesColumn: GridColDef[] = [
+export const categoriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'id',
     headerName: 'STT',
@@ -31,19 +33,6 @@ export const categoriesColumn: GridColDef[] = [
     width: 500,
     filterable: false
   },
-  // { field: 'sold', headerName: 'Đã bán', type: 'number', width: 200 },
-  // {
-  //   field: 'stock',
-  //   headerName: 'Còn hàng',
-  //   type: 'number',
-  //   width: 150
-  // },
-  // {
-  //   field: 'added',
-  //   headerName: 'Ngày nhập',
-  //   type: 'Date',
-  //   width: 200
-  // },
   {
     field: 'actions',
     headerName: 'Thao tác',
@@ -52,13 +41,19 @@ export const categoriesColumn: GridColDef[] = [
     filterable: false,
     headerAlign: 'center',
     align: 'center',
-    renderCell: (params: GridRenderCellParams) => {
+    renderCell: (params) => {
+      const handleUpdateButton = (categoryId: string) => {
+        navigate(ScreenPath.UPDATE_CATEGORY.replace(':categoryId', categoryId))
+      }
+      const handleViewButton = (categoryId: string) => {
+        navigate(ScreenPath.VIEW_CATEGORY.replace(':categoryId', categoryId))
+      }
       return (
         <ActionCell
           id={params.row.id as number}
           buttons={[
-            { icon: <EditIcon />, onClick: () => console.log('Edit clicked') },
-            { icon: <VisibilityIcon />, onClick: () => console.log('View clicked') },
+            { icon: <EditIcon />, onClick: () => handleUpdateButton(params.row.id) },
+            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) },
             { icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') }
           ]}
         />

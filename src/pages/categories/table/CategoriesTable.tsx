@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react'
 import { ICategoryRows } from '~/global/interfaces/categoriesInterface'
 import { ICategoriesProps } from '~/global/interfaces/interface'
 import Loading from '~/components/loading/Loading'
+import { useNavigate } from 'react-router-dom'
 const CategoriesTable = () => {
   const { getAllCategories } = useCategoriesApi()
   const [isLoading, setIsLoading] = useState(false)
   const [categoriesRows, setCategoriesRows] = useState<ICategoryRows[]>([])
+  const navigate = useNavigate()
   useEffect(() => {
     getCategoriesData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,7 +30,7 @@ const CategoriesTable = () => {
       setIsLoading(false)
     }
   }
-  return <>{isLoading ? <Loading /> : <CommonTable columns={categoriesColumn} rows={categoriesRows} />}</>
+  return <>{isLoading ? <Loading /> : <CommonTable columns={categoriesColumn({ navigate })} rows={categoriesRows} />}</>
 }
 
 export default CategoriesTable

@@ -6,7 +6,7 @@ export const Wrapper = styled.section`
   margin: 0.25rem 1rem;
 `
 
-export const ThumnailContainer = styled.div`
+export const ThumbnailContainer = styled.div`
   width: 25%;
   height: 20rem;
   padding: 10px;
