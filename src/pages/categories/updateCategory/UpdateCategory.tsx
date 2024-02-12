@@ -105,91 +105,85 @@ const UpdateCategory = () => {
   const handleCancelButton = () => {
     navigate(ScreenPath.CATEGORIES)
   }
-  return (
-    <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <form onSubmit={handleSubmit(handleUpdateCategoryButton)}>
-            <ButtonWrapper>
-              <SecondaryButton
-                variant='contained'
-                name='Hủy'
-                color='var(--gray-light-color)'
-                icon={<CloseIcon />}
-                onClick={handleCancelButton}
-                type='button'
-              />
-              <PrimaryButton name='Cập nhật' type='submit' variant='contained' icon={<EditIcon />} />
-            </ButtonWrapper>
-            <Wrapper>
-              <DetailThumbnailContainer>
-                <TitleText>Hình ảnh</TitleText>
-                <UpdateImage src={categoryData?.image} />
-                <FileUpload
-                  sx={{
-                    width: '300px',
-                    height: '20px',
-                    border: 'none',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    '.MuiButtonBase-root': {
-                      color: 'var(--primary-color)',
-                      backgroundColor: 'var(--primary-light-color)',
-                      '&:hover': {
-                        color: 'var(--white-color)',
-                        backgroundColor: 'var(--primary-color)'
-                      }
-                    },
-                    '.MuiSvgIcon-root, .MuiTypography-root': {
-                      display: 'none'
-                    },
-                    '.MuiButtonBase-root.MuiChip-root': {
-                      backgroundColor: 'white',
-                      '&:hover': {
-                        color: 'var(--gray-color)'
-                      }
-                    },
-                    '.MuiButtonBase-root.MuiChip-root .MuiChip-icon': {
-                      color: 'var(--primary-color)'
-                    }
-                  }}
-                  value={files}
-                  onChange={setFiles}
-                  maxFiles={1}
-                  maxSize={1024 * 1024 * 8}
-                  accept='image/png, image/jpeg'
-                  buttonText='Thay đổi ảnh'
-                />
-              </DetailThumbnailContainer>
-              <InformationContainer>
-                <TitleText>Thông tin chung</TitleText>
-                <InputTextForm
-                  control={control}
-                  name='name'
-                  label='Tên phân loại'
-                  sx={{ width: '90%', marginLeft: ' 20px' }}
-                  variant='outlined'
-                  error={errors.name?.message}
-                />
-                <InputTextForm
-                  control={control}
-                  name='description'
-                  label='Mô tả'
-                  sx={{ width: '90%', margin: '20px 0 0 20px' }}
-                  variant='outlined'
-                  error={errors.description?.message}
-                  multiline
-                  rows={5}
-                />
-              </InformationContainer>
-            </Wrapper>
-          </form>
-        </>
-      )}
-    </>
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <form onSubmit={handleSubmit(handleUpdateCategoryButton)}>
+      <ButtonWrapper>
+        <SecondaryButton
+          variant='contained'
+          name='Hủy'
+          color='var(--gray-light-color)'
+          icon={<CloseIcon />}
+          onClick={handleCancelButton}
+          type='button'
+        />
+        <PrimaryButton name='Cập nhật' type='submit' variant='contained' icon={<EditIcon />} />
+      </ButtonWrapper>
+      <Wrapper>
+        <DetailThumbnailContainer>
+          <TitleText>Hình ảnh</TitleText>
+          <UpdateImage src={categoryData?.image} />
+          <FileUpload
+            sx={{
+              width: '300px',
+              height: '20px',
+              border: 'none',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              '.MuiButtonBase-root': {
+                color: 'var(--primary-color)',
+                backgroundColor: 'var(--primary-light-color)',
+                '&:hover': {
+                  color: 'var(--white-color)',
+                  backgroundColor: 'var(--primary-color)'
+                }
+              },
+              '.MuiSvgIcon-root, .MuiTypography-root': {
+                display: 'none'
+              },
+              '.MuiButtonBase-root.MuiChip-root': {
+                backgroundColor: 'white',
+                '&:hover': {
+                  color: 'var(--gray-color)'
+                }
+              },
+              '.MuiButtonBase-root.MuiChip-root .MuiChip-icon': {
+                color: 'var(--primary-color)'
+              }
+            }}
+            value={files}
+            onChange={setFiles}
+            maxFiles={1}
+            maxSize={1024 * 1024 * 8}
+            accept='image/png, image/jpeg'
+            buttonText='Thay đổi ảnh'
+          />
+        </DetailThumbnailContainer>
+        <InformationContainer>
+          <TitleText>Thông tin chung</TitleText>
+          <InputTextForm
+            control={control}
+            name='name'
+            label='Tên phân loại'
+            sx={{ width: '90%', marginLeft: ' 20px' }}
+            variant='outlined'
+            error={errors.name?.message}
+          />
+          <InputTextForm
+            control={control}
+            name='description'
+            label='Mô tả'
+            sx={{ width: '90%', margin: '20px 0 0 20px' }}
+            variant='outlined'
+            error={errors.description?.message}
+            multiline
+            rows={5}
+          />
+        </InformationContainer>
+      </Wrapper>
+    </form>
   )
 }
 

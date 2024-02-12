@@ -30,7 +30,7 @@ const CategoriesTable = () => {
       setIsLoading(false)
     }
   }
-  return <>{isLoading ? <Loading /> : <CommonTable columns={categoriesColumn({ navigate })} rows={categoriesRows} />}</>
+  return isLoading ? <Loading /> : <CommonTable columns={categoriesColumn({ navigate })} rows={categoriesRows} />
 }
 
 export default CategoriesTable

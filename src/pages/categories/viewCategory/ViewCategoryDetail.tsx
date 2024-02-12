@@ -45,58 +45,54 @@ const ViewCategoryDetail = () => {
   const handleEditButton = () => {
     navigate(`${ScreenPath.CATEGORIES}/update/${categoryId}`)
   }
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <ButtonWrapper>
-            <SecondaryButton
-              variant='contained'
-              name='Trở về'
-              color='var(--gray-light-color)'
-              icon={<ArrowBackIcon />}
-              onClick={handleBackButton}
-              type='button'
-            />
-            <PrimaryButton
-              name='Chỉnh sửa'
-              type='button'
-              variant='contained'
-              icon={<EditIcon />}
-              onClick={handleEditButton}
-            />
-          </ButtonWrapper>
-          <Wrapper>
-            <DetailThumbnailContainer>
-              <TitleText>Hình ảnh</TitleText>
-              <Image src={categoryData?.image} alt={categoryData?.name} />
-            </DetailThumbnailContainer>
-            <InformationContainer>
-              <TitleText>Thông tin chung</TitleText>
-              <ContentWrapper>
-                <Text>
-                  <strong>Tên phân loại: </strong>
-                  {categoryData?.name}
-                </Text>
-                <Text>
-                  <strong>Mô tả: </strong>
-                  {categoryData?.description}
-                </Text>
-                <Text>
-                  <strong>Ngày tạo: </strong>
-                  {dayjs(categoryData?.createdAt).format('hh:mm DD/MM/YYYY')}
-                </Text>
-                <Text>
-                  <strong>Ngày cập nhật: </strong>
-                  {dayjs(categoryData?.updatedAt).format('hh:mm DD/MM/YYYY')}
-                </Text>
-              </ContentWrapper>
-            </InformationContainer>
-          </Wrapper>
-        </>
-      )}
+      <ButtonWrapper>
+        <SecondaryButton
+          variant='contained'
+          name='Trở về'
+          color='var(--gray-light-color)'
+          icon={<ArrowBackIcon />}
+          onClick={handleBackButton}
+          type='button'
+        />
+        <PrimaryButton
+          name='Chỉnh sửa'
+          type='button'
+          variant='contained'
+          icon={<EditIcon />}
+          onClick={handleEditButton}
+        />
+      </ButtonWrapper>
+      <Wrapper>
+        <DetailThumbnailContainer>
+          <TitleText>Hình ảnh</TitleText>
+          <Image src={categoryData?.image} alt={categoryData?.name} />
+        </DetailThumbnailContainer>
+        <InformationContainer>
+          <TitleText>Thông tin chung</TitleText>
+          <ContentWrapper>
+            <Text>
+              <strong>Tên phân loại: </strong>
+              {categoryData?.name}
+            </Text>
+            <Text>
+              <strong>Mô tả: </strong>
+              {categoryData?.description}
+            </Text>
+            <Text>
+              <strong>Ngày tạo: </strong>
+              {dayjs(categoryData?.createdAt).format('hh:mm DD/MM/YYYY')}
+            </Text>
+            <Text>
+              <strong>Ngày cập nhật: </strong>
+              {dayjs(categoryData?.updatedAt).format('hh:mm DD/MM/YYYY')}
+            </Text>
+          </ContentWrapper>
+        </InformationContainer>
+      </Wrapper>
     </>
   )
 }
