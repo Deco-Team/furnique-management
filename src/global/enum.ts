@@ -2,6 +2,8 @@ export enum ScreenPath {
   DASHBOARD = '/dashboard',
   CATEGORIES = '/categories',
   ADD_CATEGORIES = '/categories/create',
+  VIEW_CATEGORY = '/cateogies/detail/:categoryId',
+  UPDATE_CATEGORY = '/categories/update/:categoryId',
   PRODUCTS = '/products',
   ADD_PRODUCTS = '/products/create',
   ORDERS = '/orders'

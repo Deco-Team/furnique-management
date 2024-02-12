@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 import { IProductsResponse } from '~/global/interfaces/productInterface'
 import useApi from './useApi'
-//TODO: waiting for back-end document api :)
+import { notifyError } from '~/global/toastify'
+
 const useProductsApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'products/provider'
@@ -12,7 +13,7 @@ const useProductsApi = () => {
       const response = await callApi('get', endpoint)
       return response.data.docs
     } catch (error) {
-      console.log(error)
+      notifyError('Có lỗi xảy ra')
     }
   }, [callApi])
 

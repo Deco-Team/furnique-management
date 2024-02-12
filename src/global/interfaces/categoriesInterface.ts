@@ -12,3 +12,13 @@ export interface ICategoryRows {
   stock: number
   added: Date
 }
+
+export interface ICategoryDetails {
+  _id: string
+  name: string
+  description: string
+  image: string
+  status: string
+  createdAt: string
+  updatedAt: string
+}

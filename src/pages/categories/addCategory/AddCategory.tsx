@@ -12,7 +12,7 @@ import { EMPTY } from '~/global/constants/constants'
 import { ScreenPath } from '~/global/enum'
 import { ICategoriesProps } from '~/global/interfaces/interface'
 import { addCategoryValidationSchema } from '../validation/AddCategoryValidationSchema'
-import { ButtonWrapper, InformationContainer, ThumnailContainer, TitleText, Wrapper } from './AddCategory.styled'
+import { ButtonWrapper, InformationContainer, ThumbnailContainer, TitleText, Wrapper } from './AddCategory.styled'
 import useCategoriesApi from '~/hooks/api/useCategoriesApi'
 import { cloudinaryURLConvert, removeAccents } from '~/utils/common.utils'
 import { notifyError, notifySuccess } from '~/global/toastify'
@@ -80,7 +80,7 @@ const AddCategory = () => {
         <PrimaryButton name='Thêm phân loại' type='submit' variant='contained' icon={<AddIcon />} />
       </ButtonWrapper>
       <Wrapper>
-        <ThumnailContainer>
+        <ThumbnailContainer>
           <TitleText>Hình ảnh</TitleText>
           <FileUpload
             sx={{
@@ -116,7 +116,7 @@ const AddCategory = () => {
             title={`Kéo thả ảnh vào đây hoặc bấm thêm ảnh`}
             buttonText='Tải lên'
           />
-        </ThumnailContainer>
+        </ThumbnailContainer>
         <InformationContainer>
           <TitleText>Thông tin chung</TitleText>
           <InputTextForm

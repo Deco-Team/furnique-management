@@ -44,6 +44,19 @@ const useCategoriesApi = () => {
     }
   }, [callApi])
 
+  const getCategoryById = useCallback(
+    async (categoryId: string) => {
+      const endpoint = `/${rootEndpoint}/${categoryId}`
+      try {
+        const response = await callApi('get', endpoint)
+        return response.data
+      } catch (error) {
+        notifyError('Có lỗi xảy ra')
+      }
+    },
+    [callApi]
+  )
+
   const createCategory = useCallback(
     async (data: ICategory) => {
       const endpoint = `/${rootEndpoint}`
@@ -62,6 +75,7 @@ const useCategoriesApi = () => {
     async (categoryId: string, data: ICategory) => {
       const endpoint = `/${rootEndpoint}/${categoryId}`
       try {
+        notifyLoading()
         const response = await callApi('put', endpoint, {}, {}, data)
         return response
       } catch (error) {
@@ -71,7 +85,7 @@ const useCategoriesApi = () => {
     [callApi]
   )
 
-  return { getAllCategories, createCategory, updateCategory, uploadCloudinary }
+  return { getAllCategories, createCategory, updateCategory, uploadCloudinary, getCategoryById }
 }
 
 export default useCategoriesApi
