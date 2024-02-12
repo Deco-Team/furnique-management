@@ -2,6 +2,8 @@ import { ScreenPath } from '~/global/enum'
 import Login from '~/pages/auth/Login'
 import AddCategory from '~/pages/categories/addCategory/AddCategory'
 import Categories from '~/pages/categories/Categories'
+import UpdateCategory from '~/pages/categories/updateCategory/UpdateCategory'
+import ViewCategoryDetail from '~/pages/categories/viewCategory/ViewCategoryDetail'
 import Dashboard from '~/pages/dashboard/Dashboard'
 import Orders from '~/pages/orders/Orders'
 import AddProduct from '~/pages/products/addProduct/AddProduct'
@@ -19,6 +21,16 @@ export const privateRoutes = [
   {
     path: ScreenPath.ADD_CATEGORIES,
     component: AddCategory,
+    title: 'Phân loại'
+  },
+  {
+    path: ScreenPath.VIEW_CATEGORY,
+    component: ViewCategoryDetail,
+    title: 'Phân loại'
+  },
+  {
+    path: ScreenPath.UPDATE_CATEGORY,
+    component: UpdateCategory,
     title: 'Phân loại'
   },
   {

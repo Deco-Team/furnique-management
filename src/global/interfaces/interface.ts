@@ -131,3 +131,7 @@ export interface IProductsProps {
   variants: IVariant[]
   categories: string[]
 }
+
+export interface ColumnProps {
+  navigate: (path: string) => void
+}
