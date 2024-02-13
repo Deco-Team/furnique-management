@@ -1,21 +1,24 @@
 import { CalendarMonth } from '@mui/icons-material'
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone'
+import EmailIcon from '@mui/icons-material/Email'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
+import LocationOnIcon from '@mui/icons-material/LocationOn'
+import PersonIcon from '@mui/icons-material/Person'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import CustomButton from '~/components/button/CustomButton'
+import AgreeButton from '~/components/button/AgreeButton'
+import CancelButton from '~/components/button/CancelButton'
 import Loading from '~/components/loading/Loading'
 import { EMPTY } from '~/global/constants/constants'
 import { IOrder } from '~/global/interfaces/ordersInterface'
 import { notifyError } from '~/global/toastify'
 import useOrdersApi from '~/hooks/api/useOrdersApi'
 import { TitleText } from '~/pages/categories/addCategory/AddCategory.styled'
+import CancelOrderModal from '../components/CancelOrderModal'
+import OrderListTable from '../table/OrderListTable'
 import StatusTextDiv from '../table/StatusTextDiv'
-import PersonIcon from '@mui/icons-material/Person'
-import EmailIcon from '@mui/icons-material/Email'
-import ContactPhoneIcon from '@mui/icons-material/ContactPhone'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
 import {
   CustomerInformation,
   IconWrapper,
@@ -23,13 +26,14 @@ import {
   OrderContent,
   OrderInformation,
   OrderList,
-  OrderStatus,
   ShippingInformation,
   TextHeader,
   TextWrapper,
   TitleWrapper,
+  TotalWrapper,
   Wrapper
 } from './ViewOrderDetail.styled'
+import ConfirmOrderModal from '../components/ConfirmOrderModal'
 
 const ViewOrderDetail = () => {
   const params = useParams()
@@ -37,7 +41,8 @@ const ViewOrderDetail = () => {
   const { getOrderById } = useOrdersApi()
   const [isLoading, setIsLoading] = useState(false)
   const [orderData, setOrderData] = useState<IOrder>()
-
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   useEffect(() => {
     if (orderId) {
       getOrderDetail(orderId)
@@ -56,8 +61,18 @@ const ViewOrderDetail = () => {
     }
   }
 
-  const hanldeOrderNumber = (orderId: string) => {
+  const handleOrderNumber = (orderId: string) => {
     return orderId.slice(-6)
+  }
+  const handleCancelButton = () => {
+    setIsCancelModalOpen(true)
+  }
+  const handleClose = () => {
+    setIsCancelModalOpen(false)
+    setIsConfirmModalOpen(false)
+  }
+  const handleConfirmButton = () => {
+    setIsConfirmModalOpen(true)
   }
   return (
     <>
@@ -68,36 +83,21 @@ const ViewOrderDetail = () => {
           <OrderInformation>
             <OrderContent>
               <TitleWrapper>
-                <TitleText>Đơn hàng #{orderData && hanldeOrderNumber(orderData?._id)}</TitleText>
+                <TitleText>Đơn hàng #{orderData && handleOrderNumber(orderData?._id)}</TitleText>
                 <div>
-                  <CustomButton
+                  <CancelButton
                     variant='contained'
                     name='Hủy'
                     type='button'
-                    sx={{
-                      color: 'var(--red-color)',
-                      backgroundColor: 'var(--red-light-color)',
-                      height: '30px',
-                      ':hover': {
-                        backgroundColor: 'var(--red-color)',
-                        color: 'var(--white-color)'
-                      },
-                      marginRight: '10px'
-                    }}
+                    sx={{ height: '30px', marginRight: '10px' }}
+                    onClick={handleCancelButton}
                   />
-                  <CustomButton
+                  <AgreeButton
                     variant='contained'
                     name='Xác nhận'
                     type='button'
-                    sx={{
-                      color: 'var(--green-color)',
-                      backgroundColor: 'var(--green-light-color)',
-                      height: '30px',
-                      ':hover': {
-                        backgroundColor: 'var(--green-color)',
-                        color: 'var(--white-color)'
-                      }
-                    }}
+                    sx={{ height: '30px', marginRight: '10px' }}
+                    onClick={handleConfirmButton}
                   />
                 </div>
               </TitleWrapper>
@@ -184,11 +184,23 @@ const ViewOrderDetail = () => {
           <OrderList>
             <ListContent>
               <TitleText>Danh sách đơn hàng</TitleText>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                <OrderListTable />
+                <TotalWrapper>
+                  <TextWrapper>
+                    <strong>Tổng cộng</strong>
+                    <strong>{orderData?.totalAmount} VND</strong>
+                  </TextWrapper>
+                </TotalWrapper>
+              </div>
             </ListContent>
-            <OrderStatus>
-              <TitleText>Trạng thái đơn hàng</TitleText>
-            </OrderStatus>
           </OrderList>
+          {orderId && (
+            <>
+              <CancelOrderModal open={isCancelModalOpen} orderId={orderId} handleClose={handleClose} />
+              <ConfirmOrderModal open={isConfirmModalOpen} handleClose={handleClose} orderId={orderId} />
+            </>
+          )}
         </Wrapper>
       )}
     </>

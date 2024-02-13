@@ -51,3 +51,24 @@ export interface IOrdersRows {
   payment: string
   status: string
 }
+
+export interface IOrderListRows {
+  id: number
+  products: string
+  sku: string
+  quantity: number
+  price: number
+  totalAmount: number
+}
+
+export interface ICardOrder {
+  image: string
+  name: string
+  variant: string
+}
+
+export interface OrderModalProps {
+  open: boolean
+  handleClose: () => void
+  orderId: string
+}

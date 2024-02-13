@@ -14,16 +14,19 @@ export const OrderInformation = styled.div`
 export const OrderContent = styled.div`
   width: 36%;
   background-color: var(--white-color);
+  border-radius: 10px;
 `
 
 export const CustomerInformation = styled.div`
   width: 30%;
   background-color: var(--white-color);
+  border-radius: 10px;
 `
 
 export const ShippingInformation = styled.div`
   width: 30%;
   background-color: var(--white-color);
+  border-radius: 10px;
 `
 
 export const OrderList = styled.div`
@@ -63,11 +66,17 @@ export const TitleWrapper = styled.div`
 `
 
 export const ListContent = styled.div`
-  width: 68%;
+  width: 100%;
   background-color: var(--white-color);
+  border-radius: 10px;
 `
 
 export const OrderStatus = styled.div`
   width: 30%;
   background-color: var(--white-color);
+  border-radius: 10px;
+`
+export const TotalWrapper = styled.div`
+  padding: 20px 0;
+  width: 300px;
 `

@@ -90,3 +90,21 @@ export const remove = (
 ): Promise<AxiosResponse> => {
   return request(endpoint, 'DELETE', headers, params, body)
 }
+
+/**
+ * Sends a PATCH request to the specified endpoint.
+ *
+ * @param {string} endpoint - The API endpoint to which the PATCH request should be made.
+ * @param {object} [body={}] - An object containing the request body. Default is an empty object.
+ * @param {object} [params={}] - An object containing URL parameters for the request. Default is an empty object.
+ * @param {object} [headers={}] - An object containing custom headers for the request. Default is an empty object.
+ * @returns {Promise} - A Promise that resolves to the response of the HTTP request.
+ */
+export const patch = (
+  endpoint: string,
+  body: object = {},
+  params: object = {},
+  headers: object = {}
+): Promise<AxiosResponse> => {
+  return request(endpoint, 'PATCH', headers, params, body)
+}

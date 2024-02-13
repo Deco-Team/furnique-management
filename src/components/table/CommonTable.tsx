@@ -11,7 +11,7 @@ const CommonTable = ({
   pageSizeOptions = [10, 20]
 }: IDataTableProps) => {
   return (
-    <div style={{ height: 630, width: '100%' }}>
+    <div style={{ width: '100%' }}>
       <DataGrid
         paginationMode='server'
         rows={rows}
