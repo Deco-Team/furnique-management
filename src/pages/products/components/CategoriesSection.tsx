@@ -1,15 +1,15 @@
 import { Control } from 'react-hook-form'
 import InputCheckboxForm from '~/components/form/InputCheckboxForm'
-import { IProductsProps } from '~/global/interfaces/interface'
-import { categoriesOptions } from '~/mocks/categoriesOptions'
+import { ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
 import { CategoryContainer, TitleText } from '../addProduct/AddProduct.styled'
 
 interface CategoriesSectionProps {
   control: Control<IProductsProps>
   onCategoriesSelect: (selectedCategories: string[]) => void
+  categoriesOptions: ICheckboxOption[]
 }
 
-const CategoriesSection = ({ control, onCategoriesSelect }: CategoriesSectionProps) => {
+const CategoriesSection = ({ control, onCategoriesSelect, categoriesOptions }: CategoriesSectionProps) => {
   const handleCategoriesSelect = (selectedCategories: string[]) => {
     onCategoriesSelect(selectedCategories)
   }
