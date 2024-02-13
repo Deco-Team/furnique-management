@@ -5,9 +5,11 @@ import { IOrder, IOrdersRows } from '~/global/interfaces/ordersInterface'
 import useOrdersApi from '~/hooks/api/useOrdersApi'
 import { ordersColumn } from './Column'
 import dayjs from 'dayjs'
+import { useNavigate } from 'react-router-dom'
 
 const OrdersTable = () => {
   const { getAllOrders } = useOrdersApi()
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [ordersRows, setOrdersRows] = useState<IOrdersRows[]>([])
   const [totalRows, setTotalRows] = useState(0)
@@ -50,7 +52,7 @@ const OrdersTable = () => {
         <Loading />
       ) : (
         <CommonTable
-          columns={ordersColumn}
+          columns={ordersColumn({ navigate })}
           rows={ordersRows}
           totalRows={totalRows}
           page={page}
