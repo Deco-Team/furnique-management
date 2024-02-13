@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 import { IProductsResponse } from '~/global/interfaces/productInterface'
 import useApi from './useApi'
-import { notifyError } from '~/global/toastify'
 
 const useProductsApi = () => {
   const callApi = useApi()
@@ -13,7 +12,7 @@ const useProductsApi = () => {
       const response = await callApi('get', endpoint)
       return response.data.docs
     } catch (error) {
-      notifyError('Có lỗi xảy ra')
+      console.log(error)
     }
   }, [callApi])
 
