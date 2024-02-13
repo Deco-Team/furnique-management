@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import useApi from './useApi'
+import { notifyLoading } from '~/global/toastify'
 
 const useOrdersApi = () => {
   const callApi = useApi()
@@ -39,7 +40,35 @@ const useOrdersApi = () => {
     [callApi]
   )
 
-  return { getAllOrders, getOrderById }
+  const cancelOrder = useCallback(
+    async (orderId: string) => {
+      const endpoint = `/${rootEndpoint}/${orderId}/cancel`
+      try {
+        notifyLoading()
+        const response = await callApi('patch', endpoint)
+        return response
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  const confirmOrder = useCallback(
+    async (orderId: string) => {
+      const endpoint = `/${rootEndpoint}/${orderId}/confirm`
+      try {
+        notifyLoading()
+        const response = await callApi('patch', endpoint)
+        return response
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  return { getAllOrders, getOrderById, cancelOrder, confirmOrder }
 }
 
 export default useOrdersApi
