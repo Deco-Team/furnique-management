@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import useApi from './useApi'
-//TODO: waiting for back-end document api :)
+
 const useOrdersApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'orders/provider'
