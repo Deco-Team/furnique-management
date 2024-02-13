@@ -9,7 +9,7 @@ import SecondaryButton from '~/components/button/SecondaryButton'
 import { EMPTY } from '~/global/constants/constants'
 import { ONE, TWO, ZERO } from '~/global/constants/numbers'
 import { ScreenPath } from '~/global/enum'
-import { ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
+import { IAddProductProps, ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
 import CategoriesSection from '../components/CategoriesSection'
 import FileUploadSection from '../components/FileUploadSection'
 import GeneralInformationSection from '../components/GeneralInformationSection'
@@ -102,7 +102,7 @@ const AddProduct = () => {
     }
   }
 
-  const handleAddProductButton = async (data: IProductsProps) => {
+  const handleAddProductButton = async (data: IAddProductProps) => {
     const updatedVariants = data.variants.map(
       (variant: { keyValue: { [s: string]: unknown } | ArrayLike<unknown> }) => {
         const transformedKeyValue: Record<string, unknown> = {}
