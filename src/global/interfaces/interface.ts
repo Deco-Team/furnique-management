@@ -134,7 +134,7 @@ export interface IProductsProps {
   description: string
   images: string[]
   brand: string
-  variants: IVariant[]
+  variants: IVariant[] | any
   categories: string[]
 }
 
