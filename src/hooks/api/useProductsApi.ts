@@ -2,29 +2,27 @@ import { useCallback } from 'react'
 import { IProductsResponse } from '~/global/interfaces/productInterface'
 import useApi from './useApi'
 import { IProductsProps } from '~/global/interfaces/interface'
-import { notifyLoading } from '~/global/toastify'
-
+import { notifyError, notifyLoading } from '~/global/toastify'
+//TODO: waiting for back-end document api :)
 const useProductsApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'products/provider'
 
-  const getAllProducts = useCallback(
-    async (page = 1, pageSize = 10) => {
-      const endpoint = `/${rootEndpoint}`
-      try {
-        const response = await callApi('get', endpoint, {}, { page, limit: pageSize })
-        return response.data
-      } catch (error) {
-        console.log(error)
-      }
-    },
-    [callApi]
-  )
+  const getAllProducts = useCallback(async () => {
+    const endpoint = `/${rootEndpoint}`
+    try {
+      const response = await callApi('get', endpoint)
+      return response.data.docs
+    } catch (error) {
+      notifyError('Có lỗi xảy ra')
+    }
+  }, [callApi])
 
   const createProduct = useCallback(
     async (data: IProductsProps) => {
       const endpoint = `/${rootEndpoint}`
       try {
+        notifyLoading()
         const response = await callApi('post', endpoint, {}, {}, data)
         return response
       } catch (error) {
@@ -35,10 +33,9 @@ const useProductsApi = () => {
   )
 
   const updateProduct = useCallback(
-    async (productId: string, data: IProductsResponse, isWithImage = true) => {
+    async (productId: string, data: IProductsResponse) => {
       const endpoint = `/${rootEndpoint}/${productId}`
       try {
-        if (isWithImage) notifyLoading()
         const response = await callApi('put', endpoint, {}, {}, data)
         return response
       } catch (error) {
