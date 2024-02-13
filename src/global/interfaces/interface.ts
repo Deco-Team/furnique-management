@@ -134,7 +134,16 @@ export interface IProductsProps {
   description: string
   images: string[]
   brand: string
-  variants: IVariant[] | any
+  variants: IVariant[]
+  categories: string[]
+}
+
+export interface IAddProductProps {
+  name: string
+  description: string
+  images: string[]
+  brand: string
+  variants: any
   categories: string[]
 }
 
