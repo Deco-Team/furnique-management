@@ -14,12 +14,15 @@ import { ICategoriesProps } from '~/global/interfaces/interface'
 import { addCategoryValidationSchema } from '../validation/AddCategoryValidationSchema'
 import { ButtonWrapper, InformationContainer, ThumbnailContainer, TitleText, Wrapper } from './AddCategory.styled'
 import useCategoriesApi from '~/hooks/api/useCategoriesApi'
-import { cloudinaryURLConvert, removeAccents } from '~/utils/common.utils'
+import { cloudinaryURLConvert } from '~/utils/common.utils'
 import { notifyError, notifySuccess } from '~/global/toastify'
+import useCloudinaryApi from '~/hooks/api/useCloudinaryApi'
+import { v4 } from 'uuid'
 const AddCategory = () => {
   const navigate = useNavigate()
   const [files, setFiles] = useState<File[]>([])
-  const { uploadCloudinary, createCategory } = useCategoriesApi()
+  const { createCategory } = useCategoriesApi()
+  const { uploadCloudinary } = useCloudinaryApi()
 
   const defaultValues: ICategoriesProps = {
     image: EMPTY,
@@ -36,9 +39,9 @@ const AddCategory = () => {
     resolver: yupResolver(addCategoryValidationSchema)
   })
 
-  const uploadImage = async () => {
+  const uploadImage = async (publicId: string) => {
     try {
-      await uploadCloudinary(files, removeAccents(control._formValues.name))
+      await uploadCloudinary(files, [publicId])
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     }
@@ -49,13 +52,14 @@ const AddCategory = () => {
       notifyError('Cần ít nhất một ảnh')
       return
     } else {
+      const publicId = v4()
       const response = await createCategory({
         name: control._formValues.name,
         description: control._formValues.description,
-        image: cloudinaryURLConvert(control._formValues.name)
+        image: cloudinaryURLConvert(publicId)
       })
       if (response) {
-        await uploadImage()
+        await uploadImage(publicId)
         notifySuccess('Thêm thành công')
         reset()
         setFiles([])

@@ -40,7 +40,7 @@ const FileUploadSection = ({ files, setFiles }: ImageUploadSectionProps) => {
           }}
           value={files}
           onChange={setFiles}
-          maxFiles={1}
+          maxFiles={5}
           maxSize={1024 * 1024 * 8}
           accept='image/png, image/jpeg'
           title={`Kéo thả ảnh vào đây hoặc bấm thêm ảnh`}
