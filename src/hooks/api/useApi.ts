@@ -2,7 +2,7 @@ import { AxiosError, AxiosResponse } from 'axios'
 import useAuth from '../useAuth'
 import { notifyError } from '~/global/toastify'
 import { useCallback } from 'react'
-import { get, post, put, remove } from '~/utils/apiCaller'
+import { get, post, put, remove, patch } from '~/utils/apiCaller'
 
 const useApi = () => {
   const { idToken, logout, refreshToken } = useAuth()
@@ -65,7 +65,7 @@ const useApi = () => {
    */
   const callApi = useCallback(
     async (
-      method: 'get' | 'post' | 'put' | 'delete',
+      method: 'get' | 'post' | 'put' | 'delete' | 'patch',
       endpoint: string,
       headers: object = {},
       params: object = {},
@@ -90,6 +90,10 @@ const useApi = () => {
           }
           case 'delete': {
             response = await remove(endpoint, body, params, headersDefault)
+            break
+          }
+          case 'patch': {
+            response = await patch(endpoint, body, params, headersDefault)
             break
           }
         }
