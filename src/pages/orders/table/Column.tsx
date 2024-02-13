@@ -1,14 +1,15 @@
-import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import ActionCell from '~/components/table/ActionCell'
+import { ScreenPath } from '~/global/enum'
+import { ColumnProps } from '~/global/interfaces/interface'
 import StatusTextDiv from './StatusTextDiv'
 
-export const ordersColumn: GridColDef[] = [
+export const ordersColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'id',
     headerName: 'STT',
-    width: 80,
+    width: 50,
     filterable: false,
     sortable: false,
     valueGetter: (params) => {
@@ -19,18 +20,19 @@ export const ordersColumn: GridColDef[] = [
     }
   },
   { field: 'customer', headerName: 'Khách hàng', width: 180 },
-  { field: 'orderDate', headerName: 'Ngày đặt', type: 'Date', width: 150 },
+  { field: 'orderDate', headerName: 'Ngày đặt', type: 'Date', width: 100 },
   {
     field: 'totalAmount',
     headerName: 'Tổng cộng',
-    headerAlign: 'left',
+    headerAlign: 'right',
     type: 'number',
-    width: 120
+    width: 180
   },
   {
     field: 'transactionStatus',
     headerName: 'Trạng thái giao dịch',
     width: 180,
+    headerAlign: 'center',
     align: 'center',
     renderCell: (param: GridRenderCellParams) => <StatusTextDiv status={param.row.transactionStatus} />
   },
@@ -38,31 +40,32 @@ export const ordersColumn: GridColDef[] = [
     field: 'orderStatus',
     headerName: 'Trạng thái đơn hàng',
     width: 180,
+    headerAlign: 'center',
     align: 'center',
     renderCell: (param: GridRenderCellParams) => <StatusTextDiv status={param.row.orderStatus} />
   },
   {
     field: 'notes',
     headerName: 'Lưu ý',
-    width: 200,
+    width: 280,
     filterable: false
   },
   {
     field: 'actions',
     headerName: 'Thao tác',
-    width: 150,
+    width: 100,
     sortable: false,
     filterable: false,
     headerAlign: 'center',
     align: 'center',
     renderCell: (params: GridRenderCellParams) => {
+      const handleViewButton = (orderId: string) => {
+        navigate(ScreenPath.VIEW_ORDER.replace(':orderId', orderId))
+      }
       return (
         <ActionCell
           id={params.row.id as number}
-          buttons={[
-            { icon: <EditIcon />, onClick: () => console.log('Edit clicked') },
-            { icon: <VisibilityIcon />, onClick: () => console.log('View clicked') }
-          ]}
+          buttons={[{ icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) }]}
         />
       )
     }
