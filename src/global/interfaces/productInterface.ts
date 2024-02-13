@@ -43,6 +43,19 @@ export interface IProductsResponse {
   nextPage: null | number
 }
 
+export interface IProductsRequest {
+  docs: IProduct[]
+  totalDocs: number
+  limit: number
+  totalPages: number
+  page: number
+  pagingCounter: number
+  hasPrevPage: boolean
+  hasNextPage: boolean
+  prevPage: null | number
+  nextPage: null | number
+}
+
 export interface IProductRows {
   _id: string
   name: string

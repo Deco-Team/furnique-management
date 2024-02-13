@@ -1,8 +1,9 @@
 import { useCallback } from 'react'
 import { IProductsResponse } from '~/global/interfaces/productInterface'
 import useApi from './useApi'
-import { notifyError } from '~/global/toastify'
-
+import { IProductsProps } from '~/global/interfaces/interface'
+import { notifyError, notifyLoading } from '~/global/toastify'
+//TODO: waiting for back-end document api :)
 const useProductsApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'products/provider'
@@ -18,9 +19,10 @@ const useProductsApi = () => {
   }, [callApi])
 
   const createProduct = useCallback(
-    async (data: IProductsResponse) => {
+    async (data: IProductsProps) => {
       const endpoint = `/${rootEndpoint}`
       try {
+        notifyLoading()
         const response = await callApi('post', endpoint, {}, {}, data)
         return response
       } catch (error) {
