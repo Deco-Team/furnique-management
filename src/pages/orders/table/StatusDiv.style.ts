@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { IStatusOrderProps } from '~/global/interfaces/interface'
 
 export const StatusDiv = styled.div<IStatusOrderProps>`
-  width: 80px;
+  width: fit-content;
   height: 20px;
   display: flex;
   justify-content: center;

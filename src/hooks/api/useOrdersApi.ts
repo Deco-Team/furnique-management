@@ -26,7 +26,20 @@ const useOrdersApi = () => {
     [callApi]
   )
 
-  return { getAllOrders }
+  const getOrderById = useCallback(
+    async (orderId: string) => {
+      const endpoint = `/${rootEndpoint}/${orderId}`
+      try {
+        const response = await callApi('get', endpoint)
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  return { getAllOrders, getOrderById }
 }
 
 export default useOrdersApi

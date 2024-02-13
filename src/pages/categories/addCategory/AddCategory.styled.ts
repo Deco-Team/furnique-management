@@ -22,8 +22,8 @@ export const InformationContainer = styled.div`
   border-radius: 10px;
 `
 
-export const TitleText = styled.h2`
-  font-weight: 700;
+export const TitleText = styled.h3`
+  font-weight: 600;
   padding-left: 20px;
 `
 
