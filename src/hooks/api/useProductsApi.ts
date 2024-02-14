@@ -36,9 +36,10 @@ const useProductsApi = () => {
   )
 
   const updateProduct = useCallback(
-    async (productId: string, data: IProductsResponse) => {
+    async (productId: string, data: IProductsResponse, isWithImage = true) => {
       const endpoint = `/${rootEndpoint}/${productId}`
       try {
+        if (isWithImage) notifyLoading()
         const response = await callApi('put', endpoint, {}, {}, data)
         return response
       } catch (error) {

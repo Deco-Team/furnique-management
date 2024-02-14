@@ -15,20 +15,22 @@ import { ICategoryDetails } from '~/global/interfaces/categoriesInterface'
 import { ICategoriesProps } from '~/global/interfaces/interface'
 import { notifyError, notifyInfo, notifySuccess } from '~/global/toastify'
 import useCategoriesApi from '~/hooks/api/useCategoriesApi'
-import { cloudinaryURLConvert, removeAccents } from '~/utils/common.utils'
+import { cloudinaryURLConvert } from '~/utils/common.utils'
 import { ButtonWrapper, InformationContainer, TitleText, Wrapper } from '../addCategory/AddCategory.styled'
 import { addCategoryValidationSchema } from '../validation/AddCategoryValidationSchema'
 import { DetailThumbnailContainer } from '../viewCategory/ViewCategoryDetail.styled'
 import { UpdateImage } from './UpdateCategory.styled'
+import useCloudinaryApi from '~/hooks/api/useCloudinaryApi'
+import { v4 } from 'uuid'
 
 const UpdateCategory = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const { getCategoryById } = useCategoriesApi()
+  const { uploadCloudinary } = useCloudinaryApi()
   const [files, setFiles] = useState<File[]>([])
   const [categoryData, setCategoryData] = useState<ICategoryDetails>()
   const [isLoading, setIsLoading] = useState(false)
-  const { uploadCloudinary, updateCategory } = useCategoriesApi()
+  const { updateCategory, getCategoryById } = useCategoriesApi()
 
   const categoryId = params.categoryId
   const defaultValues = {
@@ -70,15 +72,16 @@ const UpdateCategory = () => {
     }
   }
 
-  const uploadImage = async () => {
+  const uploadImage = async (publicId: string) => {
     try {
-      await uploadCloudinary(files, removeAccents(control._formValues.name))
+      await uploadCloudinary(files, [publicId])
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     }
   }
 
   const handleUpdateCategoryButton = async () => {
+    const publicId = v4()
     if (categoryId) {
       const hasChanges =
         categoryData?.name !== control._formValues.name ||
@@ -88,14 +91,21 @@ const UpdateCategory = () => {
         notifyInfo('Không có thay đổi')
         return
       }
-      const response = await updateCategory(categoryId, {
-        name: control._formValues.name,
-        description: control._formValues.description,
-        image: files.length > 0 ? cloudinaryURLConvert(control._formValues.name) : categoryData?.image ?? EMPTY
-      })
-
-      if (response) {
-        await uploadImage()
+      const response = await updateCategory(
+        categoryId,
+        {
+          name: control._formValues.name,
+          description: control._formValues.description,
+          image: files.length > 0 ? cloudinaryURLConvert(publicId) : categoryData?.image ?? EMPTY
+        },
+        files.length > 0
+      )
+      if (response && files.length > 0) {
+        await uploadImage(publicId)
+        notifySuccess('Cập nhật thành công')
+        getCategoryById(categoryId)
+        navigate(ScreenPath.CATEGORIES)
+      } else if (response) {
         notifySuccess('Cập nhật thành công')
         getCategoryById(categoryId)
         navigate(ScreenPath.CATEGORIES)
