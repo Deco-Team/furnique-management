@@ -5,7 +5,7 @@ export const orderListColumns: GridColDef[] = [
   {
     field: 'id',
     headerName: 'STT',
-    width: 80,
+    width: 50,
     filterable: false,
     sortable: false,
     valueGetter: (params) => {
@@ -18,32 +18,35 @@ export const orderListColumns: GridColDef[] = [
   {
     field: 'products',
     headerName: 'Sản phẩm',
-    width: 350,
+    width: 250,
     renderCell: (param: GridRenderCellParams) => (
       <CardProducts name={param.row.products} image={param.row.image} variant={param.row.variant} />
     )
   },
-  { field: 'sku', headerName: 'SKU', width: 180 },
+  { field: 'sku', headerName: 'SKU', width: 110, sortable: false },
   { field: 'orderDate', headerName: 'Ngày đặt', width: 180 },
   {
     field: 'quantity',
     headerName: 'Số lượng',
     headerAlign: 'right',
     type: 'number',
-    width: 150
+    width: 80,
+    sortable: false
   },
   {
     field: 'price',
     headerName: 'Giá tiền',
     headerAlign: 'right',
     type: 'number',
-    width: 150
+    width: 90,
+    sortable: false
   },
   {
     field: 'totalAmount',
     headerName: 'Tổng cộng',
     headerAlign: 'right',
     type: 'number',
-    width: 150
+    width: 100,
+    sortable: false
   }
 ]

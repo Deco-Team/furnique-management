@@ -30,7 +30,7 @@ export const categoriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'description',
     headerName: 'Mô tả',
-    width: 500,
+    width: 550,
     filterable: false
   },
   {

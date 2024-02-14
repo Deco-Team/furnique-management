@@ -27,6 +27,7 @@ export interface IOrder {
   notes: string
   createdAt: string
   updatedAt: string
+  reason?: string
 }
 
 export interface IOrdersResponse {

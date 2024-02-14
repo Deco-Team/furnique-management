@@ -22,12 +22,12 @@ export const productsColumn: GridColDef[] = [
   {
     field: 'name',
     headerName: 'Sản phẩm',
-    width: 180,
+    width: 220,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
-  { field: 'categories', headerName: 'Phân loại', width: 150 },
-  { field: 'description', headerName: 'Mô tả', width: 220 },
+  { field: 'categories', headerName: 'Phân loại', width: 180 },
+  { field: 'description', headerName: 'Mô tả', width: 280 },
   {
     field: 'brand',
     headerName: 'Hãng',
@@ -48,7 +48,7 @@ export const productsColumn: GridColDef[] = [
   {
     field: 'actions',
     headerName: 'Thao tác',
-    width: 250,
+    width: 200,
     sortable: false,
     filterable: false,
     headerAlign: 'center',
