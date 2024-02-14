@@ -43,22 +43,18 @@ const StaffsTable = () => {
       setIsLoading(false)
     }
   }
-  return (
-    <>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <CommonTable
-          columns={staffsColumn}
-          rows={staffsRows}
-          totalRows={totalRows}
-          page={page}
-          pageSize={pageSize}
-          onPageChange={handlePageChange}
-          onPageSizeChange={handlePageSizeChange}
-        />
-      )}
-    </>
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <CommonTable
+      columns={staffsColumn}
+      rows={staffsRows}
+      totalRows={totalRows}
+      page={page}
+      pageSize={pageSize}
+      onPageChange={handlePageChange}
+      onPageSizeChange={handlePageSizeChange}
+    />
   )
 }
 
