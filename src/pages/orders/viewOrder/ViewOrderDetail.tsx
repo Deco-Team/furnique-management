@@ -34,6 +34,7 @@ import {
   Wrapper
 } from './ViewOrderDetail.styled'
 import ConfirmOrderModal from '../components/ConfirmOrderModal'
+import { OrderStatus } from '~/global/enum'
 
 const ViewOrderDetail = () => {
   const params = useParams()
@@ -91,6 +92,7 @@ const ViewOrderDetail = () => {
                     type='button'
                     sx={{ height: '30px', marginRight: '10px' }}
                     onClick={handleCancelButton}
+                    disable={orderData?.orderStatus === OrderStatus.CANCELED}
                   />
                   <AgreeButton
                     variant='contained'
@@ -98,6 +100,10 @@ const ViewOrderDetail = () => {
                     type='button'
                     sx={{ height: '30px', marginRight: '10px' }}
                     onClick={handleConfirmButton}
+                    disable={
+                      orderData?.orderStatus === OrderStatus.CANCELED ||
+                      orderData?.orderStatus === OrderStatus.CONFIRMED
+                    }
                   />
                 </div>
               </TitleWrapper>

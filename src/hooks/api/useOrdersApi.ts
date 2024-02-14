@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
-import useApi from './useApi'
+import { ICancelOrderProps } from '~/global/interfaces/ordersInterface'
 import { notifyLoading } from '~/global/toastify'
+import useApi from './useApi'
 
 const useOrdersApi = () => {
   const callApi = useApi()
@@ -41,11 +42,11 @@ const useOrdersApi = () => {
   )
 
   const cancelOrder = useCallback(
-    async (orderId: string) => {
+    async (orderId: string, data: ICancelOrderProps) => {
       const endpoint = `/${rootEndpoint}/${orderId}/cancel`
       try {
         notifyLoading()
-        const response = await callApi('patch', endpoint)
+        const response = await callApi('patch', endpoint, {}, {}, data)
         return response
       } catch (error) {
         console.log(error)

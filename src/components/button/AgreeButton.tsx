@@ -2,7 +2,7 @@ import { ICustomButtonProps } from '~/global/interfaces/interface'
 import CustomButton from './CustomButton'
 
 const AgreeButton = (props: ICustomButtonProps) => {
-  const { name, onClick, icon, sx } = props
+  const { name, onClick, icon, sx, disable } = props
   return (
     <>
       <CustomButton
@@ -28,6 +28,7 @@ const AgreeButton = (props: ICustomButtonProps) => {
           ...sx
         }}
         onClick={onClick}
+        disable={disable}
       />
     </>
   )

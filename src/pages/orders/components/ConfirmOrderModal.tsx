@@ -1,12 +1,15 @@
 import { Backdrop, Box, Fade, Modal, Typography } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
 import AgreeButton from '~/components/button/AgreeButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
+import { ScreenPath } from '~/global/enum'
 import { OrderModalProps } from '~/global/interfaces/ordersInterface'
 import { notifyError, notifySuccess } from '~/global/toastify'
 import useOrdersApi from '~/hooks/api/useOrdersApi'
 
 const ConfirmOrderModal = ({ open, handleClose, orderId }: OrderModalProps) => {
   const { confirmOrder } = useOrdersApi()
+  const navigate = useNavigate()
   const style = {
     position: 'absolute',
     borderRadius: '5px',
@@ -22,6 +25,7 @@ const ConfirmOrderModal = ({ open, handleClose, orderId }: OrderModalProps) => {
     try {
       confirmOrder(orderId)
       notifySuccess('Xác nhận đơn hàng thành công')
+      navigate(ScreenPath.ORDERS)
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     } finally {

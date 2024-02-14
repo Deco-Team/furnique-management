@@ -72,3 +72,7 @@ export interface OrderModalProps {
   handleClose: () => void
   orderId: string
 }
+
+export interface ICancelOrderProps {
+  reason: string
+}
