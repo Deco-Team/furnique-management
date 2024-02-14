@@ -13,16 +13,28 @@ const OrderListTable = () => {
   const orderId = params.orderId
   const [isLoading, setIsLoading] = useState(false)
   const [orderListRows, setOrderListRows] = useState<IOrderListRows[]>([])
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [totalRows, setTotalRows] = useState(0)
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize)
+  }
+
   useEffect(() => {
     if (orderId) {
-      getOrderListData(orderId)
+      getOrderListData(orderId, page, pageSize)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  const getOrderListData = async (orderId: string) => {
+  }, [page, pageSize])
+  const getOrderListData = async (orderId: string, page: number, pageSize: number) => {
     try {
       setIsLoading(true)
-      const ordersData = (await getOrderById(orderId)) as IOrder
+      const ordersData = (await getOrderById(orderId, page, pageSize)) as IOrder
       const mappedData = ordersData.items.map((item, index) => {
         const variant = item.product.variants.find((variant) => variant.sku === item.sku)
         if (!variant) {
@@ -46,6 +58,7 @@ const OrderListTable = () => {
         }
       })
       setOrderListRows(mappedData)
+      setTotalRows(ordersData.totalDocs)
     } catch (error) {
       console.error()
     } finally {
@@ -53,7 +66,23 @@ const OrderListTable = () => {
     }
   }
 
-  return <>{isLoading ? <Loading /> : <CommonTable columns={orderListColumns} rows={orderListRows} />}</>
+  return (
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <CommonTable
+          columns={orderListColumns}
+          rows={orderListRows}
+          totalRows={totalRows}
+          page={page}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
+      )}
+    </>
+  )
 }
 
 export default OrderListTable
