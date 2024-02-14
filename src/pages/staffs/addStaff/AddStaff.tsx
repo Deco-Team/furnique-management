@@ -1,17 +1,20 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import FileUpload from 'react-material-file-upload'
 import { useNavigate } from 'react-router-dom'
+import { v4 } from 'uuid'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
+import InputRadioForm from '~/components/form/InputRadioForm'
 import InputTextForm from '~/components/form/InputTextForm'
 import { EMPTY } from '~/global/constants/constants'
 import { ScreenPath, StaffRoles } from '~/global/enum'
 import { IStaffsRequest } from '~/global/interfaces/staffsInterface'
 import { notifyError, notifySuccess } from '~/global/toastify'
+import useCloudinaryApi from '~/hooks/api/useCloudinaryApi'
 import useStaffsApi from '~/hooks/api/useStaffsApi'
 import { Wrapper } from '~/pages/auth/Login.styled'
 import {
@@ -20,15 +23,17 @@ import {
   ThumbnailContainer,
   TitleText
 } from '~/pages/categories/addCategory/AddCategory.styled'
+import { cloudinaryURLConvert } from '~/utils/common.utils'
+import { roleValues } from '../constants'
 import { addStaffValidationSchema } from '../validation/AddStaffValidationSchema'
 import { InputWrapper } from './AddStaff.styled'
-import InputRadioForm from '~/components/form/InputRadioForm'
-import { roleValues } from '../constants'
 
 const AddStaff = () => {
   const navigate = useNavigate()
   const [files, setFiles] = useState<File[]>([])
   const { createStaff } = useStaffsApi()
+  const { uploadCloudinary } = useCloudinaryApi()
+  const [selectedValue, setSelectedValue] = useState(StaffRoles.STAFF)
 
   const defaultValues: IStaffsRequest = {
     firstName: EMPTY,
@@ -49,19 +54,33 @@ const AddStaff = () => {
     resolver: yupResolver(addStaffValidationSchema)
   })
 
-  const handleAddCategoryButton = async (data: IStaffsRequest) => {
+  const uploadImage = async (publicId: string) => {
+    try {
+      await uploadCloudinary(files, [publicId])
+    } catch (error) {
+      notifyError('Có lỗi xảy ra')
+    }
+  }
+
+  const handleAddStaffButton = async (data: IStaffsRequest) => {
     if (files.length <= 0) {
       notifyError('Cần ít nhất một ảnh')
       return
     } else {
+      const publicId = v4()
       const formData: IStaffsRequest = {
-        ...data
+        ...data,
+        avatar: cloudinaryURLConvert(publicId),
+        role: selectedValue
       }
+
       const response = await createStaff(formData)
       if (response) {
-        notifySuccess('Thêm thành công')
+        await uploadImage(publicId)
+        notifySuccess('Thêm nhân viên mới thành công')
         reset()
         setFiles([])
+        navigate(ScreenPath.STAFFS)
       }
     }
   }
@@ -69,8 +88,13 @@ const AddStaff = () => {
   const handleCancelButton = () => {
     navigate(ScreenPath.STAFFS)
   }
+
+  const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(event.target.value as StaffRoles)
+  }
+
   return (
-    <form onSubmit={handleSubmit(handleAddCategoryButton)}>
+    <form onSubmit={handleSubmit(handleAddStaffButton)}>
       <ButtonWrapper>
         <SecondaryButton
           variant='contained'
@@ -80,11 +104,11 @@ const AddStaff = () => {
           onClick={handleCancelButton}
           type='button'
         />
-        <PrimaryButton name='Thêm phân loại' type='submit' variant='contained' icon={<AddIcon />} />
+        <PrimaryButton name='Thêm nhân viên' type='submit' variant='contained' icon={<AddIcon />} />
       </ButtonWrapper>
       <Wrapper>
         <ThumbnailContainer>
-          <TitleText>Hình ảnh</TitleText>
+          <TitleText>Avatar</TitleText>
           <FileUpload
             sx={{
               width: '350px',
@@ -127,7 +151,7 @@ const AddStaff = () => {
               control={control}
               name='lastName'
               label='Họ và tên đệm'
-              sx={{ width: '34%', marginLeft: ' 20px' }}
+              sx={{ width: '22%', marginLeft: ' 20px' }}
               variant='outlined'
               error={errors.lastName?.message}
             />
@@ -135,9 +159,17 @@ const AddStaff = () => {
               control={control}
               name='firstName'
               label='Tên'
-              sx={{ width: '34%', marginLeft: '20px' }}
+              sx={{ width: '22%', marginLeft: '20px' }}
               variant='outlined'
               error={errors.firstName?.message}
+            />
+            <InputTextForm
+              control={control}
+              name='staffCode'
+              label='Mã nhân viên'
+              sx={{ width: '22%', marginLeft: '20px' }}
+              variant='outlined'
+              error={errors.staffCode?.message}
             />
           </InputWrapper>
           <InputWrapper>
@@ -162,8 +194,9 @@ const AddStaff = () => {
             label='Chức vụ'
             name='role'
             options={roleValues}
-            defaultValue={StaffRoles.STAFF}
-            sx={{ margin: '20px 0 0 20px' }}
+            defaultValue={selectedValue}
+            sx={{ margin: '20px  0  0  20px' }}
+            onChange={handleRadioChange}
           />
         </InformationContainer>
       </Wrapper>
