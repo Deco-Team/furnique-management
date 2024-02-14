@@ -7,7 +7,7 @@ import StaffsTable from './table/StaffsTable'
 const Staffs = () => {
   const navigate = useNavigate()
   const handleAddButton = () => {
-    navigate(ScreenPath.ADD_PRODUCTS)
+    navigate(ScreenPath.ADD_STAFF)
   }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>

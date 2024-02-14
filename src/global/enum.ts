@@ -7,8 +7,9 @@ export enum ScreenPath {
   PRODUCTS = '/products',
   ADD_PRODUCTS = '/products/create',
   ORDERS = '/orders',
+  VIEW_ORDER = '/orders/detail/:orderId',
   STAFFS = '/staffs',
-  VIEW_ORDER = '/orders/detail/:orderId'
+  ADD_STAFF = '/staffs/create'
 }
 
 export enum ProductStatus {
@@ -33,4 +34,10 @@ export enum TransactionStatus {
   ERROR = 'ERROR',
   CANCELED = 'CANCELED',
   DELETED = 'DELETED'
+}
+
+export enum StaffRoles {
+  STAFF = 'STAFF',
+  CONSULTANT_STAFF = 'CONSULTANT_STAFF',
+  DELIVERY_STAFF = 'DELIVERY_STAFF'
 }
