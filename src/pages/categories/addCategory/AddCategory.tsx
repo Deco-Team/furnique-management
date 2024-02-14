@@ -60,9 +60,10 @@ const AddCategory = () => {
       })
       if (response) {
         await uploadImage(publicId)
-        notifySuccess('Thêm thành công')
         reset()
         setFiles([])
+        notifySuccess('Thêm thành công')
+        navigate(ScreenPath.CATEGORIES)
       }
     }
   }
