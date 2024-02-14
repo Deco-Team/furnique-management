@@ -52,6 +52,7 @@ export interface ICustomButtonProps {
   icon?: React.ReactNode
   sx?: SxProps
   type: 'button' | 'submit' | 'reset'
+  disable?: boolean
 }
 
 export interface IUserInfoProps {
