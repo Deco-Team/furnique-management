@@ -10,28 +10,57 @@ const OrdersTable = () => {
   const { getAllOrders } = useOrdersApi()
   const [isLoading, setIsLoading] = useState(false)
   const [ordersRows, setOrdersRows] = useState<IOrdersRows[]>([])
+  const [totalRows, setTotalRows] = useState(0)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize)
+  }
+
   useEffect(() => {
-    getOrdersData()
+    getOrdersData(page, pageSize)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  const getOrdersData = async () => {
+  }, [page, pageSize])
+  const getOrdersData = async (page: number, pageSize: number) => {
     try {
       setIsLoading(true)
-      const ordersData = await getAllOrders()
-      const ordersRows = ordersData.map((order: IOrder) => ({
+      const ordersData = await getAllOrders(page, pageSize)
+      const ordersRows = ordersData.docs.map((order: IOrder) => ({
         ...order,
         id: order._id,
         orderDate: dayjs(order.orderDate).format('DD/MM/YYYY'),
         customer: `${order.customer.firstName} ${order.customer.lastName}`
       }))
       setOrdersRows(ordersRows)
+      setTotalRows(ordersData.totalDocs)
     } catch (error) {
       console.error()
     } finally {
       setIsLoading(false)
     }
   }
-  return <>{isLoading ? <Loading /> : <CommonTable columns={ordersColumn} rows={ordersRows} />}</>
+  return (
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <CommonTable
+          columns={ordersColumn}
+          rows={ordersRows}
+          totalRows={totalRows}
+          page={page}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
+      )}
+    </>
+  )
 }
 
 export default OrdersTable

@@ -86,7 +86,13 @@ export interface ISidebarProps {
 
 export interface IDataTableProps {
   rows: any[]
+  totalRows: number
   columns: GridColDef[]
+  page: number
+  pageSize: number
+  onPageChange: (newPage: number) => void
+  onPageSizeChange: (newPageSize: number) => void
+  pageSizeOptions?: number[]
 }
 
 export interface IStatusCategoriesProps {

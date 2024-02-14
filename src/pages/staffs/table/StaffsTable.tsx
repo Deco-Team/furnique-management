@@ -10,27 +10,57 @@ const StaffsTable = () => {
   const { getAllStaffs } = useStaffsApi()
   const [isLoading, setIsLoading] = useState(false)
   const [staffsRows, setStaffsRow] = useState<IStaffRows[]>([])
-  useEffect(() => {
-    getStaffList()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const [totalRows, setTotalRows] = useState(0)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
-  const getStaffList = async () => {
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize)
+  }
+
+  useEffect(() => {
+    getStaffList(page, pageSize)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize])
+
+  const getStaffList = async (page: number, pageSize: number) => {
     try {
       setIsLoading(true)
-      const staffsData = await getAllStaffs()
-      const staffsRows = staffsData.map((staff: IStaffRows) => ({
+      const staffsData = await getAllStaffs(page, pageSize)
+      console.log(staffsData)
+      const staffsRows = staffsData.docs.map((staff: IStaffRows) => ({
         ...staff,
         id: staff._id
       }))
       setStaffsRow(staffsRows)
+      setTotalRows(staffsData.totalDocs)
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     } finally {
       setIsLoading(false)
     }
   }
-  return <>{isLoading ? <Loading /> : <CommonTable columns={staffsColumn} rows={staffsRows} />}</>
+  return (
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <CommonTable
+          columns={staffsColumn}
+          rows={staffsRows}
+          totalRows={totalRows}
+          page={page}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
+      )}
+    </>
+  )
 }
 
 export default StaffsTable
