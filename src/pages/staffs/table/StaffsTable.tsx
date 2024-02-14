@@ -31,7 +31,6 @@ const StaffsTable = () => {
     try {
       setIsLoading(true)
       const staffsData = await getAllStaffs(page, pageSize)
-      console.log(staffsData)
       const staffsRows = staffsData.docs.map((staff: IStaffRows) => ({
         ...staff,
         id: staff._id

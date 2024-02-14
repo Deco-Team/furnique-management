@@ -20,7 +20,7 @@ export const ordersColumn = ({ navigate }: ColumnProps): GridColDef[] => [
     }
   },
   { field: 'customer', headerName: 'Khách hàng', width: 180 },
-  { field: 'orderDate', headerName: 'Ngày đặt', type: 'Date', width: 100 },
+  { field: 'orderDate', headerName: 'Ngày đặt', type: 'Date', width: 130 },
   {
     field: 'totalAmount',
     headerName: 'Tổng cộng',
