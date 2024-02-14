@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { IProductsResponse } from '~/global/interfaces/productInterface'
 import useApi from './useApi'
 import { ICreateProductProps } from '~/global/interfaces/interface'
-import { notifyError, notifyLoading } from '~/global/toastify'
+import { notifyLoading } from '~/global/toastify'
 //TODO: waiting for back-end document api :)
 
 const useProductsApi = () => {
