@@ -6,15 +6,26 @@ const useStaffsApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'staff'
 
-  const getAllStaffs = useCallback(async () => {
-    const endpoint = `/${rootEndpoint}`
-    try {
-      const response = await callApi('get', endpoint)
-      return response.data.docs
-    } catch (error) {
-      console.log(error)
-    }
-  }, [callApi])
+  const getAllStaffs = useCallback(
+    async (page = 1, pageSize = 10) => {
+      const endpoint = `/${rootEndpoint}`
+      try {
+        const response = await callApi(
+          'get',
+          endpoint,
+          {},
+          {
+            page,
+            limit: pageSize
+          }
+        )
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
 
   const getStaffById = useCallback(
     async (staffId: string) => {
