@@ -5,7 +5,7 @@ export interface IStaffsRequest {
   phone: string
   avatar?: string
   email: string
-  role: string
+  role?: string
 }
 
 export interface IStaffRows {

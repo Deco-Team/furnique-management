@@ -53,7 +53,7 @@ export interface IRadioGroupProps {
     value: string | number
   }[]
   defaultValue?: string | number
-  onChange?: (event: ChangeEvent<HTMLInputElement>, value: string | number) => void
+  onChange: (event: ChangeEvent<HTMLInputElement>, value: string | number) => void
   sx?: SxProps
 }
 
