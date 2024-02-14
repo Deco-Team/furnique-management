@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import Loading from '~/components/loading/Loading'
 import CommonTable from '~/components/table/CommonTable'
-import { IOrder, IOrdersRows } from '~/global/interfaces/ordersInterface'
-import useOrdersApi from '~/hooks/api/useOrdersApi'
-import { ordersColumn } from './Column'
-import dayjs from 'dayjs'
+import { staffsColumn } from './Column'
+import { IStaffRows } from '~/global/interfaces/staffsInterface'
+import useStaffsApi from '~/hooks/api/useStaffsApi'
+import { notifyError } from '~/global/toastify'
 
-const OrdersTable = () => {
-  const { getAllOrders } = useOrdersApi()
+const StaffsTable = () => {
+  const { getAllStaffs } = useStaffsApi()
   const [isLoading, setIsLoading] = useState(false)
-  const [ordersRows, setOrdersRows] = useState<IOrdersRows[]>([])
+  const [staffsRows, setStaffsRow] = useState<IStaffRows[]>([])
   const [totalRows, setTotalRows] = useState(0)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -23,23 +23,23 @@ const OrdersTable = () => {
   }
 
   useEffect(() => {
-    getOrdersData(page, pageSize)
+    getStaffList(page, pageSize)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageSize])
-  const getOrdersData = async (page: number, pageSize: number) => {
+
+  const getStaffList = async (page: number, pageSize: number) => {
     try {
       setIsLoading(true)
-      const ordersData = await getAllOrders(page, pageSize)
-      const ordersRows = ordersData.docs.map((order: IOrder) => ({
-        ...order,
-        id: order._id,
-        orderDate: dayjs(order.orderDate).format('DD/MM/YYYY'),
-        customer: `${order.customer.firstName} ${order.customer.lastName}`
+      const staffsData = await getAllStaffs(page, pageSize)
+      console.log(staffsData)
+      const staffsRows = staffsData.docs.map((staff: IStaffRows) => ({
+        ...staff,
+        id: staff._id
       }))
-      setOrdersRows(ordersRows)
-      setTotalRows(ordersData.totalDocs)
+      setStaffsRow(staffsRows)
+      setTotalRows(staffsData.totalDocs)
     } catch (error) {
-      console.error()
+      notifyError('Có lỗi xảy ra')
     } finally {
       setIsLoading(false)
     }
@@ -50,8 +50,8 @@ const OrdersTable = () => {
         <Loading />
       ) : (
         <CommonTable
-          columns={ordersColumn}
-          rows={ordersRows}
+          columns={staffsColumn}
+          rows={staffsRows}
           totalRows={totalRows}
           page={page}
           pageSize={pageSize}
@@ -63,4 +63,4 @@ const OrdersTable = () => {
   )
 }
 
-export default OrdersTable
+export default StaffsTable

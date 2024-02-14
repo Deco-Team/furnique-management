@@ -9,6 +9,6 @@ export const optionsSidebar = [
   { id: 2, text: 'Phân loại', link: 'categories', icon: CategoryIcon },
   { id: 3, text: 'Sản phẩm', link: 'products', icon: InventoryIcon },
   { id: 4, text: 'Đơn hàng', link: 'orders', icon: ListAltIcon },
-  { id: 5, text: 'Nhân viên', link: 'employees', icon: PeopleIcon },
+  { id: 5, text: 'Nhân viên', link: 'staffs', icon: PeopleIcon },
   { id: 6, text: 'Giao dịch', link: 'transactions', icon: AccountBalanceWalletIcon }
 ]

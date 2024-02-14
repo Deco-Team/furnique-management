@@ -35,15 +35,26 @@ const useCategoriesApi = () => {
     }
   }, [])
 
-  const getAllCategories = useCallback(async () => {
-    const endpoint = `/${rootEndpoint}`
-    try {
-      const response = await callApi('get', endpoint)
-      return response.data.docs
-    } catch (error) {
-      notifyError('Có lỗi xảy ra')
-    }
-  }, [callApi])
+  const getAllCategories = useCallback(
+    async (page = 1, pageSize = 10) => {
+      const endpoint = `/${rootEndpoint}`
+      try {
+        const response = await callApi(
+          'get',
+          endpoint,
+          {},
+          {
+            page,
+            limit: pageSize
+          }
+        )
+        return response.data
+      } catch (error) {
+        notifyError('Có lỗi xảy ra')
+      }
+    },
+    [callApi]
+  )
 
   const getCategoryById = useCallback(
     async (categoryId: string) => {

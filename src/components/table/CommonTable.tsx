@@ -1,17 +1,32 @@
 import { DataGrid } from '@mui/x-data-grid'
 import { IDataTableProps } from '~/global/interfaces/interface'
-const CommonTable = ({ rows, columns }: IDataTableProps) => {
+const CommonTable = ({
+  rows,
+  totalRows,
+  columns,
+  page = 1,
+  pageSize = 5,
+  onPageChange,
+  onPageSizeChange,
+  pageSizeOptions = [10, 20]
+}: IDataTableProps) => {
   return (
     <div style={{ height: 630, width: '100%' }}>
       <DataGrid
+        paginationMode='server'
         rows={rows}
+        rowCount={totalRows}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 10 }
+            paginationModel: { page: page - 1, pageSize: pageSize }
           }
         }}
-        pageSizeOptions={[10, 20]}
+        pageSizeOptions={pageSizeOptions}
+        onPaginationModelChange={(model) => {
+          onPageChange(model.page + 1)
+          onPageSizeChange(model.pageSize)
+        }}
         checkboxSelection
         disableColumnMenu
         sx={{ backgroundColor: 'var(--white-color)' }}

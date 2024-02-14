@@ -4,19 +4,23 @@ import useApi from './useApi'
 import { ICreateProductProps } from '~/global/interfaces/interface'
 import { notifyError, notifyLoading } from '~/global/toastify'
 //TODO: waiting for back-end document api :)
+
 const useProductsApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'products/provider'
 
-  const getAllProducts = useCallback(async () => {
-    const endpoint = `/${rootEndpoint}`
-    try {
-      const response = await callApi('get', endpoint)
-      return response.data.docs
-    } catch (error) {
-      notifyError('Có lỗi xảy ra')
-    }
-  }, [callApi])
+  const getAllProducts = useCallback(
+    async (page = 1, pageSize = 10) => {
+      const endpoint = `/${rootEndpoint}`
+      try {
+        const response = await callApi('get', endpoint, {}, { page, limit: pageSize })
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
 
   const createProduct = useCallback(
     async (data: ICreateProductProps) => {
