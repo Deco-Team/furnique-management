@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SxProps } from '@mui/material'
 import { GridColDef } from '@mui/x-data-grid'
-import React, { ReactNode } from 'react'
+import React, { ChangeEvent, ReactNode } from 'react'
 import { Control } from 'react-hook-form'
 import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
 import { IVariant } from './productInterface'
@@ -43,6 +43,18 @@ export interface ICheckboxGroupProps {
   options: ICheckboxOption[]
   defaultValues?: any[]
   control?: Control<any, any>
+}
+
+export interface IRadioGroupProps {
+  name: string
+  label: string
+  options: {
+    label: string
+    value: string | number
+  }[]
+  defaultValue?: string | number
+  onChange?: (event: ChangeEvent<HTMLInputElement>, value: string | number) => void
+  sx?: SxProps
 }
 
 export interface ICustomButtonProps {

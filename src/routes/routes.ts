@@ -9,6 +9,7 @@ import Orders from '~/pages/orders/Orders'
 import ViewOrderDetail from '~/pages/orders/viewOrder/ViewOrderDetail'
 import AddProduct from '~/pages/products/addProduct/AddProduct'
 import Products from '~/pages/products/Products'
+import AddStaff from '~/pages/staffs/addStaff/AddStaff'
 import Staffs from '~/pages/staffs/Staffs'
 
 export const publicRoutes = [{ path: '/', component: Login }]
@@ -51,13 +52,18 @@ export const privateRoutes = [
     title: 'Đơn hàng'
   },
   {
+    path: ScreenPath.VIEW_ORDER,
+    component: ViewOrderDetail,
+    title: 'Đơn hàng'
+  },
+  {
     path: ScreenPath.STAFFS,
     component: Staffs,
     title: 'Nhân viên'
   },
   {
-    path: ScreenPath.VIEW_ORDER,
-    component: ViewOrderDetail,
-    title: 'Đơn hàng'
+    path: ScreenPath.ADD_STAFF,
+    component: AddStaff,
+    title: 'Nhân viên'
   }
 ]
