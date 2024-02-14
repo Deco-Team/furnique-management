@@ -29,18 +29,10 @@ const useOrdersApi = () => {
   )
 
   const getOrderById = useCallback(
-    async (orderId: string, page = 1, pageSize = 10) => {
+    async (orderId: string) => {
       const endpoint = `/${rootEndpoint}/${orderId}`
       try {
-        const response = await callApi(
-          'get',
-          endpoint,
-          {},
-          {
-            page,
-            limit: pageSize
-          }
-        )
+        const response = await callApi('get', endpoint)
         return response.data
       } catch (error) {
         console.log(error)
