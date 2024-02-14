@@ -10,27 +10,52 @@ const CategoriesTable = () => {
   const { getAllCategories } = useCategoriesApi()
   const [isLoading, setIsLoading] = useState(false)
   const [categoriesRows, setCategoriesRows] = useState<ICategoryRows[]>([])
+  const [totalRows, setTotalRows] = useState(0)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize)
+  }
+
   const navigate = useNavigate()
   useEffect(() => {
-    getCategoriesData()
+    getCategoriesData(page, pageSize)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  const getCategoriesData = async () => {
+  }, [page, pageSize])
+  const getCategoriesData = async (page: number, pageSize: number) => {
     try {
       setIsLoading(true)
-      const categoriesData = await getAllCategories()
-      const categoriesRows = categoriesData.map((row: ICategoriesProps) => ({
+      const categoriesData = await getAllCategories(page, pageSize)
+      const categoriesRows = categoriesData.docs.map((row: ICategoriesProps) => ({
         ...row,
         id: row._id
       }))
       setCategoriesRows(categoriesRows)
+      setTotalRows(categoriesData.totalDocs)
     } catch (error) {
       console.error()
     } finally {
       setIsLoading(false)
     }
   }
-  return isLoading ? <Loading /> : <CommonTable columns={categoriesColumn({ navigate })} rows={categoriesRows} />
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <CommonTable
+      columns={categoriesColumn({ navigate })}
+      rows={categoriesRows}
+      totalRows={totalRows}
+      page={page}
+      pageSize={pageSize}
+      onPageChange={handlePageChange}
+      onPageSizeChange={handlePageSizeChange}
+    />
+  )
 }
 
 export default CategoriesTable

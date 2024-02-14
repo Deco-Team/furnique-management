@@ -10,28 +10,53 @@ const ProductsTable = () => {
   const { getAllProducts } = useProductsApi()
   const [isLoading, setIsLoading] = useState(false)
   const [productRows, setProductRows] = useState<IProductRows[]>([])
+  const [totalRows, setTotalRows] = useState(0)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage)
+  }
+
+  const handlePageSizeChange = (newPageSize: number) => {
+    setPageSize(newPageSize)
+  }
   useEffect(() => {
-    getProductsData()
+    getProductsData(page, pageSize)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-  const getProductsData = async () => {
+  }, [page, pageSize])
+  const getProductsData = async (page: number, pageSize: number) => {
     try {
       setIsLoading(true)
-      const productsData = await getAllProducts()
-      const productRows = productsData.map((product: IProduct) => ({
+      const productsData = await getAllProducts(page, pageSize)
+      const productRows = productsData.docs.map((product: IProduct) => ({
         ...product,
         id: product._id,
         categories: product.categories[0].name,
         createdAt: dayjs(product.createdAt).format('DD/MM/YYYY')
       }))
       setProductRows(productRows)
+      setTotalRows(productsData.totalDocs)
     } catch (error) {
       console.error()
     } finally {
       setIsLoading(false)
     }
   }
-  return <>{isLoading ? <Loading /> : <CommonTable columns={productsColumn} rows={productRows} />}</>
+  return isLoading ? (
+    <Loading />
+  ) : (
+    <CommonTable
+      columns={productsColumn}
+      rows={productRows}
+      totalRows={totalRows}
+      page={page}
+      pageSize={pageSize}
+      onPageChange={handlePageChange}
+      onPageSizeChange={handlePageSizeChange}
+      pageSizeOptions={[10, 20]}
+    />
+  )
 }
 
 export default ProductsTable
