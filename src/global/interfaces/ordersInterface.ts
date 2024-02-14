@@ -28,7 +28,6 @@ export interface IOrder {
   createdAt: string
   updatedAt: string
   reason?: string
-  totalDocs: number
 }
 
 export interface IOrdersResponse {
