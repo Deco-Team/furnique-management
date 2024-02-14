@@ -26,14 +26,14 @@ export const staffsColumn: GridColDef[] = [
     sortingOrder: ['asc', 'desc']
   },
   {
-    field: 'firstName',
+    field: 'lastName',
     headerName: 'Họ',
     width: 150,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
   {
-    field: 'lastName',
+    field: 'firstName',
     headerName: 'Tên',
     width: 150,
     filterable: false,

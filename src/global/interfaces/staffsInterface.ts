@@ -3,7 +3,7 @@ export interface IStaffsRequest {
   lastName: string
   staffCode: string
   phone: string
-  avatar: string
+  avatar?: string
   email: string
   role: string
 }
