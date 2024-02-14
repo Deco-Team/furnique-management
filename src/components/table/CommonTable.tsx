@@ -27,7 +27,6 @@ const CommonTable = ({
           onPageChange(model.page + 1)
           onPageSizeChange(model.pageSize)
         }}
-        checkboxSelection
         disableColumnMenu
         sx={{ backgroundColor: 'var(--white-color)' }}
       />

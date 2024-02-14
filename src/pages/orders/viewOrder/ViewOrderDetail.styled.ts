@@ -66,15 +66,20 @@ export const TitleWrapper = styled.div`
 `
 
 export const ListContent = styled.div`
-  width: 100%;
+  width: 68%;
   background-color: var(--white-color);
   border-radius: 10px;
 `
-
-export const OrderStatus = styled.div`
+export const NoteWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 30%;
+`
+export const NoteInformation = styled.div`
   background-color: var(--white-color);
   border-radius: 10px;
+  height: 10rem;
+  margin-bottom: 10px;
 `
 export const TotalWrapper = styled.div`
   padding: 20px 0;

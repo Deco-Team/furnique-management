@@ -1,4 +1,5 @@
 import { CalendarMonth } from '@mui/icons-material'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone'
 import EmailIcon from '@mui/icons-material/Email'
 import LocalMallIcon from '@mui/icons-material/LocalMall'
@@ -7,22 +8,27 @@ import PersonIcon from '@mui/icons-material/Person'
 import ReceiptIcon from '@mui/icons-material/Receipt'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AgreeButton from '~/components/button/AgreeButton'
 import CancelButton from '~/components/button/CancelButton'
+import SecondaryButton from '~/components/button/SecondaryButton'
 import Loading from '~/components/loading/Loading'
 import { EMPTY } from '~/global/constants/constants'
+import { OrderStatus, ScreenPath } from '~/global/enum'
 import { IOrder } from '~/global/interfaces/ordersInterface'
 import { notifyError } from '~/global/toastify'
 import useOrdersApi from '~/hooks/api/useOrdersApi'
-import { TitleText } from '~/pages/categories/addCategory/AddCategory.styled'
+import { ButtonWrapper, TitleText } from '~/pages/categories/addCategory/AddCategory.styled'
 import CancelOrderModal from '../components/CancelOrderModal'
+import ConfirmOrderModal from '../components/ConfirmOrderModal'
 import OrderListTable from '../table/OrderListTable'
 import StatusTextDiv from '../table/StatusTextDiv'
 import {
   CustomerInformation,
   IconWrapper,
   ListContent,
+  NoteInformation,
+  NoteWrapper,
   OrderContent,
   OrderInformation,
   OrderList,
@@ -33,11 +39,10 @@ import {
   TotalWrapper,
   Wrapper
 } from './ViewOrderDetail.styled'
-import ConfirmOrderModal from '../components/ConfirmOrderModal'
-import { OrderStatus } from '~/global/enum'
 
 const ViewOrderDetail = () => {
   const params = useParams()
+  const navigate = useNavigate()
   const orderId = params.orderId
   const { getOrderById } = useOrdersApi()
   const [isLoading, setIsLoading] = useState(false)
@@ -75,12 +80,25 @@ const ViewOrderDetail = () => {
   const handleConfirmButton = () => {
     setIsConfirmModalOpen(true)
   }
+  const handleBackButton = () => {
+    navigate(ScreenPath.ORDERS)
+  }
   return (
     <>
       {isLoading ? (
         <Loading />
       ) : (
         <Wrapper>
+          <ButtonWrapper>
+            <SecondaryButton
+              variant='contained'
+              name='Trở về'
+              color='var(--gray-light-color)'
+              icon={<ArrowBackIcon />}
+              onClick={handleBackButton}
+              type='button'
+            />
+          </ButtonWrapper>
           <OrderInformation>
             <OrderContent>
               <TitleWrapper>
@@ -200,6 +218,18 @@ const ViewOrderDetail = () => {
                 </TotalWrapper>
               </div>
             </ListContent>
+            <NoteWrapper>
+              <NoteInformation>
+                <TitleText>Lưu ý</TitleText>
+                <TextWrapper> {orderData?.notes}</TextWrapper>
+              </NoteInformation>
+              {orderData?.orderStatus === OrderStatus.CANCELED && (
+                <NoteInformation>
+                  <TitleText>Lý do hủy đơn</TitleText>
+                  <TextWrapper> {orderData?.reason}</TextWrapper>
+                </NoteInformation>
+              )}
+            </NoteWrapper>
           </OrderList>
           {orderId && (
             <>

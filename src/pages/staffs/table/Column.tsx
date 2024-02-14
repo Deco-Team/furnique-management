@@ -39,7 +39,7 @@ export const staffsColumn: GridColDef[] = [
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
-  { field: 'email', headerName: 'Email', width: 200 },
+  { field: 'email', headerName: 'Email', width: 250 },
   { field: 'phone', headerName: 'Số điện thoại', width: 150 },
   {
     field: 'role',
