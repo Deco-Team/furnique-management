@@ -32,7 +32,7 @@ const AddProduct = () => {
 
   const { uploadCloudinary } = useCloudinaryApi()
   const { createProduct } = useProductsApi()
-  const { getAllCategories } = useCategoriesApi()
+  const { getAllCategoriesForCreateProduct } = useCategoriesApi()
   const [categoriesList, setCategoriesList] = useState<ICheckboxOption[]>([])
 
   const defaultValues: IProductsProps = {
@@ -77,8 +77,8 @@ const AddProduct = () => {
   }, [])
   const getCategoriesData = async () => {
     try {
-      const categoriesData = await getAllCategories()
-      const categoriesList: ICheckboxOption[] = categoriesData.map((value: { name: unknown; _id: unknown }) => {
+      const categoriesData = await getAllCategoriesForCreateProduct()
+      const categoriesList: ICheckboxOption[] = categoriesData.docs.map((value: { name: unknown; _id: unknown }) => {
         return {
           label: value.name,
           value: value._id
@@ -86,7 +86,7 @@ const AddProduct = () => {
       })
       setCategoriesList(categoriesList)
     } catch (error) {
-      console.error()
+      console.log(error)
     }
   }
 
@@ -142,6 +142,7 @@ const AddProduct = () => {
         setFiles([])
         setSelectedCategories([])
         notifySuccess('Thêm thành công')
+        navigate(ScreenPath.PRODUCTS)
       }
     }
   }
