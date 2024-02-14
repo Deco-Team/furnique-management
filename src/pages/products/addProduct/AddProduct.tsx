@@ -9,7 +9,7 @@ import SecondaryButton from '~/components/button/SecondaryButton'
 import { EMPTY } from '~/global/constants/constants'
 import { ONE, TWO, ZERO } from '~/global/constants/numbers'
 import { ScreenPath } from '~/global/enum'
-import { ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
+import { ICheckboxOption, ICreateProductProps, IProductsProps } from '~/global/interfaces/interface'
 import CategoriesSection from '../components/CategoriesSection'
 import FileUploadSection from '../components/FileUploadSection'
 import GeneralInformationSection from '../components/GeneralInformationSection'
@@ -35,7 +35,7 @@ const AddProduct = () => {
   const { getAllCategories } = useCategoriesApi()
   const [categoriesList, setCategoriesList] = useState<ICheckboxOption[]>([])
 
-  const defaultValues: IProductsProps = {
+  const defaultValues: ICreateProductProps = {
     name: EMPTY,
     description: EMPTY,
     images: [],
@@ -102,7 +102,7 @@ const AddProduct = () => {
     }
   }
 
-  const handleAddProductButton = async (data: IProductsProps) => {
+  const handleAddProductButton = async (data: ICreateProductProps) => {
     const updatedVariants = data.variants.map(
       (variant: { keyValue: { [s: string]: unknown } | ArrayLike<unknown> }) => {
         const transformedKeyValue: Record<string, unknown> = {}
@@ -129,7 +129,7 @@ const AddProduct = () => {
         imageURL.push(cloudinaryURLConvert(publicId))
       }
 
-      const formData: IProductsProps = {
+      const formData: ICreateProductProps = {
         ...data,
         categories: selectedCategories,
         variants: updatedVariants,
