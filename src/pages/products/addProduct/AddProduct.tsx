@@ -26,8 +26,7 @@ import { v4 } from 'uuid'
 const AddProduct = () => {
   const navigate = useNavigate()
   const [files, setFiles] = useState<File[]>([])
-  const [showVariantFields, setShowVariantFields] = useState(false)
-  const [keyValueCounts, setKeyValueCounts] = useState<Record<number, number>>({})
+  const [keyValueCounts, setKeyValueCounts] = useState<Record<number, number>>({ 0: 1 })
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   const { uploadCloudinary } = useCloudinaryApi()
@@ -60,13 +59,14 @@ const AddProduct = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors }
+    formState: { errors },
+    clearErrors
   } = useForm<IProductsProps>({
     defaultValues: defaultValues,
     resolver: yupResolver(addProductValidationSchema)
   })
 
-  const { fields, append } = useFieldArray({
+  const { fields, append, remove } = useFieldArray({
     control,
     name: 'variants'
   })
@@ -75,6 +75,7 @@ const AddProduct = () => {
     getCategoriesData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   const getCategoriesData = async () => {
     try {
       const categoriesData = await getAllCategoriesForCreateProduct()
@@ -92,6 +93,9 @@ const AddProduct = () => {
 
   const handleCategoriesSelect = (selectedCategories: string[]) => {
     setSelectedCategories(selectedCategories)
+    if (selectedCategories.length > 0) {
+      clearErrors('categories')
+    }
   }
 
   const uploadImage = async (publidIds: string[]) => {
@@ -152,21 +156,21 @@ const AddProduct = () => {
   }
 
   const handleAddVariantsButton = () => {
-    if (!showVariantFields) {
-      setShowVariantFields(true)
-    } else if (fields.length < TWO) {
-      append({
-        sku: EMPTY,
-        price: ZERO,
-        quantity: ZERO,
-        dimensions: {
-          height: ZERO,
-          width: ZERO,
-          length: ZERO
-        },
-        keyValue: {}
-      })
-    }
+    append({
+      sku: EMPTY,
+      price: ZERO,
+      quantity: ZERO,
+      dimensions: {
+        height: ZERO,
+        width: ZERO,
+        length: ZERO
+      },
+      keyValue: {}
+    })
+    setKeyValueCounts({
+      ...keyValueCounts,
+      [fields.length]: 1
+    })
   }
 
   const handleAddKeyButton = (index: number) => {
@@ -179,6 +183,21 @@ const AddProduct = () => {
     }
   }
 
+  const handleRemoveKeyButton = (variantIndex: number) => {
+    setKeyValueCounts((prevKeyValueCounts) => {
+      const newKeyValueCounts = { ...prevKeyValueCounts }
+      if (newKeyValueCounts[variantIndex] > 1) {
+        newKeyValueCounts[variantIndex] -= 1
+      } else {
+        delete newKeyValueCounts[variantIndex]
+      }
+      return newKeyValueCounts
+    })
+  }
+
+  const handleRemoveVariantButton = (index: number) => {
+    remove(index)
+  }
   return (
     <form onSubmit={handleSubmit(handleAddProductButton)}>
       <ButtonWrapper>
@@ -203,13 +222,15 @@ const AddProduct = () => {
             handleAddKeyButton={handleAddKeyButton}
             handleAddVariantsButton={handleAddVariantsButton}
             keyValueCounts={keyValueCounts}
-            showVariantFields={showVariantFields}
+            handleRemoveKeyButton={handleRemoveKeyButton}
+            handleRemoveVariantButton={handleRemoveVariantButton}
           />
         </GeneralContainer>
         <CategoriesSection
           categoriesOptions={categoriesList}
           control={control}
           onCategoriesSelect={handleCategoriesSelect}
+          errors={errors}
         />
       </Wrapper>
     </form>

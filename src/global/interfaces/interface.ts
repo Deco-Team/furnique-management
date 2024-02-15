@@ -22,6 +22,7 @@ export interface IFormInputProps {
   multiline?: boolean
   rows?: number
   value?: string
+  placeholder?: string
 }
 export interface IDropdownOption {
   label: string
