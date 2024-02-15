@@ -4,24 +4,24 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useEffect, useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import { v4 } from 'uuid'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
 import { EMPTY } from '~/global/constants/constants'
 import { ONE, TWO, ZERO } from '~/global/constants/numbers'
 import { ScreenPath } from '~/global/enum'
 import { IAddProductProps, ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
+import { notifyError, notifySuccess } from '~/global/toastify'
+import useCategoriesApi from '~/hooks/api/useCategoriesApi'
+import useCloudinaryApi from '~/hooks/api/useCloudinaryApi'
+import useProductsApi from '~/hooks/api/useProductsApi'
+import { cloudinaryURLConvert } from '~/utils/common.utils'
 import CategoriesSection from '../components/CategoriesSection'
 import FileUploadSection from '../components/FileUploadSection'
 import GeneralInformationSection from '../components/GeneralInformationSection'
 import VariantsSection from '../components/VariantsSection'
 import { addProductValidationSchema } from '../validation/AddProductValidationSchema'
 import { ButtonWrapper, GeneralContainer, Wrapper } from './AddProduct.styled'
-import useProductsApi from '~/hooks/api/useProductsApi'
-import useCloudinaryApi from '~/hooks/api/useCloudinaryApi'
-import { notifyError, notifySuccess } from '~/global/toastify'
-import { cloudinaryURLConvert } from '~/utils/common.utils'
-import useCategoriesApi from '~/hooks/api/useCategoriesApi'
-import { v4 } from 'uuid'
 
 const AddProduct = () => {
   const navigate = useNavigate()
@@ -79,7 +79,7 @@ const AddProduct = () => {
   const getCategoriesData = async () => {
     try {
       const categoriesData = await getAllCategoriesForCreateProduct()
-      const categoriesList: ICheckboxOption[] = categoriesData.docs.map((value: { name: unknown; _id: unknown }) => {
+      const categoriesList: ICheckboxOption[] = categoriesData.map((value: { name: unknown; _id: unknown }) => {
         return {
           label: value.name,
           value: value._id
@@ -107,12 +107,18 @@ const AddProduct = () => {
   }
 
   const handleAddProductButton = async (data: IAddProductProps) => {
+    if (selectedCategories.length === 0) {
+      notifyError('Vui lòng chọn ít nhất 1 danh mục cho sản phẩm')
+      return
+    }
     const updatedVariants = data.variants.map(
       (variant: { keyValue: { [s: string]: unknown } | ArrayLike<unknown> }) => {
         const transformedKeyValue: Record<string, unknown> = {}
-        if (variant.keyValue && Object.keys(variant.keyValue).length > ZERO) {
-          Object.entries(variant.keyValue).forEach(([key, value]) => {
-            transformedKeyValue[key] = value
+        if (variant.keyValue) {
+          Object.values(variant.keyValue).forEach((entry) => {
+            if (typeof entry === 'object' && entry !== null && 'key' in entry && 'value' in entry) {
+              transformedKeyValue[entry.key as string] = entry.value
+            }
           })
         }
         return {
@@ -132,21 +138,25 @@ const AddProduct = () => {
         imageList.push(publicId)
         imageURL.push(cloudinaryURLConvert(publicId))
       }
-
       const formData: IProductsProps = {
         ...data,
         categories: selectedCategories,
         variants: updatedVariants,
         images: imageURL
       }
-      const response = await createProduct(formData)
-      if (response) {
-        await uploadImage(imageList)
-        reset()
-        setFiles([])
-        setSelectedCategories([])
-        notifySuccess('Thêm thành công')
-        navigate(ScreenPath.PRODUCTS)
+
+      try {
+        const response = await createProduct(formData)
+        if (response) {
+          await uploadImage(imageList)
+          reset()
+          setFiles([])
+          setSelectedCategories([])
+          notifySuccess('Thêm thành công')
+          navigate(ScreenPath.PRODUCTS)
+        }
+      } catch (error) {
+        notifyError('Có lỗi xảy ra khi thêm sản phẩm')
       }
     }
   }
@@ -198,6 +208,7 @@ const AddProduct = () => {
   const handleRemoveVariantButton = (index: number) => {
     remove(index)
   }
+
   return (
     <form onSubmit={handleSubmit(handleAddProductButton)}>
       <ButtonWrapper>
