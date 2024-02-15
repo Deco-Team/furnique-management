@@ -7,6 +7,7 @@ import { IAuthContextProps, IAuthProviderProps, IUserInfoProps } from '~/global/
 import { notifyError, notifySuccess } from '~/global/toastify'
 import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
 import { post } from '~/utils/apiCaller'
+import { decodeJwt } from 'jose'
 
 const initialContext: IAuthContextProps = {
   user: {
@@ -33,7 +34,7 @@ export const AuthContext = createContext<IAuthContextProps>(initialContext)
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [idToken, setIdToken] = useState<string | null>(null)
   const [user, setUser] = useState<IUserInfoProps | undefined>()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   useEffect(() => {
     const storedToken = localStorage.getItem('idToken')
@@ -41,12 +42,22 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       setIdToken(storedToken)
     }
   }, [])
+
   useEffect(() => {
-    if (!idToken && !loading) {
+    if (idToken) {
+      try {
+        const decodedToken = decodeJwt(idToken)
+        if (decodedToken.exp && decodedToken.exp * 1000 < Date.now()) navigate('/')
+      } catch (error) {
+        navigate('/')
+      }
+    } else {
       navigate('/')
     }
+
+    setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, idToken])
+  }, [idToken])
 
   initialContext.login = async ({ email, password }: ILoginFormProps) => {
     try {
