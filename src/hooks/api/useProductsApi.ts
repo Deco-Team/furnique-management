@@ -13,7 +13,7 @@ const useProductsApi = () => {
       const endpoint = `/${rootEndpoint}`
       try {
         const response = await callApi('get', endpoint, {}, { page, limit: pageSize })
-        return response.data
+        return response.data.docs
       } catch (error) {
         console.log(error)
       }
