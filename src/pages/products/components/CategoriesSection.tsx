@@ -1,15 +1,16 @@
-import { Control } from 'react-hook-form'
+import { Control, FieldErrors } from 'react-hook-form'
 import InputCheckboxForm from '~/components/form/InputCheckboxForm'
 import { ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
-import { CategoryContainer, TitleText } from '../addProduct/AddProduct.styled'
+import { CategoryContainer, ErrorText, TitleText } from '../addProduct/AddProduct.styled'
 
 interface CategoriesSectionProps {
   control: Control<IProductsProps>
   onCategoriesSelect: (selectedCategories: string[]) => void
   categoriesOptions: ICheckboxOption[]
+  errors: FieldErrors
 }
 
-const CategoriesSection = ({ control, onCategoriesSelect, categoriesOptions }: CategoriesSectionProps) => {
+const CategoriesSection = ({ control, onCategoriesSelect, categoriesOptions, errors }: CategoriesSectionProps) => {
   const handleCategoriesSelect = (selectedCategories: string[]) => {
     onCategoriesSelect(selectedCategories)
   }
@@ -25,6 +26,7 @@ const CategoriesSection = ({ control, onCategoriesSelect, categoriesOptions }: C
           label='Phân loại sản phẩm'
           onSelectionChange={handleCategoriesSelect}
         />
+        {errors.categories && <ErrorText>{errors.categories.message as string}</ErrorText>}
       </CategoryContainer>
     </>
   )

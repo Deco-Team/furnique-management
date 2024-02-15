@@ -2,7 +2,7 @@ import TextField from '@mui/material/TextField'
 import { Controller } from 'react-hook-form'
 import { IFormInputProps } from '~/global/interfaces/interface'
 
-const InputTextForm = ({ name, label, control, type, sx, variant, multiline, rows }: IFormInputProps) => {
+const InputTextForm = ({ name, label, control, type, sx, variant, multiline, rows, placeholder }: IFormInputProps) => {
   return (
     <Controller
       name={name}
@@ -21,6 +21,7 @@ const InputTextForm = ({ name, label, control, type, sx, variant, multiline, row
           sx={sx}
           multiline={multiline}
           rows={rows}
+          placeholder={placeholder}
         />
       )}
     />
