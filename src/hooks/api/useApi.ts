@@ -5,49 +5,26 @@ import { useCallback } from 'react'
 import { get, post, put, remove, patch } from '~/utils/apiCaller'
 
 const useApi = () => {
-  const { idToken, logout, refreshToken } = useAuth()
+  const { idToken, logout } = useAuth()
 
   const handleError = useCallback(
     async (error: unknown) => {
       let message = ''
       if (error instanceof AxiosError) {
-        console.log(error)
-        const errorDetails = error.response?.data.message
-        switch (errorDetails) {
-          case 'Access denied': {
-            await logout()
-            message = 'Account is not allowed to access the system'
-            break
-          }
-          case 'Session expired': {
-            await logout()
-            break
-          }
-          case 'Invalid token': {
-            await logout()
-            break
-          }
-          case 'No token provided': {
-            await logout()
-            break
-          }
-          case 'Token expired': {
-            await refreshToken()
-            break
-          }
-          case 'Not permitted': {
-            message = 'Tài khoản không được phép truy cập'
-            break
-          }
-          default:
-            message = errorDetails
+        const errorStatusCode = error.response?.data.status
+        if (errorStatusCode === 401) {
+          await logout()
+        }
+
+        if (errorStatusCode === 403) {
+          message = 'Không có quyền truy cập'
         }
       }
       if (message) {
         notifyError(message)
       }
     },
-    [logout, refreshToken]
+    [logout]
   )
   /**
    * Function Documentation: `callApi`
