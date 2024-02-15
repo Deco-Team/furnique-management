@@ -6,6 +6,7 @@ import { ICheckboxGroupProps, ICheckboxOption } from '~/global/interfaces/interf
 
 const useCheckboxGroup = (defaultValues: any[] = []) => {
   const [selectedItems, setSelectedItems] = useState<any>(defaultValues)
+  const [prevSelectedItems, setPrevSelectedItems] = useState<any>(defaultValues)
 
   const handleSelect = (value: any) => {
     const isPresent = selectedItems.indexOf(value)
@@ -17,25 +18,28 @@ const useCheckboxGroup = (defaultValues: any[] = []) => {
     }
   }
 
-  return { selectedItems, handleSelect }
+  return { selectedItems, handleSelect, prevSelectedItems, setPrevSelectedItems }
 }
 
 const InputCheckboxForm = ({
+  control,
   name,
   label,
   options,
   defaultValues,
   onSelectionChange
 }: ICheckboxGroupProps & { onSelectionChange: (selectedItems: string[]) => void }) => {
-  const { control, setValue } = useForm()
-  const { selectedItems, handleSelect } = useCheckboxGroup(defaultValues)
+  const { setValue } = useForm()
+  const { selectedItems, handleSelect, prevSelectedItems, setPrevSelectedItems } = useCheckboxGroup(defaultValues)
 
   useEffect(() => {
-    if (name) {
+    if (name && JSON.stringify(selectedItems) !== JSON.stringify(prevSelectedItems)) {
       setValue(name, selectedItems)
       onSelectionChange(selectedItems)
     }
-  }, [selectedItems, setValue, name, onSelectionChange])
+    setPrevSelectedItems(selectedItems)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedItems, setValue, name, onSelectionChange, prevSelectedItems])
 
   return (
     <FormControl size={'small'} variant={'outlined'}>
