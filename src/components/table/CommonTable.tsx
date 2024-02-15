@@ -32,7 +32,6 @@ const CommonTable = ({
               }
             : undefined
         }
-        checkboxSelection
         disableColumnMenu
         sx={{ backgroundColor: 'var(--white-color)' }}
       />

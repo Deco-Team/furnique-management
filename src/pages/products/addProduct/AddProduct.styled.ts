@@ -39,3 +39,12 @@ export const ButtonWrapper = styled.div`
   justify-content: flex-end;
   margin: 0.25rem;
 `
+export const ErrorText = styled.p`
+  color: var(--red-color);
+`
+
+export const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-right: 10px;
+`

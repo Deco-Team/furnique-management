@@ -1,18 +1,20 @@
+import CloseIcon from '@mui/icons-material/Close'
 import { Control, FieldArrayWithId, FieldErrors } from 'react-hook-form'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import InputTextForm from '~/components/form/InputTextForm'
 import { ONE, ZERO } from '~/global/constants/numbers'
 import { IProductsProps } from '~/global/interfaces/interface'
-import { InformationContainer, TitleText } from '../addProduct/AddProduct.styled'
+import { HeaderWrapper, InformationContainer, TitleText } from '../addProduct/AddProduct.styled'
 
 interface VariantsSectionProps {
   keyValueCounts: Record<number, number>
   control: Control<IProductsProps>
   errors: FieldErrors<IProductsProps>
   fields: FieldArrayWithId<IProductsProps, 'variants', 'id'>[]
-  showVariantFields: boolean
   handleAddKeyButton: (index: number) => void
   handleAddVariantsButton: () => void
+  handleRemoveVariantButton: (index: number) => void
+  handleRemoveKeyButton: (index: number) => void
 }
 
 const VariantsSection = ({
@@ -20,99 +22,109 @@ const VariantsSection = ({
   control,
   errors,
   fields,
-  showVariantFields,
   handleAddKeyButton,
-  handleAddVariantsButton
+  handleAddVariantsButton,
+  handleRemoveKeyButton,
+  handleRemoveVariantButton
 }: VariantsSectionProps) => {
   return (
     <>
       <InformationContainer>
         <TitleText>Phân loại</TitleText>
-        {showVariantFields &&
-          fields.map((_variant, index) => {
-            const keyValueCount = keyValueCounts[index] || ZERO
-            return (
-              <>
-                <h4 style={{ paddingLeft: '20px', margin: ZERO }}>Phân loại {index + ONE}</h4>
-                <div key={index} style={{ marginBottom: '20px' }}>
-                  <InputTextForm
-                    control={control}
-                    name={`variants[${index}].sku`}
-                    label={`SKU ${index + ONE}`}
-                    sx={{ width: '30%', margin: '20px 0 0 20px' }}
+        {fields.map((_variant, variantIndex) => {
+          const keyValueCount = keyValueCounts[variantIndex] || ZERO
+          return (
+            <div key={variantIndex}>
+              <HeaderWrapper>
+                <h4 style={{ paddingLeft: '20px', margin: ZERO }}>Phân loại {variantIndex + ONE}</h4>
+                {variantIndex >= 1 && <CloseIcon onClick={() => handleRemoveVariantButton(variantIndex)} />}
+              </HeaderWrapper>
+              <div key={variantIndex} style={{ marginBottom: '20px' }}>
+                <InputTextForm
+                  control={control}
+                  name={`variants[${variantIndex}].sku`}
+                  label={`SKU ${variantIndex + ONE}`}
+                  sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                  variant='outlined'
+                  error={errors.variants?.[variantIndex]?.sku?.message}
+                />
+                <InputTextForm
+                  control={control}
+                  name={`variants[${variantIndex}].price`}
+                  label={`Giá ${variantIndex + ONE}`}
+                  sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                  variant='outlined'
+                  error={errors.variants?.[variantIndex]?.price?.message}
+                />
+                <InputTextForm
+                  control={control}
+                  name={`variants[${variantIndex}].quantity`}
+                  label={`Số lượng ${variantIndex + ONE}`}
+                  sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                  variant='outlined'
+                  error={errors.variants?.[variantIndex]?.quantity?.message}
+                />
+                <InputTextForm
+                  control={control}
+                  name={`variants[${variantIndex}].dimensions.height`}
+                  label={`Chiều cao ${variantIndex + ONE}`}
+                  sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                  variant='outlined'
+                  error={errors.variants?.[variantIndex]?.dimensions?.height?.message}
+                />
+                <InputTextForm
+                  control={control}
+                  name={`variants[${variantIndex}].dimensions.width`}
+                  label={`Chiều rộng ${variantIndex + ONE}`}
+                  sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                  variant='outlined'
+                  error={errors.variants?.[variantIndex]?.dimensions?.width?.message}
+                />
+                <InputTextForm
+                  control={control}
+                  name={`variants[${variantIndex}].dimensions.length`}
+                  label={`Chiều dài ${variantIndex + ONE}`}
+                  sx={{ width: '30%', margin: '20px 0 0 20px' }}
+                  variant='outlined'
+                  error={errors.variants?.[variantIndex]?.dimensions?.length?.message}
+                />
+                {keyValueCount < 2 && (
+                  <PrimaryButton
                     variant='outlined'
-                    error={errors.variants?.[index]?.sku?.message}
+                    name='Thêm thuộc tính'
+                    type='button'
+                    onClick={() => handleAddKeyButton(variantIndex)}
                   />
-                  <InputTextForm
-                    control={control}
-                    name={`variants[${index}].price`}
-                    label={`Giá ${index + ONE}`}
-                    sx={{ width: '30%', margin: '20px 0 0 20px' }}
-                    variant='outlined'
-                    error={errors.variants?.[index]?.price?.message}
-                  />
-                  <InputTextForm
-                    control={control}
-                    name={`variants[${index}].quantity`}
-                    label={`Số lượng ${index + ONE}`}
-                    sx={{ width: '30%', margin: '20px 0 0 20px' }}
-                    variant='outlined'
-                    error={errors.variants?.[index]?.quantity?.message}
-                  />
-                  <InputTextForm
-                    control={control}
-                    name={`variants[${index}].dimensions.height`}
-                    label={`Chiều cao ${index + ONE}`}
-                    sx={{ width: '30%', margin: '20px 0 0 20px' }}
-                    variant='outlined'
-                    error={errors.variants?.[index]?.dimensions?.height?.message}
-                  />
-                  <InputTextForm
-                    control={control}
-                    name={`variants[${index}].dimensions.width`}
-                    label={`Chiều rộng ${index + ONE}`}
-                    sx={{ width: '30%', margin: '20px 0 0 20px' }}
-                    variant='outlined'
-                    error={errors.variants?.[index]?.dimensions?.width?.message}
-                  />
-                  <InputTextForm
-                    control={control}
-                    name={`variants[${index}].dimensions.length`}
-                    label={`Chiều dài ${index + ONE}`}
-                    sx={{ width: '30%', margin: '20px 0 0 20px' }}
-                    variant='outlined'
-                    error={errors.variants?.[index]?.dimensions?.length?.message}
-                  />
-                  {keyValueCount < 2 && (
-                    <PrimaryButton
+                )}
+                {Array.from({ length: keyValueCount }).map((_, keyValueIndex) => (
+                  <div key={keyValueIndex} style={{ display: 'flex', alignItems: 'center' }}>
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${variantIndex}].keyValue[${keyValueIndex}].key`}
+                      label={`Thuộc tính ${keyValueIndex + ONE}`}
+                      sx={{ width: '40%', margin: '10px 0 0 20px' }}
                       variant='outlined'
-                      name='Thêm thuộc tính'
-                      type='button'
-                      onClick={() => handleAddKeyButton(index)}
+                      placeholder='Màu sắc, chất liệu...'
                     />
-                  )}
-                  {Array.from({ length: keyValueCount }).map((_, i) => (
-                    <div key={i}>
-                      <InputTextForm
-                        control={control}
-                        name={`variants[${index}].keyValue[${i}].key`}
-                        label={`Thuộc tính ${i + ONE}`}
-                        sx={{ width: '45%', margin: '10px 0 0 20px' }}
-                        variant='outlined'
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${variantIndex}].keyValue[${keyValueIndex}].value`}
+                      label='Giá trị'
+                      variant={'outlined'}
+                      sx={{ width: '40%', margin: '10px 0 0 20px' }}
+                    />
+                    {keyValueIndex >= 1 && (
+                      <CloseIcon
+                        onClick={() => handleRemoveKeyButton(variantIndex)}
+                        sx={{ padding: '10px 0 0 20px' }}
                       />
-                      <InputTextForm
-                        control={control}
-                        name={`variants[${index}].keyValue[${i}].value`}
-                        label='Giá trị'
-                        variant={'outlined'}
-                        sx={{ width: '45%', margin: '10px 0 0 20px' }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </>
-            )
-          })}
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        })}
         {fields.length < 2 && (
           <PrimaryButton
             variant={'outlined'}

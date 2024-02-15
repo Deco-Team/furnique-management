@@ -32,9 +32,10 @@ const ProductsTable = () => {
       const productRows = productsData.docs.map((product: IProduct) => ({
         ...product,
         id: product._id,
-        categories: product.categories[0].name,
+        categories: product.categories?.length > 0 ? product.categories[0].name : '',
         createdAt: dayjs(product.createdAt).format('DD/MM/YYYY')
       }))
+
       setProductRows(productRows)
       setTotalRows(productsData.totalDocs)
     } catch (error) {
@@ -43,6 +44,7 @@ const ProductsTable = () => {
       setIsLoading(false)
     }
   }
+
   return isLoading ? (
     <Loading />
   ) : (
