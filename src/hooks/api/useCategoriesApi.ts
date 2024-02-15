@@ -32,7 +32,7 @@ const useCategoriesApi = () => {
     const endpoint = `/${rootEndpoint}`
     try {
       const response = await callApi('get', endpoint)
-      return response.data
+      return response.data.docs
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     }

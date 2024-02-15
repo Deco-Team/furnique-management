@@ -34,7 +34,5 @@ export const addProductValidationSchema = object().shape({
   images: array().of(string().required()).required('Cần có ít nhất 1 ảnh'),
   brand: string().trim().required('Thương hiệu là bắt buộc'),
   variants: array().of(variantSchema).required('Phân loại là bắt buộc'),
-  categories: array()
-    .min(1, 'Cần chọn ít nhất 1 danh mục cho sản phẩm')
-    .required('Vui lòng chọn 1 danh mục cho sản phẩm')
+  categories: array().required('Vui lòng chọn 1 danh mục cho sản phẩm')
 })
