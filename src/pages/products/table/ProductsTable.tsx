@@ -29,7 +29,7 @@ const ProductsTable = () => {
     try {
       setIsLoading(true)
       const productsData = await getAllProducts(page, pageSize)
-      const productRows = productsData.map((product: IProduct) => ({
+      const productRows = productsData.docs.map((product: IProduct) => ({
         ...product,
         id: product._id,
         categories: product.categories?.length > 0 ? product.categories[0].name : '',

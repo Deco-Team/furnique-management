@@ -13,7 +13,7 @@ const useProductsApi = () => {
       const endpoint = `/${rootEndpoint}`
       try {
         const response = await callApi('get', endpoint, {}, { page, limit: pageSize })
-        return response.data.docs
+        return response.data
       } catch (error) {
         console.log(error)
       }
@@ -25,7 +25,6 @@ const useProductsApi = () => {
     async (data: IProductsProps) => {
       const endpoint = `/${rootEndpoint}`
       try {
-        notifyLoading()
         const response = await callApi('post', endpoint, {}, {}, data)
         return response
       } catch (error) {
