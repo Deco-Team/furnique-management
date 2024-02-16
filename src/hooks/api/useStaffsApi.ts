@@ -32,7 +32,7 @@ const useStaffsApi = () => {
       const endpoint = `/${rootEndpoint}/${staffId}`
       try {
         const response = await callApi('get', endpoint)
-        return response.data.docs
+        return response.data
       } catch (error) {
         console.log(error)
       }

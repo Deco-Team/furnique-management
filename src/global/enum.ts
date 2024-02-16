@@ -9,7 +9,9 @@ export enum ScreenPath {
   ORDERS = '/orders',
   VIEW_ORDER = '/orders/detail/:orderId',
   STAFFS = '/staffs',
-  ADD_STAFF = '/staffs/create'
+  ADD_STAFF = '/staffs/create',
+  VIEW_STAFF = '/staff/detail/:staffId',
+  UPDATE_STAFF = 'staff/update/:staffId'
 }
 
 export enum ProductStatus {
