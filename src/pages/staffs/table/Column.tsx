@@ -3,8 +3,10 @@ import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import ActionCell from '~/components/table/ActionCell'
+import { ScreenPath } from '~/global/enum'
+import { ColumnProps } from '~/global/interfaces/interface'
 
-export const staffsColumn: GridColDef[] = [
+export const staffsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'id',
     headerName: 'STT',
@@ -55,12 +57,15 @@ export const staffsColumn: GridColDef[] = [
     headerAlign: 'center',
     align: 'center',
     renderCell: (params: GridRenderCellParams) => {
+      const handleViewButton = (staffId: string) => {
+        navigate(ScreenPath.VIEW_STAFF.replace(':staffId', staffId))
+      }
       return (
         <ActionCell
           id={params.row.id as number}
           buttons={[
             { icon: <EditIcon />, onClick: () => console.log('Edit clicked') },
-            { icon: <VisibilityIcon />, onClick: () => console.log('View clicked') },
+            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) },
             { icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') }
           ]}
         />

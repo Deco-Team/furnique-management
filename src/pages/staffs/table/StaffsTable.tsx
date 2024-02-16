@@ -5,8 +5,10 @@ import { staffsColumn } from './Column'
 import { IStaffRows } from '~/global/interfaces/staffsInterface'
 import useStaffsApi from '~/hooks/api/useStaffsApi'
 import { notifyError } from '~/global/toastify'
+import { useNavigate } from 'react-router-dom'
 
 const StaffsTable = () => {
+  const navigate = useNavigate()
   const { getAllStaffs } = useStaffsApi()
   const [isLoading, setIsLoading] = useState(false)
   const [staffsRows, setStaffsRow] = useState<IStaffRows[]>([])
@@ -47,7 +49,7 @@ const StaffsTable = () => {
     <Loading />
   ) : (
     <CommonTable
-      columns={staffsColumn}
+      columns={staffsColumn({ navigate })}
       rows={staffsRows}
       totalRows={totalRows}
       page={page}
