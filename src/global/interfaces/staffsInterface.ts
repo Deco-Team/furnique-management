@@ -21,4 +21,5 @@ export interface IStaffRows {
   createdAt: string
   updatedAt: string
   providerId: string
+  createdBy?: string
 }
