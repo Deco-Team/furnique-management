@@ -11,7 +11,7 @@ import { EMPTY } from '~/global/constants/constants'
 import { ONE, TWO, ZERO } from '~/global/constants/numbers'
 import { ScreenPath } from '~/global/enum'
 import { IAddProductProps, ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
-import { notifyError, notifySuccess } from '~/global/toastify'
+import { notifyError, notifyLoading, notifySuccess } from '~/global/toastify'
 import useCategoriesApi from '~/hooks/api/useCategoriesApi'
 import useCloudinaryApi from '~/hooks/api/useCloudinaryApi'
 import useProductsApi from '~/hooks/api/useProductsApi'
@@ -79,7 +79,7 @@ const AddProduct = () => {
   const getCategoriesData = async () => {
     try {
       const categoriesData = await getAllCategoriesForCreateProduct()
-      const categoriesList: ICheckboxOption[] = categoriesData.map((value: { name: unknown; _id: unknown }) => {
+      const categoriesList: ICheckboxOption[] = categoriesData.docs.map((value: { name: unknown; _id: unknown }) => {
         return {
           label: value.name,
           value: value._id
@@ -146,6 +146,7 @@ const AddProduct = () => {
       }
 
       try {
+        notifyLoading()
         const response = await createProduct(formData)
         if (response) {
           await uploadImage(imageList)
