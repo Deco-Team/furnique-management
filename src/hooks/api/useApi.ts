@@ -11,7 +11,7 @@ const useApi = () => {
     async (error: unknown) => {
       let message = ''
       if (error instanceof AxiosError) {
-        const errorStatusCode = error.response?.data.status
+        const errorStatusCode = error.response?.status
         if (errorStatusCode === 401) {
           await logout()
         }
