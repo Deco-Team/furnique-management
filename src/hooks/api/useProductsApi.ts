@@ -1,9 +1,8 @@
 import { useCallback } from 'react'
-import { IProductsResponse } from '~/global/interfaces/productInterface'
 import useApi from './useApi'
 import { IProductsProps } from '~/global/interfaces/interface'
 import { notifyError, notifyLoading } from '~/global/toastify'
-//TODO: waiting for back-end document api :)
+
 const useProductsApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'products/provider'
@@ -17,6 +16,19 @@ const useProductsApi = () => {
       notifyError('Có lỗi xảy ra')
     }
   }, [callApi])
+
+  const getProductById = useCallback(
+    async (productId: string) => {
+      const endpoint = `/${rootEndpoint}/${productId}`
+      try {
+        const response = await callApi('get', endpoint)
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
 
   const createProduct = useCallback(
     async (data: IProductsProps) => {
@@ -33,7 +45,7 @@ const useProductsApi = () => {
   )
 
   const updateProduct = useCallback(
-    async (productId: string, data: IProductsResponse) => {
+    async (productId: string, data: IProductsProps) => {
       const endpoint = `/${rootEndpoint}/${productId}`
       try {
         const response = await callApi('put', endpoint, {}, {}, data)
@@ -45,7 +57,7 @@ const useProductsApi = () => {
     [callApi]
   )
 
-  return { getAllProducts, createProduct, updateProduct }
+  return { getAllProducts, createProduct, updateProduct, getProductById }
 }
 
 export default useProductsApi

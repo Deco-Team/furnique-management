@@ -1,5 +1,5 @@
 import CommonTable from '~/components/table/CommonTable'
-import { categoriesColumn } from './Coloumn'
+import { categoriesColumn } from './Column'
 import useCategoriesApi from '~/hooks/api/useCategoriesApi'
 import { useEffect, useState } from 'react'
 import { ICategoryRows } from '~/global/interfaces/categoriesInterface'

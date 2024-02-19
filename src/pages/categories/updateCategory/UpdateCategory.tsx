@@ -26,11 +26,11 @@ import { v4 } from 'uuid'
 const UpdateCategory = () => {
   const navigate = useNavigate()
   const params = useParams()
-  const { uploadCloudinary } = useCloudinaryApi()
+  const { getCategoryById, updateCategory } = useCategoriesApi()
   const [files, setFiles] = useState<File[]>([])
   const [categoryData, setCategoryData] = useState<ICategoryDetails>()
   const [isLoading, setIsLoading] = useState(false)
-  const { updateCategory, getCategoryById } = useCategoriesApi()
+  const { uploadCloudinary } = useCloudinaryApi()
 
   const categoryId = params.categoryId
   const defaultValues = {
@@ -91,21 +91,14 @@ const UpdateCategory = () => {
         notifyInfo('Không có thay đổi')
         return
       }
-      const response = await updateCategory(
-        categoryId,
-        {
-          name: control._formValues.name,
-          description: control._formValues.description,
-          image: files.length > 0 ? cloudinaryURLConvert(publicId) : categoryData?.image ?? EMPTY
-        },
-        files.length > 0
-      )
-      if (response && files.length > 0) {
+      const response = await updateCategory(categoryId, {
+        name: control._formValues.name,
+        description: control._formValues.description,
+        image: files.length > 0 ? cloudinaryURLConvert(control._formValues.name) : categoryData?.image ?? EMPTY
+      })
+
+      if (response) {
         await uploadImage(publicId)
-        notifySuccess('Cập nhật thành công')
-        getCategoryById(categoryId)
-        navigate(ScreenPath.CATEGORIES)
-      } else if (response) {
         notifySuccess('Cập nhật thành công')
         getCategoryById(categoryId)
         navigate(ScreenPath.CATEGORIES)
