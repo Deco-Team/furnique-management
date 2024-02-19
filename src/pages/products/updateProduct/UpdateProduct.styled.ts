@@ -39,3 +39,15 @@ export const ButtonWrapper = styled.div`
   justify-content: flex-end;
   margin: 0.25rem;
 `
+export const Image = styled.img`
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  object-fit: cover;
+`
+export const Items = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+`

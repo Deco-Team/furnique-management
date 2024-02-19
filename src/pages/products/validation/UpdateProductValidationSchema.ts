@@ -14,7 +14,7 @@ const variantSchema = object().shape({
       width: number().typeError('Chiều rộng phải là số').positive('Chiều rộng phải lớn hơn 0').required()
     })
     .required(),
-  keyValue: object().shape({}).required()
+  keyValue: object().shape({})
 })
 
 export const updateProductValidationSchema = object().shape({

@@ -1,21 +1,24 @@
 import { useCallback } from 'react'
 import useApi from './useApi'
 import { IProductsProps } from '~/global/interfaces/interface'
-import { notifyError, notifyLoading } from '~/global/toastify'
+import { notifyLoading } from '~/global/toastify'
 
 const useProductsApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'products/provider'
 
-  const getAllProducts = useCallback(async () => {
-    const endpoint = `/${rootEndpoint}`
-    try {
-      const response = await callApi('get', endpoint)
-      return response.data.docs
-    } catch (error) {
-      notifyError('Có lỗi xảy ra')
-    }
-  }, [callApi])
+  const getAllProducts = useCallback(
+    async (page = 1, pageSize = 10) => {
+      const endpoint = `/${rootEndpoint}`
+      try {
+        const response = await callApi('get', endpoint, {}, { page, limit: pageSize })
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
 
   const getProductById = useCallback(
     async (productId: string) => {
@@ -57,7 +60,20 @@ const useProductsApi = () => {
     [callApi]
   )
 
-  return { getAllProducts, createProduct, updateProduct, getProductById }
+  const deleteProductById = useCallback(
+    async (productId: string) => {
+      const endpoint = `/${rootEndpoint}/${productId}`
+      try {
+        const response = await callApi('delete', endpoint)
+        return response
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  return { getAllProducts, createProduct, updateProduct, getProductById, deleteProductById }
 }
 
 export default useProductsApi

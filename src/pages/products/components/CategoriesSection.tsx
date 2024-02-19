@@ -8,9 +8,16 @@ interface CategoriesSectionProps {
   onCategoriesSelect: (selectedCategories: string[]) => void
   categoriesOptions: ICheckboxOption[]
   errors: FieldErrors
+  defaultValues?: string[] | undefined
 }
 
-const CategoriesSection = ({ control, onCategoriesSelect, categoriesOptions, errors }: CategoriesSectionProps) => {
+const CategoriesSection = ({
+  control,
+  onCategoriesSelect,
+  categoriesOptions,
+  errors,
+  defaultValues
+}: CategoriesSectionProps) => {
   const handleCategoriesSelect = (selectedCategories: string[]) => {
     onCategoriesSelect(selectedCategories)
   }
@@ -25,6 +32,7 @@ const CategoriesSection = ({ control, onCategoriesSelect, categoriesOptions, err
           options={categoriesOptions}
           label='Phân loại sản phẩm'
           onSelectionChange={handleCategoriesSelect}
+          defaultValues={defaultValues}
         />
         {errors.categories && <ErrorText>{errors.categories.message as string}</ErrorText>}
       </CategoryContainer>

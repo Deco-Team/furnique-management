@@ -7,11 +7,32 @@ const useCategoriesApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'categories/provider'
 
-  const getAllCategories = useCallback(async () => {
+  const getAllCategories = useCallback(
+    async (page = 1, pageSize = 10) => {
+      const endpoint = `/${rootEndpoint}`
+      try {
+        const response = await callApi(
+          'get',
+          endpoint,
+          {},
+          {
+            page,
+            limit: pageSize
+          }
+        )
+        return response.data
+      } catch (error) {
+        notifyError('Có lỗi xảy ra')
+      }
+    },
+    [callApi]
+  )
+
+  const getAllCategoriesForCreateProduct = useCallback(async () => {
     const endpoint = `/${rootEndpoint}`
     try {
       const response = await callApi('get', endpoint)
-      return response.data.docs
+      return response.data
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     }
@@ -58,7 +79,7 @@ const useCategoriesApi = () => {
     [callApi]
   )
 
-  return { getAllCategories, createCategory, updateCategory, getCategoryById }
+  return { getAllCategories, createCategory, updateCategory, getCategoryById, getAllCategoriesForCreateProduct }
 }
 
 export default useCategoriesApi

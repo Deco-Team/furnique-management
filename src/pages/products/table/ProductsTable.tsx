@@ -5,6 +5,7 @@ import CommonTable from '~/components/table/CommonTable'
 import { IProduct, IProductRows } from '~/global/interfaces/productInterface'
 import useProductsApi from '~/hooks/api/useProductsApi'
 import { productsColumn } from './Column'
+import { useNavigate } from 'react-router-dom'
 
 const ProductsTable = () => {
   const { getAllProducts } = useProductsApi()
@@ -13,6 +14,8 @@ const ProductsTable = () => {
   const [totalRows, setTotalRows] = useState(0)
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
+
+  const navigate = useNavigate()
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage)
@@ -49,7 +52,7 @@ const ProductsTable = () => {
     <Loading />
   ) : (
     <CommonTable
-      columns={productsColumn}
+      columns={productsColumn({ navigate })}
       rows={productRows}
       totalRows={totalRows}
       page={page}

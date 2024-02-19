@@ -11,7 +11,9 @@ export enum ScreenPath {
   STAFFS = '/staffs',
   ADD_STAFF = '/staffs/create',
   VIEW_STAFF = '/staff/detail/:staffId',
-  UPDATE_STAFF = 'staff/update/:staffId'
+  UPDATE_STAFF = 'staff/update/:staffId',
+  UPDATE_PRODUCT = '/products/update/:productId',
+  DELETE_PRODUCT = '/products/delete/:productId'
 }
 
 export enum ProductStatus {
