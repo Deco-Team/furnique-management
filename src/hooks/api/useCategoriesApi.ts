@@ -7,34 +7,6 @@ const useCategoriesApi = () => {
   const callApi = useApi()
   const rootEndpoint = 'categories/provider'
 
-  const uploadCloudinary = useCallback(async (files: File[], publicId: string) => {
-    const formData = new FormData()
-    for (let i = 0; i < files.length; i++) {
-      formData.append('file', files[0])
-      formData.append('cloud_name', import.meta.env.VITE_CLOUDINARY_CLOUD_NAME)
-      formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET)
-      formData.append('public_id', publicId.trim())
-      const contentRange = `bytes 0-${files[0].size - 1}/${files[0].size}`
-      const headers = {
-        'X-Unique-Upload-Id': publicId,
-        'Content-Range': contentRange
-      }
-      try {
-        const response = await fetch(import.meta.env.VITE_CLOUDINARY_UPLOAD_API, {
-          method: 'POST',
-          body: formData,
-          headers: headers
-        })
-        if (!response.ok) {
-          notifyError('Lỗi khi upload ảnh')
-          return
-        }
-      } catch (error) {
-        notifyError('Có lỗi xảy ra')
-      }
-    }
-  }, [])
-
   const getAllCategories = useCallback(async () => {
     const endpoint = `/${rootEndpoint}`
     try {
@@ -86,7 +58,7 @@ const useCategoriesApi = () => {
     [callApi]
   )
 
-  return { getAllCategories, createCategory, updateCategory, uploadCloudinary, getCategoryById }
+  return { getAllCategories, createCategory, updateCategory, getCategoryById }
 }
 
 export default useCategoriesApi

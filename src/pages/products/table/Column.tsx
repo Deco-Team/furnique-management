@@ -4,8 +4,10 @@ import VisibilityIcon from '@mui/icons-material/Visibility'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import ActionCell from '~/components/table/ActionCell'
 import StatusTextDiv from './StatusTextDiv'
+import { ScreenPath } from '~/global/enum'
+import { ColumnProps } from '~/global/interfaces/interface'
 
-export const productsColumn: GridColDef[] = [
+export const productsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'id',
     headerName: 'STT',
@@ -54,13 +56,22 @@ export const productsColumn: GridColDef[] = [
     headerAlign: 'center',
     align: 'center',
     renderCell: (params: GridRenderCellParams) => {
+      const handleUpdateButton = (categoryId: string) => {
+        navigate(ScreenPath.UPDATE_PRODUCT.replace(':productId', categoryId))
+      }
+      const handleDeleteButton = (categoryId: string) => {
+        navigate(ScreenPath.UPDATE_PRODUCT.replace(':productId', categoryId))
+      }
       return (
         <ActionCell
           id={params.row.id as number}
           buttons={[
-            { icon: <EditIcon />, onClick: () => console.log('Edit clicked') },
+            { icon: <EditIcon />, onClick: () => handleUpdateButton(params.row.id) },
             { icon: <VisibilityIcon />, onClick: () => console.log('View clicked') },
-            { icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') }
+            {
+              icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />,
+              onClick: () => handleDeleteButton(params.row.id)
+            }
           ]}
         />
       )
