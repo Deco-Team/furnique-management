@@ -4,9 +4,10 @@ import { InformationContainer, TitleText } from '../addProduct/AddProduct.styled
 interface ImageUploadSectionProps {
   files: File[]
   setFiles: React.Dispatch<React.SetStateAction<File[]>>
+  maxFiles: number
 }
 
-const FileUploadSection = ({ files, setFiles }: ImageUploadSectionProps) => {
+const FileUploadSection = ({ files, setFiles, maxFiles }: ImageUploadSectionProps) => {
   return (
     <>
       <InformationContainer>
@@ -40,7 +41,7 @@ const FileUploadSection = ({ files, setFiles }: ImageUploadSectionProps) => {
           }}
           value={files}
           onChange={setFiles}
-          maxFiles={5}
+          maxFiles={maxFiles}
           maxSize={1024 * 1024 * 8}
           accept='image/png, image/jpeg'
           title={`Kéo thả ảnh vào đây hoặc bấm thêm ảnh`}
