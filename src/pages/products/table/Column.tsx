@@ -60,7 +60,7 @@ export const productsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
         navigate(ScreenPath.UPDATE_PRODUCT.replace(':productId', categoryId))
       }
       const handleDeleteButton = (categoryId: string) => {
-        navigate(ScreenPath.UPDATE_PRODUCT.replace(':productId', categoryId))
+        navigate(ScreenPath.DELETE_PRODUCT.replace(':productId', categoryId))
       }
       return (
         <ActionCell

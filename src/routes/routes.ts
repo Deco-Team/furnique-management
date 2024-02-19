@@ -8,7 +8,9 @@ import Dashboard from '~/pages/dashboard/Dashboard'
 import Orders from '~/pages/orders/Orders'
 import ViewOrderDetail from '~/pages/orders/viewOrder/ViewOrderDetail'
 import AddProduct from '~/pages/products/addProduct/AddProduct'
+import DeleteProduct from '~/pages/products/deleteProduct/DeleteProduct'
 import Products from '~/pages/products/Products'
+import UpdateProduct from '~/pages/products/updateProduct/UpdateProduct'
 import AddStaff from '~/pages/staffs/addStaff/AddStaff'
 import Staffs from '~/pages/staffs/Staffs'
 import ViewStaffDetail from '~/pages/staffs/viewStaff/ViewStaffDetail'
@@ -45,6 +47,16 @@ export const privateRoutes = [
   {
     path: ScreenPath.ADD_PRODUCTS,
     component: AddProduct,
+    title: 'Sản phẩm'
+  },
+  {
+    path: ScreenPath.UPDATE_PRODUCT,
+    component: UpdateProduct,
+    title: 'Sản phẩm'
+  },
+  {
+    path: ScreenPath.DELETE_PRODUCT,
+    component: DeleteProduct,
     title: 'Sản phẩm'
   },
   {
