@@ -14,6 +14,7 @@ import Products from '~/pages/products/Products'
 import UpdateProduct from '~/pages/products/updateProduct/UpdateProduct'
 import AddStaff from '~/pages/staffs/addStaff/AddStaff'
 import Staffs from '~/pages/staffs/Staffs'
+import UpdateStaff from '~/pages/staffs/updateStaff/UpdateStaff'
 import ViewStaffDetail from '~/pages/staffs/viewStaff/ViewStaffDetail'
 
 export const publicRoutes = [{ path: '/', component: Login }]
@@ -88,6 +89,11 @@ export const privateRoutes = [
   {
     path: ScreenPath.VIEW_STAFF,
     component: ViewStaffDetail,
+    title: 'Nhân viên'
+  },
+  {
+    path: ScreenPath.UPDATE_STAFF,
+    component: UpdateStaff,
     title: 'Nhân viên'
   }
 ]

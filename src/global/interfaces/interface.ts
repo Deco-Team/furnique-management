@@ -24,6 +24,7 @@ export interface IFormInputProps {
   value?: string
   placeholder?: string
   defaultValues?: any
+  disabled?: boolean
 }
 export interface IDropdownOption {
   label: string
@@ -57,6 +58,7 @@ export interface IRadioGroupProps {
   defaultValue?: string | number
   onChange: (event: ChangeEvent<HTMLInputElement>, value: string | number) => void
   sx?: SxProps
+  disabled?: boolean
 }
 
 export interface ICustomButtonProps {
