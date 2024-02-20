@@ -23,3 +23,9 @@ export interface IStaffRows {
   providerId: string
   createdBy?: string
 }
+
+export interface DeactiveStaffModalProps {
+  open: boolean
+  handleClose: () => void
+  staffId: string
+}

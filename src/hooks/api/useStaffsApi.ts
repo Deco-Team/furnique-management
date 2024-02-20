@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { IStaffsRequest } from '~/global/interfaces/staffsInterface'
 import useApi from './useApi'
+import { notifyLoading } from '~/global/toastify'
 
 const useStaffsApi = () => {
   const callApi = useApi()
@@ -53,7 +54,35 @@ const useStaffsApi = () => {
     [callApi]
   )
 
-  return { getAllStaffs, createStaff, getStaffById }
+  const updateStaff = useCallback(
+    async (staffId: string, data: IStaffsRequest, isWithImage = true) => {
+      const endpoint = `/${rootEndpoint}/${staffId}`
+      try {
+        if (!isWithImage) notifyLoading()
+        const response = await callApi('patch', endpoint, {}, {}, data)
+        return response
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  const deactiveStaff = useCallback(
+    async (staffId: string) => {
+      const endpoint = `/${rootEndpoint}/${staffId}/deactivate`
+      try {
+        notifyLoading()
+        const response = await callApi('delete', endpoint)
+        return response
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  return { getAllStaffs, createStaff, getStaffById, updateStaff, deactiveStaff }
 }
 
 export default useStaffsApi

@@ -2,13 +2,13 @@ import { ICustomButtonProps } from '~/global/interfaces/interface'
 import CustomButton from './CustomButton'
 
 const CancelButton = (props: ICustomButtonProps) => {
-  const { name, onClick, icon, sx, disable } = props
+  const { name, onClick, icon, sx, disable, type } = props
   return (
     <>
       <CustomButton
         variant='contained'
         name={name}
-        type='submit'
+        type={type}
         icon={icon}
         sx={{
           textTransform: 'uppercase',

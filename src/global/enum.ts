@@ -46,3 +46,8 @@ export enum StaffRoles {
   CONSULTANT_STAFF = 'CONSULTANT_STAFF',
   DELIVERY_STAFF = 'DELIVERY_STAFF'
 }
+
+export enum StaffStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE'
+}
