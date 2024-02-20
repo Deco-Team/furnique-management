@@ -1,4 +1,3 @@
-import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
@@ -30,19 +29,20 @@ export const staffsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'lastName',
     headerName: 'Họ',
-    width: 150,
+    width: 130,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
   {
     field: 'firstName',
     headerName: 'Tên',
-    width: 150,
+    width: 130,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
-  { field: 'email', headerName: 'Email', width: 250 },
+  { field: 'email', headerName: 'Email', width: 220 },
   { field: 'phone', headerName: 'Số điện thoại', width: 150 },
+  { field: 'status', headerName: 'Trạng thái', width: 120 },
   {
     field: 'role',
     headerName: 'Chức vụ',
@@ -51,7 +51,7 @@ export const staffsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'actions',
     headerName: 'Thao tác',
-    width: 200,
+    width: 150,
     sortable: false,
     filterable: false,
     headerAlign: 'center',
@@ -60,13 +60,15 @@ export const staffsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
       const handleViewButton = (staffId: string) => {
         navigate(ScreenPath.VIEW_STAFF.replace(':staffId', staffId))
       }
+      const handleEditButton = (staffId: string) => {
+        navigate(ScreenPath.UPDATE_STAFF.replace(':staffId', staffId))
+      }
       return (
         <ActionCell
           id={params.row.id as number}
           buttons={[
-            { icon: <EditIcon />, onClick: () => console.log('Edit clicked') },
-            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) },
-            { icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') }
+            { icon: <EditIcon />, onClick: () => handleEditButton(params.row.id) },
+            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) }
           ]}
         />
       )
