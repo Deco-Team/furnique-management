@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 const ProductsTable = () => {
   const { getAllProducts } = useProductsApi()
+  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const [productRows, setProductRows] = useState<IProductRows[]>([])
   const [totalRows, setTotalRows] = useState(0)

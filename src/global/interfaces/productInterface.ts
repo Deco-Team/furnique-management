@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Control } from 'react-hook-form'
 import { ICategory } from './categoriesInterface'
 
@@ -17,10 +18,24 @@ export interface IVariant {
   }
   keyValue: Record<string, KeyValuePair>
 }
+
+export interface IVariantDetail {
+  sku: string
+  price: number
+  quantity: number
+  dimensions: {
+    height: number
+    width: number
+    length: number
+  }
+  keyValue: Map<string, string>
+}
+
 export interface IProduct {
   _id: string
   name: string
   description: string
+  slug: string
   images: string[]
   rate: number
   brand: string
@@ -29,6 +44,19 @@ export interface IProduct {
   status: string
   createdAt: string
   updatedAt: string
+}
+
+export interface IProductDetail {
+  _id: string
+  name: string
+  description: string
+  slug: string
+  images: string[]
+  rate: number
+  brand: string
+  variants: IVariantDetail[]
+  categories: ICategory[]
+  status: string
 }
 
 export interface IProductsResponse {
