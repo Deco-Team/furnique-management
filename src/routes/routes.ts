@@ -45,6 +45,11 @@ export const privateRoutes = [
     title: 'Sản phẩm'
   },
   {
+    path: ScreenPath.VIEW_PRODUCT,
+    component: ViewProductDetail,
+    title: 'Sản phẩm'
+  },
+  {
     path: ScreenPath.ADD_PRODUCTS,
     component: AddProduct,
     title: 'Sản phẩm'
