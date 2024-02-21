@@ -6,6 +6,7 @@ export enum ScreenPath {
   UPDATE_CATEGORY = '/categories/update/:categoryId',
   PRODUCTS = '/products',
   ADD_PRODUCTS = '/products/create',
+  VIEW_PRODUCT = '/products/detail/:productId',
   ORDERS = '/orders',
   VIEW_ORDER = '/orders/detail/:orderId',
   STAFFS = '/staffs',
