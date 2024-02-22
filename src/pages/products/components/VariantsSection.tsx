@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import CloseIcon from '@mui/icons-material/Close'
 import { Control, FieldArrayWithId, FieldErrors } from 'react-hook-form'
 import PrimaryButton from '~/components/button/PrimaryButton'
@@ -16,7 +15,6 @@ interface VariantsSectionProps {
   handleAddVariantsButton: () => void
   handleRemoveVariantButton: (index: number) => void
   handleRemoveKeyButton: (index: number) => void
-  defaultValues?: any
 }
 
 const VariantsSection = ({
@@ -27,10 +25,8 @@ const VariantsSection = ({
   handleAddKeyButton,
   handleAddVariantsButton,
   handleRemoveKeyButton,
-  handleRemoveVariantButton,
-  defaultValues
+  handleRemoveVariantButton
 }: VariantsSectionProps) => {
-  console.log(defaultValues)
   return (
     <>
       <InformationContainer>
@@ -100,35 +96,31 @@ const VariantsSection = ({
                     onClick={() => handleAddKeyButton(variantIndex)}
                   />
                 )}
-                {/* {defaultValues &&
-                  defaultValues[variantIndex].keyValue.keys().map((key: string, keyValueIndex: number) => (
-                    <div key={keyValueIndex} style={{ display: 'flex', alignItems: 'center' }}>
-                      <InputTextForm
-                        control={control}
-                        name={`variants[${variantIndex}].keyValue[${keyValueIndex}].key`}
-                        label={`Thuộc tính ${keyValueIndex + ONE}`}
-                        sx={{ width: '40%', margin: '10px 0 0 20px' }}
-                        variant='outlined'
-                        placeholder='Màu sắc, chất liệu...'
-                        defaultValues={key}
+                {Array.from({ length: keyValueCount }).map((_, keyValueIndex) => (
+                  <div key={keyValueIndex} style={{ display: 'flex', alignItems: 'center' }}>
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${variantIndex}].keyValue[${keyValueIndex}].key`}
+                      label={`Thuộc tính ${keyValueIndex + ONE}`}
+                      sx={{ width: '40%', margin: '10px 0 0 20px' }}
+                      variant='outlined'
+                      placeholder='Màu sắc, chất liệu...'
+                    />
+                    <InputTextForm
+                      control={control}
+                      name={`variants[${variantIndex}].keyValue[${keyValueIndex}].value`}
+                      label='Giá trị'
+                      variant={'outlined'}
+                      sx={{ width: '40%', margin: '10px 0 0 20px' }}
+                    />
+                    {keyValueIndex >= 1 && (
+                      <CloseIcon
+                        onClick={() => handleRemoveKeyButton(variantIndex)}
+                        sx={{ padding: '10px 0 0 20px' }}
                       />
-                      <InputTextForm
-                        control={control}
-                        name={`variants[${variantIndex}].keyValue[${keyValueIndex}].value`}
-                        label='Giá trị'
-                        variant={'outlined'}
-                        sx={{ width: '40%', margin: '10px 0 0 20px' }}
-                        defaultValues={defaultValues[variantIndex].keyValue[key]}
-                      />
-                      {keyValueIndex >= 1 && (
-                        <CloseIcon
-                          onClick={() => handleRemoveKeyButton(variantIndex)}
-                          sx={{ padding: '10px 0 0 20px' }}
-                        />
-                      )}
-                    </div>
-                  ))} */}
-                {_variant.keyValue.keys}
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           )
