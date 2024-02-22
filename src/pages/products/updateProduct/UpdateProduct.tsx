@@ -25,8 +25,8 @@ import { updateProductValidationSchema } from '../validation/UpdateProductValida
 import { Edit } from '@mui/icons-material'
 import { ONE, TWO, ZERO } from '~/global/constants/numbers'
 import useProductsApi from '~/hooks/api/useProductsApi'
-import { ICategory } from '~/global/interfaces/categoriesInterface'
 import { Button, ImageList, ImageListItem } from '@mui/material'
+import { IVariant } from '~/global/interfaces/productInterface'
 
 const UpdateProduct = () => {
   const defaultValues: IProductsProps = {
@@ -44,7 +44,7 @@ const UpdateProduct = () => {
           width: ZERO,
           length: ZERO
         },
-        keyValue: new Map()
+        keyValue: {}
       }
     ],
     categories: []
@@ -73,13 +73,12 @@ const UpdateProduct = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors }
+    formState: { errors },
+    clearErrors
   } = useForm<IProductsProps>({
-    defaultValues: defaultValues
-    // resolver: yupResolver(updateProductValidationSchema)
+    defaultValues: defaultValues,
+    resolver: yupResolver(updateProductValidationSchema)
   })
-
-  console.log(errors)
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -109,7 +108,7 @@ const UpdateProduct = () => {
           width: ZERO,
           length: ZERO
         },
-        keyValue: new Map()
+        keyValue: {}
       })
     }
   }
@@ -117,10 +116,9 @@ const UpdateProduct = () => {
   //#region (Category fetch)
   const handleCategoriesSelect = (selectedCategories: string[]) => {
     setSelectedCategories(selectedCategories)
-    setProductData({
-      ...productData,
-      categories: selectedCategories
-    })
+    if (selectedCategories.length > 0) {
+      clearErrors('categories')
+    }
   }
 
   useEffect(() => {
@@ -152,16 +150,47 @@ const UpdateProduct = () => {
     setIsLoading(true)
     try {
       const product = await getProductById(productId)
-      setProductData(product)
-      setSelectedCategories(product.categories.map((value: ICategory) => value._id))
-      reset({
+      const transformedProduct: IProductsProps = {
         name: product.name,
         brand: product.brand,
         description: product.description,
-        variants: product.variants,
-        categories: selectedCategories,
+        variants: product.variants.map((variant: any) => {
+          const transformedVariant: IVariant = {
+            sku: variant.sku,
+            price: variant.price,
+            quantity: variant.quantity,
+            dimensions: {
+              height: variant.dimensions.height,
+              width: variant.dimensions.width,
+              length: variant.dimensions.length
+            },
+            keyValue: {}
+          }
+
+          Object.keys(variant.keyValue).forEach((key, index) => {
+            transformedVariant.keyValue[index] = {
+              key: key,
+              value: variant.keyValue[key]
+            }
+          })
+
+          return transformedVariant
+        }),
+        categories: product.categories.map((category: any) => category._id),
         images: product.images
+      }
+      setProductData(transformedProduct)
+      setSelectedCategories(transformedProduct.categories)
+      product.variants.forEach(({ keyValue }: any, index: number) => {
+        setKeyValueCounts((prevKeyValueCounts) => {
+          return {
+            ...prevKeyValueCounts,
+            [index]: Object.keys(keyValue).length
+          }
+        })
       })
+
+      reset(transformedProduct)
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     } finally {
@@ -193,17 +222,8 @@ const UpdateProduct = () => {
     remove(index)
   }
 
-  const handleUpdateProductButton = () => {
-    const updateProductdata: IProductsProps = {
-      name: control._formValues.name,
-      brand: control._formValues.brand,
-      categories: productData.categories,
-      description: control._formValues.description,
-      images: productData.images,
-      variants: control._formValues.variants
-    }
-    console.log(control._formValues)
-    console.log(productData)
+  const handleUpdateProductButton = (data: IProductsProps) => {
+    console.log({ ...data, categories: selectedCategories })
   }
 
   const handleCancelButton = () => {
@@ -263,7 +283,6 @@ const UpdateProduct = () => {
             keyValueCounts={keyValueCounts}
             handleRemoveKeyButton={handleRemoveKeyButton}
             handleRemoveVariantButton={handleRemoveVariantButton}
-            defaultValues={productData?.variants}
           />
         </GeneralContainer>
         <CategoriesSection

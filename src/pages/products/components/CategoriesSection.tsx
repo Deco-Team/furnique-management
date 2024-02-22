@@ -8,7 +8,7 @@ interface CategoriesSectionProps {
   onCategoriesSelect: (selectedCategories: string[]) => void
   categoriesOptions: ICheckboxOption[]
   errors: FieldErrors
-  defaultValues?: string[] | undefined
+  defaultValues?: unknown[]
 }
 
 const CategoriesSection = ({
