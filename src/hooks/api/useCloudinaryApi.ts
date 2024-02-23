@@ -1,10 +1,9 @@
 import { useCallback } from 'react'
-import { notifyError, notifyLoading } from '~/global/toastify'
+import { notifyError } from '~/global/toastify'
 
 const useCloudinaryApi = () => {
   const uploadCloudinary = useCallback(async (files: File[], publicIds: string[]) => {
     const formData = new FormData()
-    notifyLoading()
     for (let i = 0; i < files.length; i++) {
       formData.append('file', files[i])
       formData.append('cloud_name', import.meta.env.VITE_CLOUDINARY_CLOUD_NAME)
