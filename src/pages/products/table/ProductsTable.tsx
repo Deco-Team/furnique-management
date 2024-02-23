@@ -16,8 +16,6 @@ const ProductsTable = () => {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
 
-  const navigate = useNavigate()
-
   const handlePageChange = (newPage: number) => {
     setPage(newPage)
   }

@@ -44,8 +44,7 @@ const ViewProductDetail = () => {
   }
 
   const handleEditButton = () => {
-    //TODO: Add update product routes when available
-    navigate(-1)
+    productId ? navigate(ScreenPath.UPDATE_PRODUCT.replace(':productId', productId)) : navigate(ScreenPath.PRODUCTS)
   }
 
   return isLoading ? (

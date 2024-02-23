@@ -56,18 +56,21 @@ export const productsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
     headerAlign: 'center',
     align: 'center',
     renderCell: (params: GridRenderCellParams) => {
-      const handleUpdateButton = (categoryId: string) => {
-        navigate(ScreenPath.UPDATE_PRODUCT.replace(':productId', categoryId))
+      const handleViewButton = (productId: string) => {
+        navigate(ScreenPath.VIEW_PRODUCT.replace(':productId', productId))
       }
-      const handleDeleteButton = (categoryId: string) => {
-        navigate(ScreenPath.DELETE_PRODUCT.replace(':productId', categoryId))
+      const handleUpdateButton = (productId: string) => {
+        navigate(ScreenPath.UPDATE_PRODUCT.replace(':productId', productId))
+      }
+      const handleDeleteButton = (productId: string) => {
+        navigate(ScreenPath.DELETE_PRODUCT.replace(':productId', productId))
       }
       return (
         <ActionCell
           id={params.row.id as number}
           buttons={[
             { icon: <EditIcon />, onClick: () => handleUpdateButton(params.row.id) },
-            { icon: <VisibilityIcon />, onClick: () => console.log('View clicked') },
+            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) },
             {
               icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />,
               onClick: () => handleDeleteButton(params.row.id)
