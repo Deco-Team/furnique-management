@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
 import InputTextForm from '~/components/form/InputTextForm'
-import { EMPTY } from '~/global/constants/constants'
+import { EMPTY, MAX_CATEGORY_IMAGE_FILES, MAX_CATEGORY_IMAGE_FILES_SIZE } from '~/global/constants/constants'
 import { ScreenPath } from '~/global/enum'
 import { ICategoriesProps } from '~/global/interfaces/interface'
 import { addCategoryValidationSchema } from '../validation/AddCategoryValidationSchema'
@@ -115,8 +115,8 @@ const AddCategory = () => {
             }}
             value={files}
             onChange={setFiles}
-            maxFiles={1}
-            maxSize={1024 * 1024 * 8}
+            maxFiles={MAX_CATEGORY_IMAGE_FILES}
+            maxSize={MAX_CATEGORY_IMAGE_FILES_SIZE}
             accept='image/png, image/jpeg'
             title={`Kéo thả ảnh vào đây hoặc bấm thêm ảnh`}
             buttonText='Tải lên'

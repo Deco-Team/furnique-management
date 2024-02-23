@@ -6,10 +6,10 @@ import { useFieldArray, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
-import { EMPTY } from '~/global/constants/constants'
-import { ONE, TWO, ZERO } from '~/global/constants/numbers'
+import { EMPTY, MAX_PRODUCT_IMAGE_FILES, MAX_PRODUCT_IMAGE_FILES_SIZE } from '~/global/constants/constants'
+import { TWO, ZERO } from '~/global/constants/numbers'
 import { ScreenPath } from '~/global/enum'
-import { IAddProductProps, ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
+import { ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
 import { notifyError, notifyLoading, notifySuccess } from '~/global/toastify'
 import useCategoriesApi from '~/hooks/api/useCategoriesApi'
 import useCloudinaryApi from '~/hooks/api/useCloudinaryApi'
@@ -26,7 +26,6 @@ import { v4 } from 'uuid'
 const AddProduct = () => {
   const navigate = useNavigate()
   const [files, setFiles] = useState<File[]>([])
-  const [keyValueCounts, setKeyValueCounts] = useState<Record<number, number>>({ 0: 1 })
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   const { uploadCloudinary } = useCloudinaryApi()
@@ -66,7 +65,7 @@ const AddProduct = () => {
     resolver: yupResolver(addProductValidationSchema)
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'variants'
   })
@@ -98,35 +97,20 @@ const AddProduct = () => {
     }
   }
 
-  const uploadImage = async (publidIds: string[]) => {
+  const uploadImage = async (publicIds: string[]) => {
     try {
-      await uploadCloudinary(files, publidIds)
+      await uploadCloudinary(files, publicIds)
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     }
   }
 
-  const handleAddProductButton = async (data: IAddProductProps) => {
+  const handleAddProductButton = async (data: IProductsProps) => {
     if (selectedCategories.length === 0) {
       notifyError('Vui lòng chọn ít nhất 1 danh mục cho sản phẩm')
       return
     }
-    const updatedVariants = data.variants.map(
-      (variant: { keyValue: { [s: string]: unknown } | ArrayLike<unknown> }) => {
-        const transformedKeyValue: Record<string, unknown> = {}
-        if (variant.keyValue) {
-          Object.values(variant.keyValue).forEach((entry) => {
-            if (typeof entry === 'object' && entry !== null && 'key' in entry && 'value' in entry) {
-              transformedKeyValue[entry.key as string] = entry.value
-            }
-          })
-        }
-        return {
-          ...variant,
-          keyValue: transformedKeyValue
-        }
-      }
-    )
+
     if (files.length <= 0) {
       notifyError('Cần ít nhất một ảnh')
       return
@@ -141,7 +125,6 @@ const AddProduct = () => {
       const formData: IProductsProps = {
         ...data,
         categories: selectedCategories,
-        variants: updatedVariants,
         images: imageURL
       }
 
@@ -166,44 +149,44 @@ const AddProduct = () => {
     navigate(ScreenPath.PRODUCTS)
   }
 
-  const handleAddVariantsButton = () => {
-    append({
-      sku: EMPTY,
-      price: ZERO,
-      quantity: ZERO,
-      dimensions: {
-        height: ZERO,
-        width: ZERO,
-        length: ZERO
-      },
-      keyValue: {}
-    })
-    setKeyValueCounts({
-      ...keyValueCounts,
-      [fields.length]: 1
-    })
+  const handleAddKeyButton = (variantIndex: number) => {
+    const variantField = fields[variantIndex]
+    const keyValueFieldCount = Object.keys(variantField.keyValue).length
+
+    if (keyValueFieldCount < TWO) {
+      update(variantIndex, {
+        ...variantField,
+        keyValue: { ...variantField.keyValue, [`${keyValueFieldCount}`]: { key: EMPTY, value: EMPTY } }
+      })
+    }
   }
 
-  const handleAddKeyButton = (index: number) => {
-    const currentCount = keyValueCounts[index] || ZERO
-    if (currentCount < TWO) {
-      setKeyValueCounts({
-        ...keyValueCounts,
-        [index]: currentCount + ONE
+  const handleAddVariantsButton = () => {
+    if (fields.length < TWO) {
+      append({
+        sku: EMPTY,
+        price: ZERO,
+        quantity: ZERO,
+        dimensions: {
+          height: ZERO,
+          width: ZERO,
+          length: ZERO
+        },
+        keyValue: {
+          [`${fields.length - 1}`]: {
+            key: EMPTY,
+            value: EMPTY
+          }
+        }
       })
     }
   }
 
   const handleRemoveKeyButton = (variantIndex: number) => {
-    setKeyValueCounts((prevKeyValueCounts) => {
-      const newKeyValueCounts = { ...prevKeyValueCounts }
-      if (newKeyValueCounts[variantIndex] > 1) {
-        newKeyValueCounts[variantIndex] -= 1
-      } else {
-        delete newKeyValueCounts[variantIndex]
-      }
-      return newKeyValueCounts
-    })
+    const variantField = fields[variantIndex]
+    const keyValueFields = variantField.keyValue
+    delete keyValueFields[Object.keys(keyValueFields).pop()!]
+    update(variantIndex, { ...variantField, keyValue: keyValueFields })
   }
 
   const handleRemoveVariantButton = (index: number) => {
@@ -226,14 +209,18 @@ const AddProduct = () => {
       <Wrapper>
         <GeneralContainer>
           <GeneralInformationSection control={control} errors={errors} />
-          <FileUploadSection files={files} setFiles={setFiles} />
+          <FileUploadSection
+            files={files}
+            setFiles={setFiles}
+            maxFiles={MAX_PRODUCT_IMAGE_FILES}
+            maxSize={MAX_PRODUCT_IMAGE_FILES_SIZE}
+          />
           <VariantsSection
             control={control}
             errors={errors}
             fields={fields}
             handleAddKeyButton={handleAddKeyButton}
             handleAddVariantsButton={handleAddVariantsButton}
-            keyValueCounts={keyValueCounts}
             handleRemoveKeyButton={handleRemoveKeyButton}
             handleRemoveVariantButton={handleRemoveVariantButton}
           />
