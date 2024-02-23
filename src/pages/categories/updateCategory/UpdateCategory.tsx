@@ -9,7 +9,7 @@ import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
 import InputTextForm from '~/components/form/InputTextForm'
 import Loading from '~/components/loading/Loading'
-import { EMPTY } from '~/global/constants/constants'
+import { EMPTY, MAX_CATEGORY_IMAGE_FILES, MAX_CATEGORY_IMAGE_FILES_SIZE } from '~/global/constants/constants'
 import { ScreenPath } from '~/global/enum'
 import { ICategoryDetails } from '~/global/interfaces/categoriesInterface'
 import { ICategoriesProps } from '~/global/interfaces/interface'
@@ -158,8 +158,8 @@ const UpdateCategory = () => {
             }}
             value={files}
             onChange={setFiles}
-            maxFiles={1}
-            maxSize={1024 * 1024 * 8}
+            maxFiles={MAX_CATEGORY_IMAGE_FILES}
+            maxSize={MAX_CATEGORY_IMAGE_FILES_SIZE}
             accept='image/png, image/jpeg'
             buttonText='Thay đổi ảnh'
           />

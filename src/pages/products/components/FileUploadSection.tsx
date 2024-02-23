@@ -5,9 +5,10 @@ interface ImageUploadSectionProps {
   files: File[]
   setFiles: React.Dispatch<React.SetStateAction<File[]>>
   maxFiles: number
+  maxSize: number
 }
 
-const FileUploadSection = ({ files, setFiles, maxFiles }: ImageUploadSectionProps) => {
+const FileUploadSection = ({ files, setFiles, maxFiles, maxSize }: ImageUploadSectionProps) => {
   return (
     <>
       <InformationContainer>
@@ -42,7 +43,7 @@ const FileUploadSection = ({ files, setFiles, maxFiles }: ImageUploadSectionProp
           value={files}
           onChange={setFiles}
           maxFiles={maxFiles}
-          maxSize={1024 * 1024 * 8}
+          maxSize={maxSize}
           accept='image/png, image/jpeg'
           title={`Kéo thả ảnh vào đây hoặc bấm thêm ảnh`}
           buttonText='Tải lên'

@@ -7,7 +7,6 @@ import { IProductsProps } from '~/global/interfaces/interface'
 import { HeaderWrapper, InformationContainer, TitleText } from '../addProduct/AddProduct.styled'
 
 interface VariantsSectionProps {
-  keyValueCounts: Record<number, number>
   control: Control<IProductsProps>
   errors: FieldErrors<IProductsProps>
   fields: FieldArrayWithId<IProductsProps, 'variants', 'id'>[]
@@ -18,7 +17,6 @@ interface VariantsSectionProps {
 }
 
 const VariantsSection = ({
-  keyValueCounts,
   control,
   errors,
   fields,
@@ -31,8 +29,8 @@ const VariantsSection = ({
     <>
       <InformationContainer>
         <TitleText>Phân loại</TitleText>
-        {fields.map((_variant, variantIndex) => {
-          const keyValueCount = keyValueCounts[variantIndex] || ZERO
+        {fields.map((variant, variantIndex) => {
+          const keyValueCount = Object.keys(variant.keyValue).length
           return (
             <div key={variantIndex}>
               <HeaderWrapper>

@@ -1,7 +1,7 @@
 import { Control } from 'react-hook-form'
 import { ICategory } from './categoriesInterface'
 
-interface KeyValuePair {
+export interface KeyValuePair {
   key: string
   value: string
 }

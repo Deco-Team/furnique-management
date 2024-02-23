@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/exhaustive-deps */
 import { yupResolver } from '@hookform/resolvers/yup'
 import CloseIcon from '@mui/icons-material/Close'
 import { useEffect, useState } from 'react'
@@ -9,10 +6,10 @@ import { useNavigate, useParams } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
 import Loading from '~/components/loading/Loading'
-import { EMPTY } from '~/global/constants/constants'
+import { EMPTY, MAX_PRODUCT_IMAGE_FILES, MAX_PRODUCT_IMAGE_FILES_SIZE } from '~/global/constants/constants'
 import { ScreenPath } from '~/global/enum'
 import { ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
-import { notifyError } from '~/global/toastify'
+import { notifyError, notifyLoading, notifySuccess } from '~/global/toastify'
 import useCategoriesApi from '~/hooks/api/useCategoriesApi'
 
 import useCloudinaryApi from '~/hooks/api/useCloudinaryApi'
@@ -23,10 +20,12 @@ import CategoriesSection from '../components/CategoriesSection'
 import VariantsSection from '../components/VariantsSection'
 import { updateProductValidationSchema } from '../validation/UpdateProductValidationSchema'
 import { Edit } from '@mui/icons-material'
-import { ONE, TWO, ZERO } from '~/global/constants/numbers'
+import { TWO, ZERO } from '~/global/constants/numbers'
 import useProductsApi from '~/hooks/api/useProductsApi'
 import { Button, ImageList, ImageListItem } from '@mui/material'
 import { IVariant } from '~/global/interfaces/productInterface'
+import { v4 } from 'uuid'
+import { cloudinaryURLConvert } from '~/utils/common.utils'
 
 const UpdateProduct = () => {
   const defaultValues: IProductsProps = {
@@ -55,13 +54,10 @@ const UpdateProduct = () => {
   const [files, setFiles] = useState<File[]>([])
   const [productData, setProductData] = useState<IProductsProps>(defaultValues)
   const [isLoading, setIsLoading] = useState(false)
-  const [keyValueCounts, setKeyValueCounts] = useState<Record<number, number>>({})
-  const [showVariantFields, setShowVariantFields] = useState(false)
+  // const [keyValueCounts, setKeyValueCounts] = useState<Record<number, number>>({})
 
   const [categoriesList, setCategoriesList] = useState<ICheckboxOption[]>([])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-
-  const [imageLimit, setImageLimit] = useState(0)
 
   const { getAllCategoriesForCreateProduct } = useCategoriesApi()
   const { uploadCloudinary } = useCloudinaryApi()
@@ -80,38 +76,10 @@ const UpdateProduct = () => {
     resolver: yupResolver(updateProductValidationSchema)
   })
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     control,
     name: 'variants'
   })
-
-  const handleAddKeyButton = (index: number) => {
-    const currentCount = keyValueCounts[index] || ZERO
-    if (currentCount < TWO) {
-      setKeyValueCounts({
-        ...keyValueCounts,
-        [index]: currentCount + ONE
-      })
-    }
-  }
-
-  const handleAddVariantsButton = () => {
-    if (!showVariantFields) {
-      setShowVariantFields(true)
-    } else if (fields.length < TWO) {
-      append({
-        sku: EMPTY,
-        price: ZERO,
-        quantity: ZERO,
-        dimensions: {
-          height: ZERO,
-          width: ZERO,
-          length: ZERO
-        },
-        keyValue: {}
-      })
-    }
-  }
 
   //#region (Category fetch)
   const handleCategoriesSelect = (selectedCategories: string[]) => {
@@ -123,6 +91,7 @@ const UpdateProduct = () => {
 
   useEffect(() => {
     getCategoriesData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const getCategoriesData = async () => {
     try {
@@ -144,6 +113,7 @@ const UpdateProduct = () => {
     if (productId) {
       getProductDetail(productId)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const getProductDetail = async (productId: string) => {
@@ -154,6 +124,7 @@ const UpdateProduct = () => {
         name: product.name,
         brand: product.brand,
         description: product.description,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         variants: product.variants.map((variant: any) => {
           const transformedVariant: IVariant = {
             sku: variant.sku,
@@ -176,19 +147,12 @@ const UpdateProduct = () => {
 
           return transformedVariant
         }),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         categories: product.categories.map((category: any) => category._id),
         images: product.images
       }
       setProductData(transformedProduct)
       setSelectedCategories(transformedProduct.categories)
-      product.variants.forEach(({ keyValue }: any, index: number) => {
-        setKeyValueCounts((prevKeyValueCounts) => {
-          return {
-            ...prevKeyValueCounts,
-            [index]: Object.keys(keyValue).length
-          }
-        })
-      })
 
       reset(transformedProduct)
     } catch (error) {
@@ -198,32 +162,97 @@ const UpdateProduct = () => {
     }
   }
 
-  const uploadImage = async (publicId: string) => {
+  const uploadImage = async (publicIds: string[]) => {
     try {
-      await uploadCloudinary(files, [publicId])
+      await uploadCloudinary(files, publicIds)
     } catch (error) {
       notifyError('Có lỗi xảy ra')
     }
   }
 
+  const handleAddKeyButton = (variantIndex: number) => {
+    const variantField = fields[variantIndex]
+    const keyValueFieldCount = Object.keys(variantField.keyValue).length
+
+    if (keyValueFieldCount < TWO) {
+      update(variantIndex, {
+        ...variantField,
+        keyValue: { ...variantField.keyValue, [`${keyValueFieldCount}`]: { key: EMPTY, value: EMPTY } }
+      })
+    }
+  }
+
+  const handleAddVariantsButton = () => {
+    if (fields.length < TWO) {
+      append({
+        sku: EMPTY,
+        price: ZERO,
+        quantity: ZERO,
+        dimensions: {
+          height: ZERO,
+          width: ZERO,
+          length: ZERO
+        },
+        keyValue: {
+          [`${fields.length - 1}`]: {
+            key: EMPTY,
+            value: EMPTY
+          }
+        }
+      })
+    }
+  }
+
   const handleRemoveKeyButton = (variantIndex: number) => {
-    setKeyValueCounts((prevKeyValueCounts) => {
-      const newKeyValueCounts = { ...prevKeyValueCounts }
-      if (newKeyValueCounts[variantIndex] > 1) {
-        newKeyValueCounts[variantIndex] -= 1
-      } else {
-        delete newKeyValueCounts[variantIndex]
-      }
-      return newKeyValueCounts
-    })
+    const variantField = fields[variantIndex]
+    const keyValueFields = variantField.keyValue
+    delete keyValueFields[Object.keys(keyValueFields).pop()!]
+    update(variantIndex, { ...variantField, keyValue: keyValueFields })
   }
 
   const handleRemoveVariantButton = (index: number) => {
     remove(index)
   }
 
-  const handleUpdateProductButton = (data: IProductsProps) => {
-    console.log({ ...data, categories: selectedCategories })
+  const handleUpdateProductButton = async (data: IProductsProps) => {
+    if (!productId) return
+    if (selectedCategories.length === 0) {
+      notifyError('Vui lòng chọn ít nhất 1 danh mục cho sản phẩm')
+      return
+    }
+    if (files.length + data.images.length <= 0) {
+      notifyError('Cần ít nhất một ảnh')
+      return
+    } else {
+      const imageList: string[] = []
+      const imageURL: string[] = []
+      for (let i = 0; i < files.length; i++) {
+        const publicId = v4()
+        imageList.push(publicId)
+        imageURL.push(cloudinaryURLConvert(publicId))
+      }
+
+      const formData: IProductsProps = {
+        ...data,
+        categories: selectedCategories,
+        images: [...productData.images, ...imageURL]
+      }
+
+      try {
+        notifyLoading()
+        const response = await updateProduct(productId, formData)
+        if (response) {
+          await uploadImage(imageList)
+          reset()
+          setFiles([])
+          setSelectedCategories([])
+          notifySuccess('Cập nhật thành công')
+          navigate(ScreenPath.PRODUCTS)
+        }
+      } catch (error) {
+        notifyError('Có lỗi xảy ra khi cập nhật sản phẩm')
+      }
+    }
   }
 
   const handleCancelButton = () => {
@@ -248,7 +277,14 @@ const UpdateProduct = () => {
       <Wrapper>
         <GeneralContainer>
           <GeneralInformationSection control={control} errors={errors} />
-          <FileUploadSection maxFiles={5 - productData.images.length} files={files} setFiles={setFiles} />
+          {MAX_PRODUCT_IMAGE_FILES - productData.images.length !== 0 && (
+            <FileUploadSection
+              maxFiles={5 - productData.images.length}
+              files={files}
+              setFiles={setFiles}
+              maxSize={MAX_PRODUCT_IMAGE_FILES_SIZE}
+            />
+          )}
           <ImageList cols={5}>
             {productData?.images.map((value: string, i: number) => (
               <ImageListItem key={i}>
@@ -280,7 +316,7 @@ const UpdateProduct = () => {
             fields={fields}
             handleAddKeyButton={handleAddKeyButton}
             handleAddVariantsButton={handleAddVariantsButton}
-            keyValueCounts={keyValueCounts}
+            // keyValueCounts={keyValueCounts}
             handleRemoveKeyButton={handleRemoveKeyButton}
             handleRemoveVariantButton={handleRemoveVariantButton}
           />
