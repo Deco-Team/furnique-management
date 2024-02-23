@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 import useApi from './useApi'
 import { IProductsProps } from '~/global/interfaces/interface'
-import { notifyLoading } from '~/global/toastify'
 
 const useProductsApi = () => {
   const callApi = useApi()
@@ -36,9 +35,20 @@ const useProductsApi = () => {
   const createProduct = useCallback(
     async (data: IProductsProps) => {
       const endpoint = `/${rootEndpoint}`
+      const transformedVariants = data.variants.map((variant) => {
+        const transformedKeyValue: Record<string, string> = {}
+        Object.values(variant.keyValue).forEach(({ key, value }) => {
+          transformedKeyValue[key] = value
+        })
+        return {
+          ...variant,
+          keyValue: transformedKeyValue
+        }
+      })
+      const productData = { ...data, variants: transformedVariants }
+
       try {
-        notifyLoading()
-        const response = await callApi('post', endpoint, {}, {}, data)
+        const response = await callApi('post', endpoint, {}, {}, productData)
         return response
       } catch (error) {
         console.log(error)
@@ -50,8 +60,20 @@ const useProductsApi = () => {
   const updateProduct = useCallback(
     async (productId: string, data: IProductsProps) => {
       const endpoint = `/${rootEndpoint}/${productId}`
+      const transformedVariants = data.variants.map((variant) => {
+        const transformedKeyValue: Record<string, string> = {}
+        Object.values(variant.keyValue).forEach(({ key, value }) => {
+          transformedKeyValue[key] = value
+        })
+        return {
+          ...variant,
+          keyValue: transformedKeyValue
+        }
+      })
+      const productData = { ...data, variants: transformedVariants }
+
       try {
-        const response = await callApi('put', endpoint, {}, {}, data)
+        const response = await callApi('put', endpoint, {}, {}, productData)
         return response
       } catch (error) {
         console.log(error)
