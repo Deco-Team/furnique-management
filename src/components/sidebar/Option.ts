@@ -1,4 +1,4 @@
-import { GridViewOutlined } from '@mui/icons-material'
+import { GridViewOutlined, Task } from '@mui/icons-material'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import CategoryIcon from '@mui/icons-material/Category'
 import InventoryIcon from '@mui/icons-material/Inventory'
@@ -10,5 +10,6 @@ export const optionsSidebar = [
   { id: 3, text: 'Sản phẩm', link: 'products', icon: InventoryIcon },
   { id: 4, text: 'Đơn hàng', link: 'orders', icon: ListAltIcon },
   { id: 5, text: 'Nhân viên', link: 'staffs', icon: PeopleIcon },
-  { id: 6, text: 'Giao dịch', link: 'transactions', icon: AccountBalanceWalletIcon }
+  { id: 6, text: 'Công việc', link: 'tasks', icon: Task },
+  { id: 7, text: 'Giao dịch', link: 'transactions', icon: AccountBalanceWalletIcon }
 ]
