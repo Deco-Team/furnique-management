@@ -16,6 +16,7 @@ import AddStaff from '~/pages/staffs/addStaff/AddStaff'
 import Staffs from '~/pages/staffs/Staffs'
 import UpdateStaff from '~/pages/staffs/updateStaff/UpdateStaff'
 import ViewStaffDetail from '~/pages/staffs/viewStaff/ViewStaffDetail'
+import Tasks from '~/pages/tasks/Tasks'
 
 export const publicRoutes = [{ path: '/', component: Login }]
 
@@ -92,6 +93,10 @@ export const privateRoutes = [
     title: 'Nhân viên'
   },
   {
+    path: ScreenPath.TASKS,
+    component: Tasks,
+    title: 'Công việc'
+  },
     path: ScreenPath.UPDATE_STAFF,
     component: UpdateStaff,
     title: 'Nhân viên'
