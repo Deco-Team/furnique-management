@@ -1,4 +1,4 @@
-import { Delete, Edit, Visibility } from '@mui/icons-material'
+import { Edit, Visibility } from '@mui/icons-material'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import ActionsCell from '~/components/table/ActionCell'
 import { ColumnProps } from '~/global/interfaces/interface'
@@ -28,14 +28,14 @@ export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'assignee',
     headerName: 'Người thực hiện',
-    width: 150,
+    width: 180,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
   {
     field: 'reporter',
     headerName: 'Người giao việc',
-    width: 150,
+    width: 200,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
@@ -49,7 +49,7 @@ export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'priority',
     headerName: 'Độ ưu tiên',
-    width: 100,
+    width: 150,
     filterable: false,
     sortingOrder: ['asc', 'desc'],
     renderCell: (param: GridRenderCellParams) => <Chip status={param.row.priority} />
@@ -57,7 +57,7 @@ export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'status',
     headerName: 'Trạng thái',
-    width: 125,
+    width: 180,
     filterable: false,
     sortingOrder: ['asc', 'desc'],
     renderCell: (param: GridRenderCellParams) => <Chip status={param.row.status} />
@@ -65,7 +65,7 @@ export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'actions',
     headerName: 'Thao tác',
-    width: 200,
+    width: 180,
     sortable: false,
     filterable: false,
     headerAlign: 'center',
@@ -79,8 +79,7 @@ export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
           id={params.row.id as number}
           buttons={[
             { icon: <Edit />, onClick: () => handleViewButton(params.row.id) },
-            { icon: <Visibility />, onClick: () => console.log('View clicked') },
-            { icon: <Delete sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') }
+            { icon: <Visibility />, onClick: () => console.log('View clicked') }
           ]}
         />
       )
