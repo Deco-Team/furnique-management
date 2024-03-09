@@ -97,6 +97,7 @@ export const privateRoutes = [
     component: Tasks,
     title: 'Công việc'
   },
+  {
     path: ScreenPath.UPDATE_STAFF,
     component: UpdateStaff,
     title: 'Nhân viên'
