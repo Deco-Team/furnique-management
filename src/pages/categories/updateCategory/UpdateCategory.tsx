@@ -11,7 +11,7 @@ import InputTextForm from '~/components/form/InputTextForm'
 import Loading from '~/components/loading/Loading'
 import { EMPTY, MAX_CATEGORY_IMAGE_FILES, MAX_CATEGORY_IMAGE_FILES_SIZE } from '~/global/constants/constants'
 import { ScreenPath } from '~/global/enum'
-import { ICategoryDetails } from '~/global/interfaces/categoriesInterface'
+import { ICategory, ICategoryDetails } from '~/global/interfaces/categoriesInterface'
 import { ICategoriesProps } from '~/global/interfaces/interface'
 import { notifyError, notifyInfo, notifySuccess } from '~/global/toastify'
 import useCategoriesApi from '~/hooks/api/useCategoriesApi'
@@ -80,29 +80,29 @@ const UpdateCategory = () => {
     }
   }
 
-  const handleUpdateCategoryButton = async () => {
-    const publicId = v4()
-    if (categoryId) {
-      const hasChanges =
-        categoryData?.name !== control._formValues.name ||
-        categoryData?.description !== control._formValues.description ||
-        files.length !== 0
-      if (!hasChanges) {
-        notifyInfo('Không có thay đổi')
-        return
-      }
-      const response = await updateCategory(categoryId, {
-        name: control._formValues.name,
-        description: control._formValues.description,
-        image: files.length > 0 ? cloudinaryURLConvert(control._formValues.name) : categoryData?.image ?? EMPTY
-      })
+  const handleUpdateCategoryButton = async (data: ICategoriesProps) => {
+    if (!categoryId) return
 
-      if (response) {
-        await uploadImage(publicId)
-        notifySuccess('Cập nhật thành công')
-        getCategoryById(categoryId)
-        navigate(ScreenPath.CATEGORIES)
-      }
+    const hasChanges =
+      categoryData?.name !== data.name || categoryData?.description !== data.description || files.length > 0
+    if (!hasChanges) {
+      notifyInfo('Không có thay đổi')
+      return
+    }
+
+    const publicId = v4()
+    const imageUrl = cloudinaryURLConvert(publicId)
+    const formData: ICategory = {
+      ...data,
+      image: imageUrl
+    }
+    const response = await updateCategory(categoryId, formData)
+
+    if (response) {
+      await uploadImage(publicId)
+      notifySuccess('Cập nhật thành công')
+      getCategoryById(categoryId)
+      navigate(ScreenPath.CATEGORIES)
     }
   }
   const handleCancelButton = () => {
