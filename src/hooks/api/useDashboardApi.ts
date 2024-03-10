@@ -46,7 +46,7 @@ const useDashboardApi = () => {
 
   const getCustomerNumber = useCallback(
     async (periodType: string) => {
-      const endpoint = `${rootEndpoint}/current/sales?periodType=${periodType}`
+      const endpoint = `${rootEndpoint}/current/customers?periodType=${periodType}`
       try {
         const response = await callApi('get', endpoint)
         return response.data
