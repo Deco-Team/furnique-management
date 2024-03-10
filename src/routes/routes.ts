@@ -5,6 +5,7 @@ import Categories from '~/pages/categories/Categories'
 import UpdateCategory from '~/pages/categories/updateCategory/UpdateCategory'
 import ViewCategoryDetail from '~/pages/categories/viewCategory/ViewCategoryDetail'
 import Dashboard from '~/pages/dashboard/Dashboard'
+import Delivery from '~/pages/delivery/Delivery'
 import Orders from '~/pages/orders/Orders'
 import ViewOrderDetail from '~/pages/orders/viewOrder/ViewOrderDetail'
 import AddProduct from '~/pages/products/addProduct/AddProduct'
@@ -101,5 +102,10 @@ export const privateRoutes = [
     path: ScreenPath.UPDATE_STAFF,
     component: UpdateStaff,
     title: 'Nhân viên'
+  },
+  {
+    path: ScreenPath.DELIVERY,
+    component: Delivery,
+    title: 'Giao hàng'
   }
 ]

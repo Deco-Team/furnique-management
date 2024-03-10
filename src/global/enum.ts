@@ -15,7 +15,8 @@ export enum ScreenPath {
   UPDATE_STAFF = '/staff/update/:staffId',
   UPDATE_PRODUCT = '/products/update/:productId',
   DELETE_PRODUCT = '/products/delete/:productId',
-  TASKS = '/tasks'
+  TASKS = '/tasks',
+  DELIVERY = '/delivery'
 }
 
 export enum ProductStatus {
@@ -95,4 +96,12 @@ export enum PeriodType {
   DAY = 'DAY',
   MONTH = 'MONTH',
   YEAR = 'YEAR'
+}
+
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  STAFF = 'STAFF',
+  DELIVERY_STAFF = 'DELIVERY_STAFF',
+  CONSULTANT_STAFF = 'CONSULTANT_STAFF',
+  CUSTOMER = 'CUSTOMER'
 }

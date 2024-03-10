@@ -25,6 +25,7 @@ export interface IFormInputProps {
   placeholder?: string
   defaultValues?: any
   disabled?: boolean
+  required?: boolean
 }
 export interface IDropdownOption {
   label: string
@@ -72,7 +73,7 @@ export interface ICustomButtonProps {
 }
 
 export interface IUserInfoProps {
-  id: string
+  _id: string
   staffCode: string
   email: string
   password: string
@@ -82,11 +83,19 @@ export interface IUserInfoProps {
   lastName: string
 }
 
+export interface IUser {
+  name: string
+  sub: string
+  role: string
+  iat: number
+  exp: number
+}
+
 export interface IAuthProviderProps {
   children: ReactNode
 }
 export interface IAuthContextProps {
-  user: IUserInfoProps | undefined
+  user: IUser | undefined
   idToken: string | null
   login: ({ email, password }: ILoginFormProps) => Promise<void>
   logout: () => Promise<void>
