@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { CalendarMonth } from '@mui/icons-material'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone'
@@ -39,21 +40,33 @@ import {
   TotalWrapper,
   Wrapper
 } from './ViewOrderDetail.styled'
+import CreateDeliveryModal from '~/pages/delivery/modal/CreateDeliveryModal'
+import useStaffsApi from '~/hooks/api/useStaffsApi'
+import { IUserInfoProps } from '~/global/interfaces/interface'
 
 const ViewOrderDetail = () => {
   const params = useParams()
   const navigate = useNavigate()
   const orderId = params.orderId
   const { getOrderById } = useOrdersApi()
+  const { getDeliveryStaffs } = useStaffsApi()
   const [isLoading, setIsLoading] = useState(false)
   const [orderData, setOrderData] = useState<IOrder>()
+  const [deliveryStaffList, setDeliveryStaffList] = useState<
+    {
+      id: string
+      label: string
+    }[]
+  >([])
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   useEffect(() => {
     if (orderId) {
       getOrderDetail(orderId)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  useEffect(() => {
+    getDeliveryStaffList()
   }, [])
   const getOrderDetail = async (orderId: string) => {
     try {
@@ -62,6 +75,24 @@ const ViewOrderDetail = () => {
       setOrderData(orderDetailData)
     } catch (error) {
       notifyError('Có lỗi xảy ra')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const getDeliveryStaffList = async () => {
+    try {
+      setIsLoading(true)
+      const staffList = await getDeliveryStaffs()
+      const data = staffList.docs.map((value: IUserInfoProps) => {
+        return {
+          id: value._id,
+          label: `${value.firstName} ${value.lastName}`
+        }
+      })
+      setDeliveryStaffList(data)
+    } catch (error) {
+      notifyError('Có lỗi xảy ra!!!')
     } finally {
       setIsLoading(false)
     }
@@ -90,6 +121,9 @@ const ViewOrderDetail = () => {
       ) : (
         <Wrapper>
           <ButtonWrapper>
+            {orderData?.orderStatus === OrderStatus.CONFIRMED ? (
+              <CreateDeliveryModal orderId={orderData._id} deliveryStaffList={deliveryStaffList} />
+            ) : null}
             <SecondaryButton
               variant='contained'
               name='Trở về'

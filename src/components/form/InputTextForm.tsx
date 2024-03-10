@@ -12,7 +12,8 @@ const InputTextForm = ({
   multiline,
   rows,
   placeholder,
-  disabled
+  disabled,
+  required
 }: IFormInputProps) => {
   return (
     <Controller
@@ -34,6 +35,7 @@ const InputTextForm = ({
           rows={rows}
           placeholder={placeholder}
           disabled={disabled}
+          required={required}
         />
       )}
     />

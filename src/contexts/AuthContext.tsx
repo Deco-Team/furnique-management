@@ -3,22 +3,20 @@ import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Loading from '~/components/loading/Loading'
 import { EMPTY } from '~/global/constants/constants'
-import { IAuthContextProps, IAuthProviderProps, IUserInfoProps } from '~/global/interfaces/interface'
+import { IAuthContextProps, IAuthProviderProps, IUser } from '~/global/interfaces/interface'
 import { notifyError, notifySuccess } from '~/global/toastify'
 import { ILoginFormProps } from '~/pages/auth/types/LoginForm'
 import { post } from '~/utils/apiCaller'
 import { decodeJwt } from 'jose'
+import { ZERO } from '~/global/constants/numbers'
 
 const initialContext: IAuthContextProps = {
   user: {
-    id: EMPTY,
-    email: EMPTY,
-    password: EMPTY,
-    firstName: EMPTY,
-    lastName: EMPTY,
-    avatar: EMPTY,
     role: EMPTY,
-    staffCode: EMPTY
+    iat: ZERO,
+    exp: ZERO,
+    name: EMPTY,
+    sub: EMPTY
   },
   idToken: null,
   login: async () => {},
@@ -33,13 +31,21 @@ export const AuthContext = createContext<IAuthContextProps>(initialContext)
 
 const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [idToken, setIdToken] = useState<string | null>(null)
-  const [user, setUser] = useState<IUserInfoProps | undefined>()
+  const [user, setUser] = useState<IUser | undefined>()
   const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
   useEffect(() => {
-    const storedToken = localStorage.getItem('idToken')
+    const storedToken = localStorage.getItem('idToken') || ''
     if (storedToken) {
       setIdToken(storedToken)
+      const decodedToken = decodeJwt(storedToken)
+      setUser({
+        role: decodedToken.role as string,
+        iat: decodedToken.iat as number,
+        exp: decodedToken.exp as number,
+        name: decodedToken.name as string,
+        sub: decodedToken.sub as string
+      })
     }
   }, [])
 
@@ -48,6 +54,14 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       try {
         const decodedToken = decodeJwt(idToken)
         if (decodedToken.exp && decodedToken.exp * 1000 < Date.now()) navigate('/')
+        else
+          setUser({
+            role: decodedToken.role as string,
+            iat: decodedToken.iat as number,
+            exp: decodedToken.exp as number,
+            name: decodedToken.name as string,
+            sub: decodedToken.sub as string
+          })
       } catch (error) {
         navigate('/')
       }
@@ -65,7 +79,15 @@ const AuthProvider = ({ children }: IAuthProviderProps) => {
       const { data } = await post('/auth/provider/login', { email, password }, {}, {})
       const token = data.data.accessToken
       setIdToken(token)
+      const decodedToken = decodeJwt(token)
       localStorage.setItem('idToken', token)
+      setUser({
+        role: decodedToken.role as string,
+        iat: decodedToken.iat as number,
+        exp: decodedToken.exp as number,
+        name: decodedToken.name as string,
+        sub: decodedToken.sub as string
+      })
       notifySuccess('Đăng nhập thành công')
     } catch (error) {
       if (error instanceof AxiosError && error.response && error.response.data) {

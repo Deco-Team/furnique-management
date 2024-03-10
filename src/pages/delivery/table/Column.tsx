@@ -1,10 +1,10 @@
 import { Edit, Visibility } from '@mui/icons-material'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
+import Chip from '~/components/chip/Chip'
 import ActionsCell from '~/components/table/ActionCell'
 import { ColumnProps } from '~/global/interfaces/interface'
-import Chip from '../../../components/chip/Chip'
 
-export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
+export const deliveriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'id',
     headerName: 'STT',
@@ -71,8 +71,8 @@ export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
     headerAlign: 'center',
     align: 'center',
     renderCell: (params) => {
-      const handleViewButton = (taskId: string) => {
-        navigate(taskId)
+      const handleViewButton = (deliveryId: string) => {
+        navigate(deliveryId)
       }
       return (
         <ActionsCell
