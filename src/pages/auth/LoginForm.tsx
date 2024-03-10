@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import { EMPTY } from '~/global/constants/constants'
-import { ScreenPath } from '~/global/enum'
+import { ScreenPath, UserRole } from '~/global/enum'
 import useAuth from '~/hooks/useAuth'
 import InputTextForm from '../../components/form/InputTextForm'
 import { FormWrapper } from './Login.styled'
@@ -24,10 +24,15 @@ const LoginForm = () => {
     defaultValues: defaultValues,
     resolver: yupResolver(loginValidationSchema)
   })
-  const { idToken, login } = useAuth()
+  const { idToken, login, user } = useAuth()
   const navigate = useNavigate()
   useEffect(() => {
-    if (idToken) {
+    if (user?.role === UserRole.ADMIN || user?.role === UserRole.STAFF) {
+      navigate(ScreenPath.DASHBOARD)
+    } else if (user?.role === UserRole.DELIVERY_STAFF) {
+      navigate(ScreenPath.DELIVERY)
+    } else if (user?.role === UserRole.CONSULTANT_STAFF) {
+      //TODO: Add consultant staff default routes later
       navigate(ScreenPath.DASHBOARD)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

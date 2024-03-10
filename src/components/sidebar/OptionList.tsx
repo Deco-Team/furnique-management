@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { optionsSidebar } from './Option'
+import { optionSidebarAuth } from './Option'
 import { Avatar, Image } from './Sidebar.styled'
+import useAuth from '~/hooks/useAuth'
 
 interface SidebarProps {
   prop: React.RefObject<HTMLDivElement>
 }
 
 const OptionList: React.FC<SidebarProps> = ({ prop }) => {
-  const [btn, setButton] = useState<number | null>(null) //dashboard is default option
+  const { user } = useAuth()
 
+  const [btn, setButton] = useState<number | null>(null) //dashboard is default option
+  const [optionsSidebar, _setOptionsSidebar] = useState(() => optionSidebarAuth(user?.role))
   const handleClick = (id: number) => {
     setButton(id)
     if (prop.current) {

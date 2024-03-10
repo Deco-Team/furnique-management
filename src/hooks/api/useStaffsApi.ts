@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { IStaffsRequest } from '~/global/interfaces/staffsInterface'
 import useApi from './useApi'
 import { notifyLoading } from '~/global/toastify'
+import { UserRole } from '~/global/enum'
 
 const useStaffsApi = () => {
   const callApi = useApi()
@@ -82,7 +83,29 @@ const useStaffsApi = () => {
     [callApi]
   )
 
-  return { getAllStaffs, createStaff, getStaffById, updateStaff, deactiveStaff }
+  const getDeliveryStaffs = useCallback(
+    async (page = 1, pageSize = 100) => {
+      const endpoint = `/${rootEndpoint}`
+      try {
+        const response = await callApi(
+          'get',
+          endpoint,
+          {},
+          {
+            page,
+            limit: pageSize,
+            role: UserRole.DELIVERY_STAFF
+          }
+        )
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  return { getAllStaffs, createStaff, getStaffById, updateStaff, deactiveStaff, getDeliveryStaffs }
 }
 
 export default useStaffsApi
