@@ -134,7 +134,7 @@ const Dashboard = () => {
 
   const shouldDisableYear = (date: number) => {
     const year = dayjs(date).year()
-    return year > dayjs().year()
+    return year < 2024
   }
 
   return (
