@@ -12,7 +12,7 @@ export enum ScreenPath {
   STAFFS = '/staffs',
   ADD_STAFF = '/staffs/create',
   VIEW_STAFF = '/staff/detail/:staffId',
-  UPDATE_STAFF = 'staff/update/:staffId',
+  UPDATE_STAFF = '/staff/update/:staffId',
   UPDATE_PRODUCT = '/products/update/:productId',
   DELETE_PRODUCT = '/products/delete/:productId',
   TASKS = '/tasks'
@@ -89,4 +89,10 @@ export enum TaskStatus {
 export enum StaffStatus {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE'
+}
+
+export enum PeriodType {
+  DAY = 'DAY',
+  MONTH = 'MONTH',
+  YEAR = 'YEAR'
 }

@@ -190,3 +190,16 @@ export interface IPagination<T> {
   prevPage: number
   nextPage: number
 }
+
+export interface DashboardStatus {
+  increase?: boolean
+  decrease?: boolean
+}
+
+export interface CardDashboardProps {
+  icon: ReactNode
+  title: string
+  numberReport: string
+  percentage: number
+  status: boolean
+}
