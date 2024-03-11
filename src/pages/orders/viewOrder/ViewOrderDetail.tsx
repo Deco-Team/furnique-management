@@ -15,7 +15,7 @@ import CancelButton from '~/components/button/CancelButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
 import Loading from '~/components/loading/Loading'
 import { EMPTY } from '~/global/constants/constants'
-import { OrderStatus, ScreenPath } from '~/global/enum'
+import { OrderStatus, StaffRoles } from '~/global/enum'
 import { IOrder } from '~/global/interfaces/ordersInterface'
 import { notifyError } from '~/global/toastify'
 import useOrdersApi from '~/hooks/api/useOrdersApi'
@@ -43,11 +43,13 @@ import {
 import CreateDeliveryModal from '~/pages/delivery/modal/CreateDeliveryModal'
 import useStaffsApi from '~/hooks/api/useStaffsApi'
 import { IUserInfoProps } from '~/global/interfaces/interface'
+import useAuth from '~/hooks/useAuth'
 
 const ViewOrderDetail = () => {
   const params = useParams()
   const navigate = useNavigate()
   const orderId = params.orderId
+  const { user } = useAuth()
   const { getOrderById } = useOrdersApi()
   const { getDeliveryStaffs } = useStaffsApi()
   const [isLoading, setIsLoading] = useState(false)
@@ -66,12 +68,14 @@ const ViewOrderDetail = () => {
     }
   }, [])
   useEffect(() => {
-    getDeliveryStaffList()
+    if (user?.role !== StaffRoles.DELIVERY_STAFF) {
+      getDeliveryStaffList()
+    }
   }, [])
   const getOrderDetail = async (orderId: string) => {
     try {
       setIsLoading(true)
-      const orderDetailData = await getOrderById(orderId)
+      const orderDetailData = await getOrderById(orderId, user?.role || '')
       setOrderData(orderDetailData)
     } catch (error) {
       notifyError('Có lỗi xảy ra')
@@ -112,7 +116,7 @@ const ViewOrderDetail = () => {
     setIsConfirmModalOpen(true)
   }
   const handleBackButton = () => {
-    navigate(ScreenPath.ORDERS)
+    navigate(-1)
   }
   return (
     <>
@@ -137,27 +141,29 @@ const ViewOrderDetail = () => {
             <OrderContent>
               <TitleWrapper>
                 <TitleText>Đơn hàng #{orderData && handleOrderNumber(orderData?._id)}</TitleText>
-                <div>
-                  <CancelButton
-                    variant='contained'
-                    name='Hủy'
-                    type='button'
-                    sx={{ height: '30px', marginRight: '10px' }}
-                    onClick={handleCancelButton}
-                    disable={orderData?.orderStatus === OrderStatus.CANCELED}
-                  />
-                  <AgreeButton
-                    variant='contained'
-                    name='Xác nhận'
-                    type='button'
-                    sx={{ height: '30px', marginRight: '10px' }}
-                    onClick={handleConfirmButton}
-                    disable={
-                      orderData?.orderStatus === OrderStatus.CANCELED ||
-                      orderData?.orderStatus === OrderStatus.CONFIRMED
-                    }
-                  />
-                </div>
+                {user?.role === StaffRoles.DELIVERY_STAFF ? null : (
+                  <div>
+                    <CancelButton
+                      variant='contained'
+                      name='Hủy'
+                      type='button'
+                      sx={{ height: '30px', marginRight: '10px' }}
+                      onClick={handleCancelButton}
+                      disable={orderData?.orderStatus === OrderStatus.CANCELED}
+                    />
+                    <AgreeButton
+                      variant='contained'
+                      name='Xác nhận'
+                      type='button'
+                      sx={{ height: '30px', marginRight: '10px' }}
+                      onClick={handleConfirmButton}
+                      disable={
+                        orderData?.orderStatus === OrderStatus.CANCELED ||
+                        orderData?.orderStatus === OrderStatus.CONFIRMED
+                      }
+                    />
+                  </div>
+                )}
               </TitleWrapper>
               <TextWrapper>
                 <TextHeader>
