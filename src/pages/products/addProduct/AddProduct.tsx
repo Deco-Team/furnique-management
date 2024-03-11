@@ -48,7 +48,12 @@ const AddProduct = () => {
           width: ZERO,
           length: ZERO
         },
-        keyValue: {}
+        keyValue: {
+          '0': {
+            key: EMPTY,
+            value: EMPTY
+          }
+        }
       }
     ],
     categories: []
