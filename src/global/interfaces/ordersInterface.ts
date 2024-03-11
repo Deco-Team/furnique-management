@@ -28,6 +28,7 @@ export interface IOrder {
   createdAt: string
   updatedAt: string
   reason?: string
+  isDeliveryAssigned: boolean
 }
 
 export interface IOrdersResponse {
