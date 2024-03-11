@@ -46,7 +46,8 @@ export enum TransactionStatus {
 export enum StaffRoles {
   STAFF = 'STAFF',
   CONSULTANT_STAFF = 'CONSULTANT_STAFF',
-  DELIVERY_STAFF = 'DELIVERY_STAFF'
+  DELIVERY_STAFF = 'DELIVERY_STAFF',
+  ADMIN = 'ADMIN'
 }
 
 // export enum Priority {

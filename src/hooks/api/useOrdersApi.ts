@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { ICancelOrderProps } from '~/global/interfaces/ordersInterface'
 import { notifyLoading } from '~/global/toastify'
 import useApi from './useApi'
+import { StaffRoles } from '~/global/enum'
 
 const useOrdersApi = () => {
   const callApi = useApi()
@@ -29,11 +30,16 @@ const useOrdersApi = () => {
   )
 
   const getOrderById = useCallback(
-    async (orderId: string) => {
+    async (orderId: string, staff: string) => {
       const endpoint = `/${rootEndpoint}/${orderId}`
       try {
-        const response = await callApi('get', endpoint)
-        return response.data
+        if (staff === StaffRoles.DELIVERY_STAFF) {
+          const response = await callApi('get', `${endpoint}/shipping`)
+          return response.data
+        } else if (staff === StaffRoles.ADMIN || staff === StaffRoles.STAFF) {
+          const response = await callApi('get', endpoint)
+          return response.data
+        }
       } catch (error) {
         console.log(error)
       }
@@ -69,7 +75,20 @@ const useOrdersApi = () => {
     [callApi]
   )
 
-  return { getAllOrders, getOrderById, cancelOrder, confirmOrder }
+  const getDeliveryStaffOrderById = useCallback(
+    async (orderId: string) => {
+      const endpoint = `/${rootEndpoint}/${orderId}/shipping`
+      try {
+        const response = await callApi('get', endpoint)
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  return { getAllOrders, getOrderById, cancelOrder, confirmOrder, getDeliveryStaffOrderById }
 }
 
 export default useOrdersApi
