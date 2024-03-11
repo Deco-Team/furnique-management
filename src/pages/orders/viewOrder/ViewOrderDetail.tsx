@@ -121,7 +121,7 @@ const ViewOrderDetail = () => {
       ) : (
         <Wrapper>
           <ButtonWrapper>
-            {orderData?.orderStatus === OrderStatus.CONFIRMED ? (
+            {orderData?.orderStatus === OrderStatus.CONFIRMED && !orderData.isDeliveryAssigned ? (
               <CreateDeliveryModal orderId={orderData._id} deliveryStaffList={deliveryStaffList} />
             ) : null}
             <SecondaryButton
