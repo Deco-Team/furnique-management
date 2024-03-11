@@ -2,6 +2,7 @@ import { Edit, Visibility } from '@mui/icons-material'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import Chip from '~/components/chip/Chip'
 import ActionsCell from '~/components/table/ActionCell'
+import { ScreenPath } from '~/global/enum'
 import { ColumnProps } from '~/global/interfaces/interface'
 
 export const deliveriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
@@ -71,15 +72,15 @@ export const deliveriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
     headerAlign: 'center',
     align: 'center',
     renderCell: (params) => {
-      const handleViewButton = (deliveryId: string) => {
-        navigate(deliveryId)
+      const handleViewButton = (orderId: string) => {
+        navigate(ScreenPath.VIEW_ORDER.replace(':orderId', orderId))
       }
       return (
         <ActionsCell
           id={params.row.id as number}
           buttons={[
-            { icon: <Edit />, onClick: () => handleViewButton(params.row.id) },
-            { icon: <Visibility />, onClick: () => console.log('View clicked') }
+            { icon: <Edit />, onClick: () => handleViewButton(params.row.orderId) },
+            { icon: <Visibility />, onClick: () => handleViewButton(params.row.orderId) }
           ]}
         />
       )

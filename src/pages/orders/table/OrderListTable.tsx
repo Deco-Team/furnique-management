@@ -6,10 +6,12 @@ import { IOrder, IOrderListRows } from '~/global/interfaces/ordersInterface'
 import useOrdersApi from '~/hooks/api/useOrdersApi'
 import { orderListColumns } from './OrderColumn'
 import dayjs from 'dayjs'
+import useAuth from '~/hooks/useAuth'
 
 const OrderListTable = () => {
   const { getOrderById } = useOrdersApi()
   const params = useParams()
+  const { user } = useAuth()
   const orderId = params.orderId
   const [isLoading, setIsLoading] = useState(false)
   const [orderListRows, setOrderListRows] = useState<IOrderListRows[]>([])
@@ -22,7 +24,7 @@ const OrderListTable = () => {
   const getOrderListData = async (orderId: string) => {
     try {
       setIsLoading(true)
-      const ordersData = (await getOrderById(orderId)) as IOrder
+      const ordersData = (await getOrderById(orderId, user?.role || '')) as IOrder
       const mappedData = ordersData.items.map((item, index) => {
         const variant = item.product.variants.find((variant) => variant.sku === item.sku)
         if (!variant) {

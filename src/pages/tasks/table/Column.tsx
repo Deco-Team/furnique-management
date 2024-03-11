@@ -1,4 +1,4 @@
-import { Edit, Visibility } from '@mui/icons-material'
+import { Visibility } from '@mui/icons-material'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import ActionsCell from '~/components/table/ActionCell'
 import { ColumnProps } from '~/global/interfaces/interface'
@@ -78,8 +78,8 @@ export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
         <ActionsCell
           id={params.row.id as number}
           buttons={[
-            { icon: <Edit />, onClick: () => handleViewButton(params.row.id) },
-            { icon: <Visibility />, onClick: () => console.log('View clicked') }
+            // { icon: <Edit />, onClick: () => handleViewButton(params.row.id) },
+            { icon: <Visibility />, onClick: () => handleViewButton(params.row.id) }
           ]}
         />
       )
