@@ -63,7 +63,39 @@ const useTasksApi = () => {
     [callApi]
   )
 
-  return { getAllTasksForAdmin, getAllTasksForDelivery, createShippingTask }
+  const changeShippingProgress = useCallback(
+    async (orderId: string) => {
+      const endpoint = `${rootEndpoint}/shipping/${orderId}/progress`
+      try {
+        const response = await callApi('patch', endpoint)
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  const changeShippingComplete = useCallback(
+    async (orderId: string) => {
+      const endpoint = `${rootEndpoint}/shipping/${orderId}/complete`
+      try {
+        const response = await callApi('patch', endpoint)
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  return {
+    getAllTasksForAdmin,
+    getAllTasksForDelivery,
+    createShippingTask,
+    changeShippingProgress,
+    changeShippingComplete
+  }
 }
 
 export default useTasksApi
