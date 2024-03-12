@@ -5,6 +5,15 @@ const StatusTextDiv = ({ status }: { status: string }) => {
   if (status === OrderStatus.CANCELED || status === TransactionStatus.CANCELED) {
     return <StatusDiv canceled={true}>Đã Hủy</StatusDiv>
   }
+  if (status === TransactionStatus.ERROR) {
+    return <StatusDiv canceled={true}>Lỗi</StatusDiv>
+  }
+  if (status === TransactionStatus.REFUNDED) {
+    return <StatusDiv canceled={true}>Đã Hoàn Tiền</StatusDiv>
+  }
+  if (status === TransactionStatus.CAPTURED) {
+    return <StatusDiv completed={true}>Ghi nhận</StatusDiv>
+  }
   if (status === OrderStatus.COMPLETED) {
     return <StatusDiv completed={true}>Hoàn Thành</StatusDiv>
   }
