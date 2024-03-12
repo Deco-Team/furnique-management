@@ -98,14 +98,14 @@ const UpdateStaff = () => {
 
   const hasChanges = (): boolean => {
     const formValues = control._formValues
-    const { firstName, lastName, phone, avatar } = formValues
+    const { firstName, lastName, phone } = formValues
     const hasNewAvatar = files.length > 0
 
     return (
       firstName !== staffData?.firstName ||
       lastName !== staffData?.lastName ||
       phone !== staffData?.phone ||
-      (hasNewAvatar && avatar !== staffData?.avatar)
+      hasNewAvatar
     )
   }
 
