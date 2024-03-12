@@ -44,6 +44,8 @@ import CreateDeliveryModal from '~/pages/delivery/modal/CreateDeliveryModal'
 import useStaffsApi from '~/hooks/api/useStaffsApi'
 import { IUserInfoProps } from '~/global/interfaces/interface'
 import useAuth from '~/hooks/useAuth'
+import { Box, Button } from '@mui/material'
+import useTasksApi from '~/hooks/api/useTasksApi'
 
 const ViewOrderDetail = () => {
   const params = useParams()
@@ -52,6 +54,7 @@ const ViewOrderDetail = () => {
   const { user } = useAuth()
   const { getOrderById } = useOrdersApi()
   const { getDeliveryStaffs } = useStaffsApi()
+  const { changeShippingProgress, changeShippingComplete } = useTasksApi()
   const [isLoading, setIsLoading] = useState(false)
   const [orderData, setOrderData] = useState<IOrder>()
   const [deliveryStaffList, setDeliveryStaffList] = useState<
@@ -118,6 +121,20 @@ const ViewOrderDetail = () => {
   const handleBackButton = () => {
     navigate(-1)
   }
+
+  const handleProgressButton = async () => {
+    if (orderId) {
+      await changeShippingProgress(orderId)
+      navigate(-1)
+    }
+  }
+  console.log(orderData?.orderStatus)
+  const handleCompleteButton = async () => {
+    if (orderId) {
+      await changeShippingComplete(orderId)
+      navigate(-1)
+    }
+  }
   return (
     <>
       {isLoading ? (
@@ -141,7 +158,27 @@ const ViewOrderDetail = () => {
             <OrderContent>
               <TitleWrapper>
                 <TitleText>Đơn hàng #{orderData && handleOrderNumber(orderData?._id)}</TitleText>
-                {user?.role === StaffRoles.DELIVERY_STAFF ? null : (
+                {user?.role === StaffRoles.DELIVERY_STAFF ? (
+                  <Box sx={{ display: 'flex' }}>
+                    <Button
+                      type='button'
+                      sx={{ height: '30px', marginRight: '10px' }}
+                      onClick={handleProgressButton}
+                      disabled={orderData?.orderStatus === OrderStatus.DELIVERING}
+                    >
+                      G.hàng
+                    </Button>
+                    <Button
+                      type='button'
+                      color='success'
+                      sx={{ height: '30px', marginRight: '10px' }}
+                      onClick={handleCompleteButton}
+                      disabled={orderData?.orderStatus === OrderStatus.CONFIRMED}
+                    >
+                      Hoàn thành
+                    </Button>
+                  </Box>
+                ) : (
                   <div>
                     <CancelButton
                       variant='contained'
