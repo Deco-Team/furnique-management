@@ -16,7 +16,8 @@ export enum ScreenPath {
   UPDATE_PRODUCT = '/products/update/:productId',
   DELETE_PRODUCT = '/products/delete/:productId',
   TASKS = '/tasks',
-  DELIVERY = '/delivery'
+  DELIVERY = '/delivery',
+  CONSULTANT = '/consultant'
 }
 
 export enum ProductStatus {

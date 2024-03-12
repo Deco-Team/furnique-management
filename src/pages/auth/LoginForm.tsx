@@ -32,8 +32,7 @@ const LoginForm = () => {
     } else if (user?.role === UserRole.DELIVERY_STAFF) {
       navigate(ScreenPath.DELIVERY)
     } else if (user?.role === UserRole.CONSULTANT_STAFF) {
-      //TODO: Add consultant staff default routes later
-      navigate(ScreenPath.DASHBOARD)
+      navigate(ScreenPath.CONSULTANT)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idToken])
