@@ -1,4 +1,4 @@
-import { GridViewOutlined, LocalShipping, Task } from '@mui/icons-material'
+import { GridViewOutlined, LocalShipping, SupportAgent, Task } from '@mui/icons-material'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import CategoryIcon from '@mui/icons-material/Category'
 import InventoryIcon from '@mui/icons-material/Inventory'
@@ -15,7 +15,8 @@ const adminSidebar = [
   { id: 5, text: 'Nhân viên', link: 'staffs', icon: PeopleIcon },
   { id: 6, text: 'Công việc', link: 'tasks', icon: Task },
   { id: 7, text: 'Giao dịch', link: 'transactions', icon: AccountBalanceWalletIcon },
-  { id: 8, text: 'Giao hàng', link: 'delivery', icon: LocalShipping }
+  { id: 8, text: 'Giao hàng', link: 'delivery', icon: LocalShipping },
+  { id: 9, text: 'Tư vấn', link: 'consultant', icon: SupportAgent }
 ]
 
 const staffSidebar = [
@@ -24,10 +25,12 @@ const staffSidebar = [
   { id: 3, text: 'Đơn hàng', link: 'orders', icon: ListAltIcon },
   { id: 4, text: 'Công việc', link: 'tasks', icon: Task },
   { id: 5, text: 'Giao hàng', link: 'delivery', icon: LocalShipping },
-  { id: 6, text: 'Nhân viên', link: 'staffs', icon: PeopleIcon }
+  { id: 6, text: 'Tư vấn', link: 'consultant', icon: SupportAgent }
 ]
 
 const deliverySidebar = [{ id: 1, text: 'Giao hàng', link: 'delivery', icon: LocalShipping }]
+
+const consultantSidebar = [{ id: 1, text: 'Tư vấn', link: 'consultant', icon: SupportAgent }]
 
 export const optionSidebarAuth = (role: string | undefined) => {
   switch (role) {
@@ -36,8 +39,7 @@ export const optionSidebarAuth = (role: string | undefined) => {
     case UserRole.DELIVERY_STAFF:
       return deliverySidebar
     case UserRole.CONSULTANT_STAFF:
-      //TODO: Fix later
-      return adminSidebar
+      return consultantSidebar
     case UserRole.STAFF:
       return staffSidebar
     default:
