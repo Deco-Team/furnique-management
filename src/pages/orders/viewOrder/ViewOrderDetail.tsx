@@ -158,48 +158,52 @@ const ViewOrderDetail = () => {
             <OrderContent>
               <TitleWrapper>
                 <TitleText>Đơn hàng #{orderData && handleOrderNumber(orderData?._id)}</TitleText>
-                {user?.role === StaffRoles.DELIVERY_STAFF ? (
-                  <Box sx={{ display: 'flex' }}>
-                    <Button
-                      type='button'
-                      sx={{ height: '30px', marginRight: '10px' }}
-                      onClick={handleProgressButton}
-                      disabled={orderData?.orderStatus === OrderStatus.DELIVERING}
-                    >
-                      G.hàng
-                    </Button>
-                    <Button
-                      type='button'
-                      color='success'
-                      sx={{ height: '30px', marginRight: '10px' }}
-                      onClick={handleCompleteButton}
-                      disabled={orderData?.orderStatus === OrderStatus.CONFIRMED}
-                    >
-                      Hoàn thành
-                    </Button>
-                  </Box>
-                ) : (
-                  <div>
-                    <CancelButton
-                      variant='contained'
-                      name='Hủy'
-                      type='button'
-                      sx={{ height: '30px', marginRight: '10px' }}
-                      onClick={handleCancelButton}
-                      disable={orderData?.orderStatus === OrderStatus.CANCELED}
-                    />
-                    <AgreeButton
-                      variant='contained'
-                      name='Xác nhận'
-                      type='button'
-                      sx={{ height: '30px', marginRight: '10px' }}
-                      onClick={handleConfirmButton}
-                      disable={
-                        orderData?.orderStatus === OrderStatus.CANCELED ||
-                        orderData?.orderStatus === OrderStatus.CONFIRMED
-                      }
-                    />
-                  </div>
+                {orderData?.orderStatus === OrderStatus.COMPLETED ? null : (
+                  <>
+                    {user?.role === StaffRoles.DELIVERY_STAFF ? (
+                      <Box sx={{ display: 'flex' }}>
+                        <Button
+                          type='button'
+                          sx={{ height: '30px', marginRight: '10px' }}
+                          onClick={handleProgressButton}
+                          disabled={orderData?.orderStatus === OrderStatus.DELIVERING}
+                        >
+                          G.hàng
+                        </Button>
+                        <Button
+                          type='button'
+                          color='success'
+                          sx={{ height: '30px', marginRight: '10px' }}
+                          onClick={handleCompleteButton}
+                          disabled={orderData?.orderStatus === OrderStatus.CONFIRMED}
+                        >
+                          Hoàn thành
+                        </Button>
+                      </Box>
+                    ) : (
+                      <div>
+                        <CancelButton
+                          variant='contained'
+                          name='Hủy'
+                          type='button'
+                          sx={{ height: '30px', marginRight: '10px' }}
+                          onClick={handleCancelButton}
+                          disable={orderData?.orderStatus === OrderStatus.CANCELED}
+                        />
+                        <AgreeButton
+                          variant='contained'
+                          name='Xác nhận'
+                          type='button'
+                          sx={{ height: '30px', marginRight: '10px' }}
+                          onClick={handleConfirmButton}
+                          disable={
+                            orderData?.orderStatus === OrderStatus.CANCELED ||
+                            orderData?.orderStatus === OrderStatus.CONFIRMED
+                          }
+                        />
+                      </div>
+                    )}
+                  </>
                 )}
               </TitleWrapper>
               <TextWrapper>
