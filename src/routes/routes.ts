@@ -5,6 +5,7 @@ import Categories from '~/pages/categories/Categories'
 import UpdateCategory from '~/pages/categories/updateCategory/UpdateCategory'
 import ViewCategoryDetail from '~/pages/categories/viewCategory/ViewCategoryDetail'
 import Consultant from '~/pages/consultants/Consultant'
+import ViewConsultantBookingDetail from '~/pages/consultants/ViewConsultantBookingDetail/ViewConsultantBookingDetail'
 import Dashboard from '~/pages/dashboard/Dashboard'
 import Delivery from '~/pages/delivery/Delivery'
 import Orders from '~/pages/orders/Orders'
@@ -111,13 +112,18 @@ export const privateRoutes = [
     title: 'Giao hàng'
   },
   {
-    path: ScreenPath.CONSULTANT,
-    component: Consultant,
-    title: 'Tư vấn'
-    },
-    {
     path: ScreenPath.TRANSACTIONS,
     component: Transactions,
     title: 'Giao dịch'
+  },
+  {
+    path: ScreenPath.CONSULTANT_BOOKING,
+    component: Consultant,
+    title: 'Tư vấn'
+  },
+  {
+    path: ScreenPath.CONSULTANT_BOOKING_CUSTOMER_INFO,
+    component: ViewConsultantBookingDetail,
+    title: 'Tư vấn'
   }
 ]

@@ -26,7 +26,20 @@ const useConsultBookingsApi = () => {
     [callApi]
   )
 
-  return { getConsultantBookings }
+  const getConsultantBookingById = useCallback(
+    async (id: string) => {
+      const endpoint = `/${rootEndpoint}/${id}`
+      try {
+        const response = await callApi('get', endpoint)
+        return response.data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    [callApi]
+  )
+
+  return { getConsultantBookings, getConsultantBookingById }
 }
 
 export default useConsultBookingsApi
