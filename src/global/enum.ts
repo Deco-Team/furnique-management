@@ -17,8 +17,9 @@ export enum ScreenPath {
   DELETE_PRODUCT = '/products/delete/:productId',
   TASKS = '/tasks',
   DELIVERY = '/delivery',
-  CONSULTANT = '/consultant',
-  TRANSACTIONS = '/transactions'
+  TRANSACTIONS = '/transactions',
+  CONSULTANT_BOOKING = '/consultant-booking',
+  CONSULTANT_BOOKING_CUSTOMER_INFO = '/consultant-booking/:consultantBookingId'
 }
 
 export enum ProductStatus {

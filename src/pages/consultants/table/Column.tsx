@@ -58,15 +58,12 @@ export const consultantsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
     align: 'center',
     renderCell: (params) => {
       const handleViewButton = () => {
-        navigate(ScreenPath.DASHBOARD)
+        navigate(ScreenPath.CONSULTANT_BOOKING_CUSTOMER_INFO.replace(':consultantBookingId', params.row.id.toString()))
       }
       return (
         <ActionsCell
           id={params.row.id as number}
-          buttons={[
-            // { icon: <Edit />, onClick: () => handleViewButton(params.row.orderId) },
-            { icon: <Visibility />, onClick: () => handleViewButton() }
-          ]}
+          buttons={[{ icon: <Visibility />, onClick: () => handleViewButton() }]}
         />
       )
     }
