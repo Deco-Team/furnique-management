@@ -1,15 +1,13 @@
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
-import { GridColDef } from '@mui/x-data-grid'
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import ActionCell from '~/components/table/ActionCell'
-import { ColumnProps } from '~/global/interfaces/interface'
+import StatusTextDiv from '~/pages/orders/table/StatusTextDiv'
 
-export const transactionsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
+export const transactionsColumn: GridColDef[] = [
   {
     field: 'id',
     headerName: 'STT',
-    width: 100,
+    width: 50,
     filterable: false,
     sortable: false,
     valueGetter: (params) => {
@@ -20,16 +18,43 @@ export const transactionsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
     }
   },
   {
-    field: 'transaction.orderInfo',
+    field: 'orderInfo',
     headerName: 'Tên giao dịch',
-    width: 425,
+    width: 500,
     filterable: false,
-    sortingOrder: ['asc', 'desc']
+    valueGetter: (params) => params.row.transaction.orderInfo
+  },
+  {
+    field: 'paymentMethod',
+    headerName: 'Phương thức thanh toán',
+    width: 200,
+    filterable: false,
+    sortable: false
+  },
+  {
+    field: 'amount',
+    headerName: 'Số tiền',
+    width: 200,
+    filterable: false,
+    sortingOrder: ['asc', 'desc'],
+    valueFormatter: (params) => {
+      const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+      })
+      return formatter.format(params.value)
+    }
+  },
+  {
+    field: 'transactionStatus',
+    headerName: 'Trạng thái giao dịch',
+    width: 200,
+    renderCell: (param: GridRenderCellParams) => <StatusTextDiv status={param.row.transactionStatus} />
   },
   {
     field: 'actions',
     headerName: 'Thao tác',
-    width: 200,
+    width: 100,
     sortable: false,
     filterable: false,
     headerAlign: 'center',
@@ -38,11 +63,7 @@ export const transactionsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
       return (
         <ActionCell
           id={params.row.id as number}
-          buttons={[
-            { icon: <EditIcon />, onClick: () => () => console.log('Delete clicked') },
-            { icon: <VisibilityIcon />, onClick: () => () => console.log('Delete clicked') },
-            { icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') }
-          ]}
+          buttons={[{ icon: <VisibilityIcon />, onClick: () => () => console.log('Delete clicked') }]}
         />
       )
     }

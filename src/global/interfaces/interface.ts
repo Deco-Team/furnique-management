@@ -212,3 +212,11 @@ export interface CardDashboardProps {
   percentage: number
   status: boolean
 }
+
+export interface TransactionStatus {
+  error?: boolean
+  captured?: boolean
+  canceled?: boolean
+  deleted?: boolean
+  draft?: boolean
+}
