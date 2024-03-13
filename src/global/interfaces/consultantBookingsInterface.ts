@@ -19,6 +19,11 @@ export interface IConsultantBookingsProps {
     email: string
     phone: string
   }
-  note: string
-  interestedCategories: string[]
+  notes: string
+  interestedCategories: {
+    _id: string
+    name: string
+    description: string
+    image: string
+  }[]
 }

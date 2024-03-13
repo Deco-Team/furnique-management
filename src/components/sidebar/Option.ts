@@ -16,7 +16,7 @@ const adminSidebar = [
   { id: 6, text: 'Công việc', link: 'tasks', icon: Task },
   { id: 7, text: 'Giao dịch', link: 'transactions', icon: AccountBalanceWalletIcon },
   { id: 8, text: 'Giao hàng', link: 'delivery', icon: LocalShipping },
-  { id: 9, text: 'Tư vấn', link: 'consultant', icon: SupportAgent }
+  { id: 9, text: 'Tư vấn', link: 'consultant-booking', icon: SupportAgent }
 ]
 
 const staffSidebar = [
@@ -25,12 +25,12 @@ const staffSidebar = [
   { id: 3, text: 'Đơn hàng', link: 'orders', icon: ListAltIcon },
   { id: 4, text: 'Công việc', link: 'tasks', icon: Task },
   { id: 5, text: 'Giao hàng', link: 'delivery', icon: LocalShipping },
-  { id: 6, text: 'Tư vấn', link: 'consultant', icon: SupportAgent }
+  { id: 6, text: 'Tư vấn', link: 'consultant-booking', icon: SupportAgent }
 ]
 
 const deliverySidebar = [{ id: 1, text: 'Giao hàng', link: 'delivery', icon: LocalShipping }]
 
-const consultantSidebar = [{ id: 1, text: 'Tư vấn', link: 'consultant', icon: SupportAgent }]
+const consultantSidebar = [{ id: 1, text: 'Tư vấn', link: 'consultant-booking', icon: SupportAgent }]
 
 export const optionSidebarAuth = (role: string | undefined) => {
   switch (role) {
