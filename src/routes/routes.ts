@@ -19,6 +19,7 @@ import Staffs from '~/pages/staffs/Staffs'
 import UpdateStaff from '~/pages/staffs/updateStaff/UpdateStaff'
 import ViewStaffDetail from '~/pages/staffs/viewStaff/ViewStaffDetail'
 import Tasks from '~/pages/tasks/Tasks'
+import Transactions from '~/pages/transactions/Transactions'
 
 export const publicRoutes = [{ path: '/', component: Login }]
 
@@ -113,5 +114,10 @@ export const privateRoutes = [
     path: ScreenPath.CONSULTANT,
     component: Consultant,
     title: 'Tư vấn'
+    },
+    {
+    path: ScreenPath.TRANSACTIONS,
+    component: Transactions,
+    title: 'Giao dịch'
   }
 ]
