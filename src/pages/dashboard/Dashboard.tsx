@@ -13,7 +13,7 @@ import { PeriodType } from '~/global/enum'
 import { AnalyticsRespose } from '~/global/interfaces/dashboardInterface'
 import { notifyError } from '~/global/toastify'
 import useDashboardApi from '~/hooks/api/useDashboardApi'
-import { formatNumber } from '~/utils/format'
+import { formatCurrency, formatNumber } from '~/utils/format'
 import { AnalyticsWrapper, ChartWrapper, DailyCardWrapper, DailyWrapper, TitleWrapper } from './Dashboard.styled'
 import RevenueChart from './components/Chart'
 import ContentCard from './components/ContentCard'
@@ -155,7 +155,7 @@ const Dashboard = () => {
               icon={<ShoppingCartRoundedIcon sx={{ color: 'var(--primary-color)', fontSize: '30px' }} />}
               title='Tổng doanh thu'
               percentage={saleData?.percent ?? 0}
-              numberReport={formatNumber(saleData?.total ?? 0)}
+              numberReport={formatCurrency(saleData?.total ?? 0)}
               status={(saleData && saleData?.percent > 0) ?? false}
             />
             <ContentCard
@@ -209,7 +209,7 @@ const Dashboard = () => {
                   <Typography variant='h6' fontWeight={500}>
                     Tổng doanh thu
                   </Typography>
-                  {dailySaleData?.total}
+                  {formatCurrency(dailySaleData?.total ?? 0)}
                 </div>
               </DailyCardWrapper>
             </DailyWrapper>

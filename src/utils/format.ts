@@ -10,3 +10,11 @@ export const formatNumber = (num: number): string => {
   }
   return formattedNum.reverse().join('')
 }
+
+export function formatCurrency(value: number, currency: string = 'VND', locale: string = 'vi-VN'): string {
+  const formatter = new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency
+  })
+  return formatter.format(value)
+}
