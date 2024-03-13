@@ -32,7 +32,7 @@ const LoginForm = () => {
     } else if (user?.role === UserRole.DELIVERY_STAFF) {
       navigate(ScreenPath.DELIVERY)
     } else if (user?.role === UserRole.CONSULTANT_STAFF) {
-      navigate(ScreenPath.CONSULTANT)
+      navigate(ScreenPath.CONSULTANT_BOOKING)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idToken])
