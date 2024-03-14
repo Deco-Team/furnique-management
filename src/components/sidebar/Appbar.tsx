@@ -11,13 +11,14 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
 import * as React from 'react'
-import { Search, SearchIconWrapper, StyledInputBase } from './Appbar.styled'
+import { ProfileButton, Search, SearchIconWrapper, StyledInputBase } from './Appbar.styled'
 import useAuth from '~/hooks/useAuth'
+import { roleValues } from '~/pages/staffs/constants'
 
 const Appbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null)
-  const { logout } = useAuth()
+  const { logout, user } = useAuth()
   const isMenuOpen = Boolean(anchorEl)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
@@ -121,7 +122,7 @@ const Appbar = () => {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
+            {/* <IconButton
               size='large'
               aria-label='show 4 new mails'
               color='inherit'
@@ -148,8 +149,8 @@ const Appbar = () => {
               <Badge badgeContent={17} color='error'>
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
-            <IconButton
+            </IconButton> */}
+            <ProfileButton
               size='large'
               edge='end'
               aria-label='account of current user'
@@ -157,14 +158,13 @@ const Appbar = () => {
               aria-haspopup='true'
               onClick={handleProfileMenuOpen}
               color='inherit'
-              sx={{
-                '&:focus': {
-                  outline: 'none'
-                }
-              }}
             >
               <AccountCircle />
-            </IconButton>
+              <div>
+                <h4>{user?.name}</h4>
+                <h4>{roleValues.find((roleValue) => roleValue.value === user?.role)?.label}</h4>
+              </div>
+            </ProfileButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
