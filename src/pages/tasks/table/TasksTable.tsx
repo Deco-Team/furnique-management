@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Loading from '~/components/loading/Loading'
 import CommonTable from '~/components/table/CommonTable'
 import { tasksColumn } from './Column'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import { ITaskRows, ITasksProps } from '~/global/interfaces/tasksInterface'
 import useTasksApi from '~/hooks/api/useTasksApi'
 import moment from 'moment'
@@ -16,7 +16,7 @@ const TasksTable = () => {
 
   const { getAllTasksForAdmin } = useTasksApi()
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage)
@@ -55,7 +55,7 @@ const TasksTable = () => {
     <Loading />
   ) : (
     <CommonTable
-      columns={tasksColumn({ navigate })}
+      columns={tasksColumn(/* { navigate } */)}
       rows={tasksRows}
       totalRows={totalRows}
       page={page}

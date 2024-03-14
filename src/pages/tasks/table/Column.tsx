@@ -1,10 +1,8 @@
-import { Visibility } from '@mui/icons-material'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
-import ActionsCell from '~/components/table/ActionCell'
-import { ColumnProps } from '~/global/interfaces/interface'
+// import { ColumnProps } from '~/global/interfaces/interface'
 import Chip from '../../../components/chip/Chip'
 
-export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
+export const tasksColumn = (/* { navigate }: ColumnProps */): GridColDef[] => [
   {
     field: 'id',
     headerName: 'STT',
@@ -61,28 +59,28 @@ export const tasksColumn = ({ navigate }: ColumnProps): GridColDef[] => [
     filterable: false,
     sortingOrder: ['asc', 'desc'],
     renderCell: (param: GridRenderCellParams) => <Chip status={param.row.status} />
-  },
-  {
-    field: 'actions',
-    headerName: 'Thao tác',
-    width: 180,
-    sortable: false,
-    filterable: false,
-    headerAlign: 'center',
-    align: 'center',
-    renderCell: (params) => {
-      const handleViewButton = (taskId: string) => {
-        navigate(taskId)
-      }
-      return (
-        <ActionsCell
-          id={params.row.id as number}
-          buttons={[
-            // { icon: <Edit />, onClick: () => handleViewButton(params.row.id) },
-            { icon: <Visibility />, onClick: () => handleViewButton(params.row.id) }
-          ]}
-        />
-      )
-    }
   }
+  // {
+  //   field: 'actions',
+  //   headerName: 'Thao tác',
+  //   width: 180,
+  //   sortable: false,
+  //   filterable: false,
+  //   headerAlign: 'center',
+  //   align: 'center',
+  //   renderCell: (params) => {
+  //     const handleViewButton = (taskId: string) => {
+  //       navigate(taskId)
+  //     }
+  //     return (
+  //       <ActionsCell
+  //         id={params.row.id as number}
+  //         buttons={[
+  //           // { icon: <Edit />, onClick: () => handleViewButton(params.row.id) },
+  //           { icon: <Visibility />, onClick: () => handleViewButton(params.row.id) }
+  //         ]}
+  //       />
+  //     )
+  //   }
+  // }
 ]
