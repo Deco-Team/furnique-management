@@ -66,7 +66,7 @@ const ViewConsultantBookingDetail = () => {
         />
       </ButtonWrapper>
       <Wrapper>
-        <InformationContainer style={{ width: '45%' }}>
+        <InformationContainer>
           <TitleText>Thông tin đặt tư vấn thiết kế</TitleText>
           <TextWrapper>
             <TextHeader>
@@ -87,7 +87,7 @@ const ViewConsultantBookingDetail = () => {
             <TextRight>{consultantBookingData?.interestedCategories?.map((cate) => cate.name).join(', ')}</TextRight>
           </TextWrapper>
         </InformationContainer>
-        <InformationContainer style={{ width: '45%' }}>
+        <InformationContainer>
           <TitleText>Nhân viên tư vấn</TitleText>
           <TextWrapper>
             <TextHeader>
@@ -108,9 +108,7 @@ const ViewConsultantBookingDetail = () => {
             {consultantBookingData?.consultant.email}
           </TextWrapper>
         </InformationContainer>
-      </Wrapper>
-      <Wrapper>
-        <InformationContainer style={{ width: '45%' }}>
+        <InformationContainer>
           <TitleText>Khách hàng</TitleText>
           <TextWrapper>
             <TextHeader>
@@ -131,7 +129,7 @@ const ViewConsultantBookingDetail = () => {
             {consultantBookingData?.customer.phone}
           </TextWrapper>
         </InformationContainer>
-        <InformationContainer style={{ width: '45%' }}>
+        <InformationContainer>
           <TitleText>Lưu ý</TitleText>
           <TextWrapper>
             <TextLeft>{consultantBookingData?.notes}</TextLeft>

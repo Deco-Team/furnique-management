@@ -1,9 +1,11 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  @media (max-width: 1024px) {
+    display: block;
+  }
 `
 
 export const TitleText = styled.h3`
@@ -11,7 +13,8 @@ export const TitleText = styled.h3`
 `
 
 export const InformationContainer = styled.div`
-  padding: 0 20px;
+  min-height: 200px;
+  padding: 10px;
   background-color: var(--white-color);
   border-radius: 10px;
   margin: 10px;
