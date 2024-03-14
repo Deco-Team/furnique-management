@@ -2,7 +2,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import MailIcon from '@mui/icons-material/Mail'
 import MoreIcon from '@mui/icons-material/MoreVert'
 import NotificationsIcon from '@mui/icons-material/Notifications'
-import SearchIcon from '@mui/icons-material/Search'
+// import SearchIcon from '@mui/icons-material/Search'
 import AppBar from '@mui/material/AppBar'
 import Badge from '@mui/material/Badge'
 import Box from '@mui/material/Box'
@@ -11,7 +11,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
 import * as React from 'react'
-import { ProfileButton, Search, SearchIconWrapper, StyledInputBase } from './Appbar.styled'
+import { ProfileButton } from './Appbar.styled'
 import useAuth from '~/hooks/useAuth'
 import { roleValues } from '~/pages/staffs/constants'
 
@@ -114,12 +114,12 @@ const Appbar = () => {
     <>
       <AppBar position='static' sx={{ boxShadow: 'none' }}>
         <Toolbar sx={{ color: 'var(--gray-color)', backgroundColor: '#e0e2e737' }}>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase placeholder='Tìm kiếm...' inputProps={{ 'aria-label': 'search' }} />
-          </Search>
+          </Search> */}
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {/* <IconButton

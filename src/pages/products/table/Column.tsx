@@ -1,4 +1,4 @@
-import DeleteIcon from '@mui/icons-material/Delete'
+// import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
@@ -62,19 +62,19 @@ export const productsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
       const handleUpdateButton = (productId: string) => {
         navigate(ScreenPath.UPDATE_PRODUCT.replace(':productId', productId))
       }
-      const handleDeleteButton = (productId: string) => {
+      /* const handleDeleteButton = (productId: string) => {
         navigate(ScreenPath.DELETE_PRODUCT.replace(':productId', productId))
-      }
+      } */
       return (
         <ActionCell
           id={params.row.id as number}
           buttons={[
             { icon: <EditIcon />, onClick: () => handleUpdateButton(params.row.id) },
-            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) },
+            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) } /* ,
             {
               icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />,
               onClick: () => handleDeleteButton(params.row.id)
-            }
+            } */
           ]}
         />
       )

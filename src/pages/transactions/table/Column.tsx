@@ -1,6 +1,4 @@
-import VisibilityIcon from '@mui/icons-material/Visibility'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
-import ActionCell from '~/components/table/ActionCell'
 import StatusTextDiv from '~/pages/orders/table/StatusTextDiv'
 
 export const transactionsColumn: GridColDef[] = [
@@ -50,22 +48,5 @@ export const transactionsColumn: GridColDef[] = [
     headerName: 'Trạng thái giao dịch',
     width: 200,
     renderCell: (param: GridRenderCellParams) => <StatusTextDiv status={param.row.transactionStatus} />
-  },
-  {
-    field: 'actions',
-    headerName: 'Thao tác',
-    width: 100,
-    sortable: false,
-    filterable: false,
-    headerAlign: 'center',
-    align: 'center',
-    renderCell: (params) => {
-      return (
-        <ActionCell
-          id={params.row.id as number}
-          buttons={[{ icon: <VisibilityIcon />, onClick: () => () => console.log('Delete clicked') }]}
-        />
-      )
-    }
   }
 ]

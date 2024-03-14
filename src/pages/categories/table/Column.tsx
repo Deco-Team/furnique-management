@@ -1,4 +1,4 @@
-import DeleteIcon from '@mui/icons-material/Delete'
+// import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import { GridColDef } from '@mui/x-data-grid'
@@ -53,8 +53,8 @@ export const categoriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
           id={params.row.id as number}
           buttons={[
             { icon: <EditIcon />, onClick: () => handleUpdateButton(params.row.id) },
-            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) },
-            { icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') }
+            { icon: <VisibilityIcon />, onClick: () => handleViewButton(params.row.id) } /* ,
+            { icon: <DeleteIcon sx={{ color: 'var(--red-color)' }} />, onClick: () => console.log('Delete clicked') } */
           ]}
         />
       )
