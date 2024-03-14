@@ -1,5 +1,24 @@
+import { IconButton } from '@mui/material'
 import InputBase from '@mui/material/InputBase'
 import { alpha, styled } from '@mui/material/styles'
+
+export const ProfileButton = styled(IconButton)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  borderRadius: '10%',
+  '&:focus': {
+    outline: 'none'
+  },
+  '& div': {
+    marginLeft: '10px',
+    textAlign: 'left',
+    '& h4': {
+      margin: 0,
+      fontSize: '0.8rem'
+    }
+  }
+}))
 
 export const Search = styled('div')(({ theme }) => ({
   position: 'relative',
