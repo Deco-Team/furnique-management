@@ -5,7 +5,7 @@ export const transactionsColumn: GridColDef[] = [
   {
     field: 'id',
     headerName: 'STT',
-    width: 50,
+    width: 100,
     filterable: false,
     sortable: false,
     valueGetter: (params) => {
@@ -18,21 +18,21 @@ export const transactionsColumn: GridColDef[] = [
   {
     field: 'orderInfo',
     headerName: 'Tên giao dịch',
-    width: 500,
+    width: 450,
     filterable: false,
-    valueGetter: (params) => params.row.transaction.orderInfo
+    valueGetter: (params) => params.row.transaction.orderId
   },
   {
     field: 'paymentMethod',
     headerName: 'Phương thức thanh toán',
-    width: 200,
+    width: 300,
     filterable: false,
     sortable: false
   },
   {
     field: 'amount',
     headerName: 'Số tiền',
-    width: 200,
+    width: 250,
     filterable: false,
     sortingOrder: ['asc', 'desc'],
     valueFormatter: (params) => {
@@ -46,7 +46,7 @@ export const transactionsColumn: GridColDef[] = [
   {
     field: 'transactionStatus',
     headerName: 'Trạng thái giao dịch',
-    width: 200,
+    width: 300,
     renderCell: (param: GridRenderCellParams) => <StatusTextDiv status={param.row.transactionStatus} />
   }
 ]

@@ -46,6 +46,7 @@ import { IUserInfoProps } from '~/global/interfaces/interface'
 import useAuth from '~/hooks/useAuth'
 import { Box, Button } from '@mui/material'
 import useTasksApi from '~/hooks/api/useTasksApi'
+import { formatCurrency } from '~/utils/format'
 
 const ViewOrderDetail = () => {
   const params = useParams()
@@ -188,7 +189,10 @@ const ViewOrderDetail = () => {
                           type='button'
                           sx={{ height: '30px', marginRight: '10px' }}
                           onClick={handleCancelButton}
-                          disable={orderData?.orderStatus === OrderStatus.CANCELED}
+                          disable={
+                            orderData?.orderStatus !== OrderStatus.PENDING &&
+                            orderData?.orderStatus !== OrderStatus.CONFIRMED
+                          }
                         />
                         <AgreeButton
                           variant='contained'
@@ -294,7 +298,7 @@ const ViewOrderDetail = () => {
                 <TotalWrapper>
                   <TextWrapper>
                     <strong>Tổng cộng</strong>
-                    <strong>{orderData?.totalAmount} VND</strong>
+                    <strong>{formatCurrency(orderData?.totalAmount ?? 0)}</strong>
                   </TextWrapper>
                 </TotalWrapper>
               </div>

@@ -39,7 +39,7 @@ const ConsultantTable = () => {
         ...row,
         customer: `${row.customer.lastName} ${row.customer.firstName}`,
         consultant: `${row.consultant.lastName} ${row.consultant.firstName}`,
-        bookingDate: moment(row.bookingDate).format('DD-MM-yyyy'),
+        bookingDate: moment(row.bookingDate).format('hh:mm:ss DD/MM/yyyy'),
         id: row._id
       }))
       setConsultantBookingRows(consultantBookingRows)

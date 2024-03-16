@@ -9,7 +9,7 @@ export const deliveriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'id',
     headerName: 'STT',
-    width: 100,
+    width: 80,
     filterable: false,
     sortable: false,
     valueGetter: (params) => {
@@ -22,7 +22,7 @@ export const deliveriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'title',
     headerName: 'Tên công việc',
-    width: 150,
+    width: 210,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
@@ -58,7 +58,7 @@ export const deliveriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'status',
     headerName: 'Trạng thái',
-    width: 180,
+    width: 150,
     filterable: false,
     sortingOrder: ['asc', 'desc'],
     renderCell: (param: GridRenderCellParams) => <Chip status={param.row.status} />
@@ -66,7 +66,7 @@ export const deliveriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'actions',
     headerName: 'Thao tác',
-    width: 180,
+    width: 150,
     sortable: false,
     filterable: false,
     headerAlign: 'center',

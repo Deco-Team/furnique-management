@@ -9,7 +9,7 @@ export const consultantsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'id',
     headerName: 'STT',
-    width: 100,
+    width: 150,
     filterable: false,
     sortable: false,
     valueGetter: (params) => {
@@ -22,21 +22,21 @@ export const consultantsColumn = ({ navigate }: ColumnProps): GridColDef[] => [
   {
     field: 'consultant',
     headerName: 'Người tư vấn',
-    width: 180,
+    width: 250,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
   {
     field: 'customer',
     headerName: 'Khách hàng',
-    width: 200,
+    width: 250,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
   {
     field: 'bookingDate',
     headerName: 'Ngày đặt',
-    width: 175,
+    width: 250,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },

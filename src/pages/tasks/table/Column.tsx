@@ -19,14 +19,14 @@ export const tasksColumn = (/* { navigate }: ColumnProps */): GridColDef[] => [
   {
     field: 'title',
     headerName: 'Tên công việc',
-    width: 150,
+    width: 250,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
   {
     field: 'assignee',
     headerName: 'Người thực hiện',
-    width: 180,
+    width: 200,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },
@@ -40,7 +40,7 @@ export const tasksColumn = (/* { navigate }: ColumnProps */): GridColDef[] => [
   {
     field: 'dueDate',
     headerName: 'Ngày hết hạn',
-    width: 175,
+    width: 200,
     filterable: false,
     sortingOrder: ['asc', 'desc']
   },

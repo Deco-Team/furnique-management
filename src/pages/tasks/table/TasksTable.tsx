@@ -39,7 +39,7 @@ const TasksTable = () => {
         ...row,
         assignee: `${row.assignee.firstName} ${row.assignee.lastName}`,
         reporter: `${row.reporter.firstName} ${row.reporter.lastName}`,
-        dueDate: moment(row.dueDate).format('DD-MM-yyyy'),
+        dueDate: moment(row.dueDate).format('DD/Mm/yyyy'),
         id: row._id
       }))
       setTasksRows(tasksRows)
