@@ -42,7 +42,7 @@ const OrderListTable = () => {
           quantity: item.quantity,
           price: variant.price,
           totalAmount: item.quantity * variant.price,
-          image: item.product.images,
+          image: item.product.images[0],
           variant: keyValueString,
           orderDate: dayjs(ordersData.orderDate).format('hh:mm:ss DD/MM/YYYY')
         }
