@@ -2,7 +2,11 @@ import { array, lazy, number, object, string } from 'yup'
 
 const variantSchema = object().shape({
   sku: string().required('SKU là bắt buộc'),
-  price: number().typeError('Giá phải là số').positive('Giá phải lớn hơn 0').required('Giá là bắt buộc'),
+  price: number()
+    .typeError('Giá phải là số')
+    .positive('Giá phải lớn hơn 0')
+    .max(999999999, 'Giá không được vượt quá 999.999.999')
+    .required('Giá là bắt buộc'),
   quantity: number()
     .typeError('Số lượng phải là số')
     .positive('Số lượng phải lớn hơn 0')

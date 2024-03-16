@@ -49,7 +49,7 @@ const VariantsSection = ({
                 <InputTextForm
                   control={control}
                   name={`variants[${variantIndex}].price`}
-                  label={`Giá ${variantIndex + ONE}`}
+                  label={`Giá ${variantIndex + ONE} (VND)`}
                   sx={{ width: '30%', margin: '20px 0 0 20px' }}
                   variant='outlined'
                   error={errors.variants?.[variantIndex]?.price?.message}
@@ -57,7 +57,7 @@ const VariantsSection = ({
                 <InputTextForm
                   control={control}
                   name={`variants[${variantIndex}].quantity`}
-                  label={`Số lượng ${variantIndex + ONE}`}
+                  label={`Số lượng ${variantIndex + ONE} (Cái)`}
                   sx={{ width: '30%', margin: '20px 0 0 20px' }}
                   variant='outlined'
                   error={errors.variants?.[variantIndex]?.quantity?.message}
@@ -65,7 +65,7 @@ const VariantsSection = ({
                 <InputTextForm
                   control={control}
                   name={`variants[${variantIndex}].dimensions.height`}
-                  label={`Chiều cao ${variantIndex + ONE}`}
+                  label={`Chiều cao ${variantIndex + ONE} (cm)`}
                   sx={{ width: '30%', margin: '20px 0 0 20px' }}
                   variant='outlined'
                   error={errors.variants?.[variantIndex]?.dimensions?.height?.message}
@@ -73,7 +73,7 @@ const VariantsSection = ({
                 <InputTextForm
                   control={control}
                   name={`variants[${variantIndex}].dimensions.width`}
-                  label={`Chiều rộng ${variantIndex + ONE}`}
+                  label={`Chiều rộng ${variantIndex + ONE} (cm)`}
                   sx={{ width: '30%', margin: '20px 0 0 20px' }}
                   variant='outlined'
                   error={errors.variants?.[variantIndex]?.dimensions?.width?.message}
@@ -81,7 +81,7 @@ const VariantsSection = ({
                 <InputTextForm
                   control={control}
                   name={`variants[${variantIndex}].dimensions.length`}
-                  label={`Chiều dài ${variantIndex + ONE}`}
+                  label={`Chiều dài ${variantIndex + ONE} (cm )`}
                   sx={{ width: '30%', margin: '20px 0 0 20px' }}
                   variant='outlined'
                   error={errors.variants?.[variantIndex]?.dimensions?.length?.message}

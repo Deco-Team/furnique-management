@@ -24,7 +24,7 @@ export const orderListColumns: GridColDef[] = [
     )
   },
   { field: 'sku', headerName: 'SKU', width: 110, sortable: false },
-  { field: 'orderDate', headerName: 'Ngày đặt', width: 180 },
+  { field: 'orderDate', headerName: 'Ngày đặt', width: 170 },
   {
     field: 'quantity',
     headerName: 'Số lượng',
@@ -39,7 +39,14 @@ export const orderListColumns: GridColDef[] = [
     headerAlign: 'right',
     type: 'number',
     width: 90,
-    sortable: false
+    sortable: false,
+    valueFormatter: (params) => {
+      const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+      })
+      return formatter.format(params.value)
+    }
   },
   {
     field: 'totalAmount',
@@ -47,6 +54,13 @@ export const orderListColumns: GridColDef[] = [
     headerAlign: 'right',
     type: 'number',
     width: 100,
-    sortable: false
+    sortable: false,
+    valueFormatter: (params) => {
+      const formatter = new Intl.NumberFormat('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+      })
+      return formatter.format(params.value)
+    }
   }
 ]
