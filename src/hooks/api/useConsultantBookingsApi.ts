@@ -3,7 +3,7 @@ import useApi from './useApi'
 
 const useConsultBookingsApi = () => {
   const callApi = useApi()
-  const rootEndpoint = '/consultant-bookings/provider'
+  const rootEndpoint = 'consultant-bookings/provider'
 
   const getConsultantBookings = useCallback(
     async (page = 1, pageSize = 10) => {
