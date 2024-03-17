@@ -3,7 +3,7 @@ import useApi from './useApi'
 import { IAssignDelivery } from '~/pages/delivery/modal/CreateDeliveryModal'
 
 const useTasksApi = () => {
-  const rootEndpoint = '/task'
+  const rootEndpoint = 'task'
 
   const callApi = useApi()
 

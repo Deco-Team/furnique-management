@@ -37,6 +37,7 @@ const CreateDeliveryModal = ({ deliveryStaffList, orderId }: ICreateDeliveryModa
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const [startDate, setStartDate] = useState('')
   const navigate = useNavigate()
   const { createShippingTask } = useTasksApi()
   const defaultValues: IAssignDelivery = {
@@ -72,6 +73,8 @@ const CreateDeliveryModal = ({ deliveryStaffList, orderId }: ICreateDeliveryModa
     reset(defaultValues)
     navigate(ScreenPath.ORDERS)
   }
+
+  console.log(control._formValues.startDate)
 
   return (
     <>
@@ -159,7 +162,10 @@ const CreateDeliveryModal = ({ deliveryStaffList, orderId }: ICreateDeliveryModa
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer sx={{ my: 2 }} components={['DatePicker']}>
                     <DatePicker
-                      onChange={onChange}
+                      onChange={(value) => {
+                        setStartDate(value || '')
+                        onChange(value)
+                      }}
                       value={value}
                       disablePast
                       sx={{ width: '100%' }}
@@ -174,17 +180,17 @@ const CreateDeliveryModal = ({ deliveryStaffList, orderId }: ICreateDeliveryModa
                 </LocalizationProvider>
               )}
             />
-
             <Controller
               name='dueDate'
               control={control}
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DemoContainer sx={{ my: 2 }} components={['DatePicker']}>
                     <DatePicker
                       onChange={onChange}
-                      value={value}
+                      value={startDate}
                       disablePast
+                      minDate={startDate}
                       sx={{ width: '100%' }}
                       label='Ngày kết thúc'
                       slotProps={{
@@ -197,7 +203,9 @@ const CreateDeliveryModal = ({ deliveryStaffList, orderId }: ICreateDeliveryModa
                 </LocalizationProvider>
               )}
             />
-            <Button type='submit'>Tạo</Button>
+            <Button type='submit' variant='contained'>
+              Tạo
+            </Button>
           </form>
         </Box>
       </Modal>

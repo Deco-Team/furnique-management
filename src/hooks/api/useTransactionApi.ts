@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import useApi from './useApi'
 
 const useTransactionApi = () => {
-  const rootEndpoint = '/payment'
+  const rootEndpoint = 'payment'
 
   const callApi = useApi()
 
