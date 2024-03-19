@@ -65,7 +65,7 @@ const useTasksApi = () => {
 
   const changeShippingProgress = useCallback(
     async (orderId: string) => {
-      const endpoint = `${rootEndpoint}/shipping/${orderId}/progress`
+      const endpoint = `/${rootEndpoint}/shipping/${orderId}/progress`
       try {
         const response = await callApi('patch', endpoint)
         return response.data
@@ -78,7 +78,7 @@ const useTasksApi = () => {
 
   const changeShippingComplete = useCallback(
     async (orderId: string) => {
-      const endpoint = `${rootEndpoint}/shipping/${orderId}/complete`
+      const endpoint = `/${rootEndpoint}/shipping/${orderId}/complete`
       try {
         const response = await callApi('patch', endpoint)
         return response.data

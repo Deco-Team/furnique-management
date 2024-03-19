@@ -1,4 +1,4 @@
-import { Edit, Visibility } from '@mui/icons-material'
+import { Visibility } from '@mui/icons-material'
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid'
 import Chip from '~/components/chip/Chip'
 import ActionsCell from '~/components/table/ActionCell'
@@ -78,10 +78,7 @@ export const deliveriesColumn = ({ navigate }: ColumnProps): GridColDef[] => [
       return (
         <ActionsCell
           id={params.row.id as number}
-          buttons={[
-            { icon: <Edit />, onClick: () => handleViewButton(params.row.orderId) },
-            { icon: <Visibility />, onClick: () => handleViewButton(params.row.orderId) }
-          ]}
+          buttons={[{ icon: <Visibility />, onClick: () => handleViewButton(params.row.orderId) }]}
         />
       )
     }
