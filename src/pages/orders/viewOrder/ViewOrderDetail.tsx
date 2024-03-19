@@ -129,7 +129,6 @@ const ViewOrderDetail = () => {
       navigate(-1)
     }
   }
-  console.log(orderData?.orderStatus)
   const handleCompleteButton = async () => {
     if (orderId) {
       await changeShippingComplete(orderId)
