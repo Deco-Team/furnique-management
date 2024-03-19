@@ -21,6 +21,7 @@ import UpdateStaff from '~/pages/staffs/updateStaff/UpdateStaff'
 import ViewStaffDetail from '~/pages/staffs/viewStaff/ViewStaffDetail'
 import Tasks from '~/pages/tasks/Tasks'
 import Transactions from '~/pages/transactions/Transactions'
+import VisitBooking from '~/pages/visit-booking/VisitBooking'
 
 export const publicRoutes = [{ path: '/', component: Login }]
 
@@ -125,5 +126,10 @@ export const privateRoutes = [
     path: ScreenPath.CONSULTANT_BOOKING_CUSTOMER_INFO,
     component: ViewConsultantBookingDetail,
     title: 'Tư vấn'
+  },
+  {
+    path: ScreenPath.VISIT_BOOKING,
+    component: VisitBooking,
+    title: 'Đến cửa hàng'
   }
 ]
