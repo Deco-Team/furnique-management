@@ -1,4 +1,4 @@
-import { GridViewOutlined, LocalShipping, SupportAgent, Task } from '@mui/icons-material'
+import { EventAvailable, GridViewOutlined, LocalShipping, SupportAgent, Task } from '@mui/icons-material'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import CategoryIcon from '@mui/icons-material/Category'
 import InventoryIcon from '@mui/icons-material/Inventory'
@@ -16,7 +16,8 @@ const adminSidebar = [
   { id: 6, text: 'Công việc', link: 'tasks', icon: Task },
   { id: 7, text: 'Giao dịch', link: 'transactions', icon: AccountBalanceWalletIcon },
   { id: 8, text: 'Giao hàng', link: 'delivery', icon: LocalShipping },
-  { id: 9, text: 'Tư vấn', link: 'consultant-booking', icon: SupportAgent }
+  { id: 9, text: 'Tư vấn', link: 'consultant-booking', icon: SupportAgent },
+  { id: 10, text: 'Đến cửa hàng', link: 'visit-showroom-booking', icon: EventAvailable }
 ]
 
 const staffSidebar = [
