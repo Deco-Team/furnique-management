@@ -19,7 +19,8 @@ export enum ScreenPath {
   DELIVERY = '/delivery',
   TRANSACTIONS = '/transactions',
   CONSULTANT_BOOKING = '/consultant-booking',
-  CONSULTANT_BOOKING_CUSTOMER_INFO = '/consultant-booking/:consultantBookingId'
+  CONSULTANT_BOOKING_CUSTOMER_INFO = '/consultant-booking/:consultantBookingId',
+  VISIT_BOOKING = '/visit-showroom-booking'
 }
 
 export enum ProductStatus {
