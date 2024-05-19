@@ -1,12 +1,18 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import CloseIcon from '@mui/icons-material/Close'
 import { useEffect, useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
 import Loading from '~/components/loading/Loading'
-import { EMPTY, MAX_PRODUCT_IMAGE_FILES, MAX_PRODUCT_IMAGE_FILES_SIZE } from '~/global/constants/constants'
+import {
+  EMPTY,
+  MAX_PRODUCT_IMAGE_FILES,
+  MAX_PRODUCT_IMAGE_FILES_3D,
+  MAX_PRODUCT_IMAGE_FILES_SIZE,
+  MAX_PRODUCT_IMAGE_FILES_SIZE_3D
+} from '~/global/constants/constants'
 import { ScreenPath } from '~/global/enum'
 import { ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
 import { notifyError, notifyLoading, notifySuccess } from '~/global/toastify'
@@ -22,7 +28,16 @@ import { updateProductValidationSchema } from '../validation/UpdateProductValida
 import { Edit } from '@mui/icons-material'
 import { TWO, ZERO } from '~/global/constants/numbers'
 import useProductsApi from '~/hooks/api/useProductsApi'
-import { Button, ImageList, ImageListItem } from '@mui/material'
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  ImageList,
+  ImageListItem,
+  Radio,
+  RadioGroup
+} from '@mui/material'
 import { IVariant } from '~/global/interfaces/productInterface'
 import { v4 } from 'uuid'
 import { cloudinaryURLConvert } from '~/utils/common.utils'
@@ -52,6 +67,7 @@ const UpdateProduct = () => {
   const navigate = useNavigate()
   const params = useParams()
   const [files, setFiles] = useState<File[]>([])
+  const [files3D, setFiles3D] = useState<File[]>([])
   const [productData, setProductData] = useState<IProductsProps>(defaultValues)
   const [isLoading, setIsLoading] = useState(false)
   // const [keyValueCounts, setKeyValueCounts] = useState<Record<number, number>>({})
@@ -124,6 +140,8 @@ const UpdateProduct = () => {
         name: product.name,
         brand: product.brand,
         description: product.description,
+        arPlacement: product.arPlacement,
+        modelUrl: product.modelUrl,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         variants: product.variants.map((variant: any) => {
           const transformedVariant: IVariant = {
@@ -162,7 +180,7 @@ const UpdateProduct = () => {
     }
   }
 
-  const uploadImage = async (publicIds: string[]) => {
+  const uploadImage = async (files: File[], publicIds: string[]) => {
     try {
       await uploadCloudinary(files, publicIds)
     } catch (error) {
@@ -232,17 +250,30 @@ const UpdateProduct = () => {
         imageURL.push(cloudinaryURLConvert(publicId))
       }
 
-      const formData: IProductsProps = {
-        ...data,
-        categories: selectedCategories,
-        images: [...productData.images, ...imageURL]
+      let formData: IProductsProps
+      const publicId3d = v4()
+      if (files3D) {
+        const modelUrl = cloudinaryURLConvert(publicId3d, true)
+        formData = {
+          ...data,
+          categories: selectedCategories,
+          images: [...productData.images, ...imageURL],
+          modelUrl: modelUrl
+        }
+      } else {
+        formData = {
+          ...data,
+          categories: selectedCategories,
+          images: [...productData.images, ...imageURL]
+        }
       }
 
       try {
         notifyLoading()
         const response = await updateProduct(productId, formData)
         if (response) {
-          await uploadImage(imageList)
+          await uploadImage(files, imageList)
+          if (files3D) await uploadImage(files3D, [publicId3d])
           reset()
           setFiles([])
           setSelectedCategories([])
@@ -310,6 +341,50 @@ const UpdateProduct = () => {
               </ImageListItem>
             ))}
           </ImageList>
+          {productData.modelUrl ? (
+            <Button
+              sx={{
+                my: 2
+              }}
+              size='small'
+              color='error'
+              variant='contained'
+              onClick={() => {
+                setProductData({
+                  ...productData,
+                  modelUrl: undefined
+                })
+              }}
+            >
+              Xóa ảnh 3D
+            </Button>
+          ) : null}
+          <Controller
+            control={control}
+            name='arPlacement'
+            render={({ field }) => (
+              <FormControl {...field} sx={{ ml: 4 }}>
+                <FormLabel>Loại model</FormLabel>
+                <RadioGroup
+                  aria-labelledby='demo-radio-buttons-group-label'
+                  defaultValue={control._defaultValues.arPlacement}
+                  name='radio-buttons-group'
+                >
+                  <FormControlLabel value='floor' control={<Radio />} label='Floor' />
+                  <FormControlLabel value='wall' control={<Radio />} label='Wall' />
+                </RadioGroup>
+              </FormControl>
+            )}
+          />
+          {!productData.modelUrl ? (
+            <FileUploadSection
+              is3D
+              files={files3D}
+              setFiles={setFiles3D}
+              maxFiles={MAX_PRODUCT_IMAGE_FILES_3D}
+              maxSize={MAX_PRODUCT_IMAGE_FILES_SIZE_3D}
+            />
+          ) : null}
           <VariantsSection
             control={control}
             errors={errors}

@@ -2,11 +2,17 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import AddIcon from '@mui/icons-material/Add'
 import CloseIcon from '@mui/icons-material/Close'
 import { useEffect, useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form'
+import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import PrimaryButton from '~/components/button/PrimaryButton'
 import SecondaryButton from '~/components/button/SecondaryButton'
-import { EMPTY, MAX_PRODUCT_IMAGE_FILES, MAX_PRODUCT_IMAGE_FILES_SIZE } from '~/global/constants/constants'
+import {
+  EMPTY,
+  MAX_PRODUCT_IMAGE_FILES,
+  MAX_PRODUCT_IMAGE_FILES_3D,
+  MAX_PRODUCT_IMAGE_FILES_SIZE,
+  MAX_PRODUCT_IMAGE_FILES_SIZE_3D
+} from '~/global/constants/constants'
 import { TWO, ZERO } from '~/global/constants/numbers'
 import { ScreenPath } from '~/global/enum'
 import { ICheckboxOption, IProductsProps } from '~/global/interfaces/interface'
@@ -22,10 +28,13 @@ import VariantsSection from '../components/VariantsSection'
 import { addProductValidationSchema } from '../validation/AddProductValidationSchema'
 import { ButtonWrapper, GeneralContainer, Wrapper } from './AddProduct.styled'
 import { v4 } from 'uuid'
+import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 
 const AddProduct = () => {
   const navigate = useNavigate()
   const [files, setFiles] = useState<File[]>([])
+  const [files3D, setFiles3D] = useState<File[]>([])
+
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
 
   const { uploadCloudinary } = useCloudinaryApi()
@@ -37,6 +46,7 @@ const AddProduct = () => {
     name: EMPTY,
     description: EMPTY,
     images: [],
+    modelUrl: EMPTY,
     brand: EMPTY,
     variants: [
       {
@@ -102,7 +112,7 @@ const AddProduct = () => {
     }
   }
 
-  const uploadImage = async (publicIds: string[]) => {
+  const uploadImage = async (files: File[], publicIds: string[]) => {
     try {
       await uploadCloudinary(files, publicIds)
     } catch (error) {
@@ -127,17 +137,30 @@ const AddProduct = () => {
         imageList.push(publicId)
         imageURL.push(cloudinaryURLConvert(publicId))
       }
-      const formData: IProductsProps = {
-        ...data,
-        categories: selectedCategories,
-        images: imageURL
+      let formData: IProductsProps
+      const publicId3d = v4()
+      if (files3D) {
+        const modelUrl = cloudinaryURLConvert(publicId3d, true)
+        formData = {
+          ...data,
+          categories: selectedCategories,
+          images: imageURL,
+          modelUrl: modelUrl
+        }
+      } else {
+        formData = {
+          ...data,
+          categories: selectedCategories,
+          images: imageURL
+        }
       }
 
       try {
         notifyLoading()
         const response = await createProduct(formData)
         if (response) {
-          await uploadImage(imageList)
+          await uploadImage(files, imageList)
+          if (files3D) await uploadImage(files3D, [publicId3d])
           reset()
           setFiles([])
           setSelectedCategories([])
@@ -219,6 +242,30 @@ const AddProduct = () => {
             setFiles={setFiles}
             maxFiles={MAX_PRODUCT_IMAGE_FILES}
             maxSize={MAX_PRODUCT_IMAGE_FILES_SIZE}
+          />
+          <FileUploadSection
+            is3D
+            files={files3D}
+            setFiles={setFiles3D}
+            maxFiles={MAX_PRODUCT_IMAGE_FILES_3D}
+            maxSize={MAX_PRODUCT_IMAGE_FILES_SIZE_3D}
+          />
+          <Controller
+            control={control}
+            name='arPlacement'
+            render={({ field }) => (
+              <FormControl {...field} sx={{ ml: 4 }}>
+                <FormLabel>Loại model</FormLabel>
+                <RadioGroup
+                  aria-labelledby='demo-radio-buttons-group-label'
+                  defaultValue='female'
+                  name='radio-buttons-group'
+                >
+                  <FormControlLabel value='floor' control={<Radio />} label='Floor' />
+                  <FormControlLabel value='wall' control={<Radio />} label='Wall' />
+                </RadioGroup>
+              </FormControl>
+            )}
           />
           <VariantsSection
             control={control}
