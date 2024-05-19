@@ -53,6 +53,7 @@ export interface IProductDetail {
   slug: string
   images: string[]
   rate: number
+  arPlacement: 'floor' | 'wall'
   brand: string
   variants: IVariantDetail[]
   categories: ICategory[]

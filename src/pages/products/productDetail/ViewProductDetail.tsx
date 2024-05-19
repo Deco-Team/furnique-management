@@ -103,7 +103,10 @@ const ViewProductDetail = () => {
               Mô tả: {productData?.description}
             </Typography>
             <Typography sx={{ my: 1 }} variant='body1'>
-              Thương hiệu: {productData?.description}
+              Thương hiệu: {productData?.brand}
+            </Typography>
+            <Typography sx={{ my: 1 }} variant='body1'>
+              AR: {productData?.arPlacement}
             </Typography>
             {/* <Typography sx={{ my: 1 }} variant='body1'>
               Ngày tạo: {productData?.createdAt}
