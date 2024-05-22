@@ -160,6 +160,8 @@ export interface IProductsProps {
   name: string
   description: string
   images: string[]
+  modelUrl?: string
+  arPlacement?: 'floor' | 'wall'
   brand: string
   variants: IVariant[]
   categories: string[]
@@ -169,15 +171,7 @@ export interface IAddProductProps {
   name: string
   description: string
   images: string[]
-  brand: string
-  variants: any
-  categories: string[]
-}
-
-export interface IAddProductProps {
-  name: string
-  description: string
-  images: string[]
+  modelUrl?: string
   brand: string
   variants: any
   categories: string[]

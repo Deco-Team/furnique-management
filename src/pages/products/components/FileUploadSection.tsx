@@ -6,13 +6,14 @@ interface ImageUploadSectionProps {
   setFiles: React.Dispatch<React.SetStateAction<File[]>>
   maxFiles: number
   maxSize: number
+  is3D?: boolean
 }
 
-const FileUploadSection = ({ files, setFiles, maxFiles, maxSize }: ImageUploadSectionProps) => {
+const FileUploadSection = ({ files, setFiles, maxFiles, maxSize, is3D }: ImageUploadSectionProps) => {
   return (
     <>
       <InformationContainer>
-        <TitleText>Hình ảnh</TitleText>
+        <TitleText>Hình ảnh{is3D ? ' 3D' : null}</TitleText>
         <FileUpload
           sx={{
             width: '88%',
@@ -44,7 +45,7 @@ const FileUploadSection = ({ files, setFiles, maxFiles, maxSize }: ImageUploadSe
           onChange={setFiles}
           maxFiles={maxFiles}
           maxSize={maxSize}
-          accept='image/png, image/jpeg'
+          accept={is3D ? '.glb' : 'image/png, image/jpeg'}
           title={`Kéo thả ảnh vào đây hoặc bấm thêm ảnh`}
           buttonText='Tải lên'
         />
