@@ -20,7 +20,7 @@ export const transactionsColumn: GridColDef[] = [
     headerName: 'Tên giao dịch',
     width: 450,
     filterable: false,
-    valueGetter: (params) => params.row.transaction.orderId
+    valueGetter: (params) => params.row.transaction.orderCode
   },
   {
     field: 'paymentMethod',
